@@ -3,14 +3,22 @@
   "channel": "stable",
   "enabled": true,
   "latest": {
-    "game_version": "1.59.0",
+    "game_version": "1.59.1",
     "android_version_code": 170,
     "min_updater_schema": 1
   },
   "manifest_url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/manifest.json",
   "release_base": "https://github.com/corinthianrattler-ui/aetherion-updates/releases/download/",
-  "payloads": [],
-  "notes": "Incremental updater channel is live. Version 1.59.0 is the bootstrap shell; future versions list only changed payloads here.",
+  "payloads": [
+    {
+      "path": "patches/v1.59.1-dominus-armor.js",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/patches/v1.59.1-dominus-armor.js",
+      "sha256": "2fcde51ffc5c2c72272d7d4e9302d817be48d1836e87c2cef4d0906bca9e0a1b",
+      "size": 6267,
+      "restart_required": true
+    }
+  ],
+  "notes": "Dominus armor pass: Kingslayer material shifted to blackened steel, deep crimson and antique gold; Dominus armor pieces renamed and given rose-themed modular equipment art.",
   "save_policy": {
     "managed": false,
     "preserve_always": true

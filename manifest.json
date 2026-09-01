@@ -1,16 +1,16 @@
 {
   "schema": 1,
   "channel": "stable",
-  "enabled": false,
+  "enabled": true,
   "latest": {
-    "game_version": "1.58.4",
-    "android_version_code": 169,
+    "game_version": "1.59.0",
+    "android_version_code": 170,
     "min_updater_schema": 1
   },
   "manifest_url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/manifest.json",
   "release_base": "https://github.com/corinthianrattler-ui/aetherion-updates/releases/download/",
   "payloads": [],
-  "notes": "Bootstrap manifest. Downloads stay disabled until the first verified Release payload is published.",
+  "notes": "Incremental updater channel is live. Version 1.59.0 is the bootstrap shell; future versions list only changed payloads here.",
   "save_policy": {
     "managed": false,
     "preserve_always": true

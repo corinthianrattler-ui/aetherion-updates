@@ -50,12 +50,15 @@ class Source:
 @dataclass(frozen=True)
 class Part:
     source: str
-    label: int
+    label: int | None
     node: str
     target: tuple[float, float, float, float, float, float]
     faces: int
     rotation_degrees: float = 0.0
     mirror_x: bool = False
+    uniform_scale: float | None = None
+    reference_labels: tuple[int, ...] | None = None
+    preserve_coordinates: bool = False
 
 
 def parse_glb(path: Path, name: str) -> Source:
@@ -119,10 +122,12 @@ def body_labels(points: np.ndarray) -> np.ndarray:
     labels = np.full(len(points), -1, dtype=np.int8)
     labels[y >= 0.835] = 0  # head
     labels[y < 0.09] = 4  # feet
-    labels[(y >= 0.09) & (y < 0.50)] = 3  # legs
-    upper = (y >= 0.50) & (y < 0.835)
-    labels[upper & (np.abs(x) <= 0.105)] = 1  # torso
-    labels[upper & (np.abs(x) > 0.105)] = 2  # arms
+    hands = (y >= 0.285) & (y < 0.465) & (np.abs(x) > 0.095)
+    labels[hands] = 5  # hands and cuffs can hide under equipped gauntlets
+    arms = (y >= 0.465) & (y < 0.835) & (np.abs(x) > 0.105)
+    labels[arms] = 2  # upper sleeves remain independently visible
+    labels[(labels < 0) & (y >= 0.47)] = 1  # torso
+    labels[labels < 0] = 3  # waist and legs
     return labels
 
 
@@ -212,45 +217,47 @@ CLASSIFIERS: dict[str, Callable[[np.ndarray], np.ndarray]] = {
 
 
 PARTS = (
-    # Foundation is split so clothing can cover only the occupied body region.
-    Part("body", 0, "foundation__head", (-0.068, 0.068, 0.835, 1.000, -0.105, 0.105), 15000),
-    Part("body", 1, "foundation__torso", (-0.112, 0.112, 0.495, 0.840, -0.100, 0.100), 18000),
-    Part("body", 2, "foundation__arms", (-0.184, 0.184, 0.350, 0.835, -0.105, 0.105), 22000),
-    Part("body", 3, "foundation__legs", (-0.105, 0.105, 0.085, 0.505, -0.100, 0.100), 22000),
-    Part("body", 4, "foundation__feet", (-0.135, 0.135, 0.000, 0.105, -0.105, 0.115), 10000),
+    # All six nodes come from one globally simplified body and retain its exact
+    # shared coordinates/normals. The split enables coverage hiding without
+    # changing anatomy or opening seams in the foundation loadout.
+    Part("body", 0, "foundation__head", (0, 0, 0, 0, 0, 0), 1000000, preserve_coordinates=True),
+    Part("body", 1, "foundation__torso", (0, 0, 0, 0, 0, 0), 1000000, preserve_coordinates=True),
+    Part("body", 2, "foundation__arms", (0, 0, 0, 0, 0, 0), 1000000, preserve_coordinates=True),
+    Part("body", 5, "foundation__hands", (0, 0, 0, 0, 0, 0), 1000000, preserve_coordinates=True),
+    Part("body", 3, "foundation__legs", (0, 0, 0, 0, 0, 0), 1000000, preserve_coordinates=True),
+    Part("body", 4, "foundation__feet", (0, 0, 0, 0, 0, 0), 1000000, preserve_coordinates=True),
 
-    Part("armor", 0, "gear__dominus_lord_helm", (-0.087, 0.087, 0.825, 1.018, -0.112, 0.135), 14000),
-    Part("armor", 1, "gear__dominus_gorget", (-0.100, 0.100, 0.735, 0.858, -0.108, 0.125), 9000),
-    Part("armor", 2, "gear__dominus_pauldrons", (-0.205, 0.205, 0.685, 0.845, -0.135, 0.135), 16000),
-    Part("armor", 3, "gear__dominus_cuirass", (-0.150, 0.150, 0.490, 0.800, -0.125, 0.150), 20000),
-    Part("armor", 4, "gear__dominus_arming_doublet", (-0.188, 0.188, 0.350, 0.815, -0.120, 0.128), 22000),
-    Part("armor", 5, "gear__dominus_gauntlets", (-0.205, 0.205, 0.315, 0.475, -0.122, 0.140), 14000),
-    Part("armor", 6, "gear__dominus_belt", (-0.148, 0.148, 0.440, 0.555, -0.128, 0.145), 9000),
-    Part("armor", 7, "gear__dominus_legplates", (-0.126, 0.126, 0.090, 0.535, -0.125, 0.138), 22000),
-    # The supplied armor board contains one authored boot. Fit it to the right
-    # foot and mirror a second instance so the equipped feet slot is a true pair.
-    Part("armor", 8, "gear__dominus_boots", (0.018, 0.145, -0.012, 0.155, -0.125, 0.150), 16000, mirror_x=True),
-    Part("armor", 9, "gear__dominus_cloak", (-0.205, 0.205, 0.150, 0.805, -0.160, -0.086), 24000),
+    Part("armor", 0, "gear__dominus_lord_helm", (-0.087, 0.087, 0.825, 1.018, -0.112, 0.135), 14000, uniform_scale=1.05),
+    Part("armor", 1, "gear__dominus_gorget", (-0.100, 0.100, 0.735, 0.858, -0.108, 0.125), 9000, uniform_scale=0.66),
+    Part("armor", 2, "gear__dominus_pauldrons", (-0.205, 0.205, 0.685, 0.845, -0.135, 0.135), 16000, uniform_scale=1.20),
+    Part("armor", 3, "gear__dominus_cuirass", (-0.150, 0.150, 0.490, 0.800, -0.125, 0.150), 20000, uniform_scale=1.11),
+    Part("armor", 4, "gear__dominus_arming_doublet", (-0.188, 0.188, 0.350, 0.815, -0.120, 0.128), 22000, uniform_scale=1.28),
+    Part("armor", 5, "gear__dominus_gauntlets", (-0.205, 0.205, 0.285, 0.475, -0.122, 0.140), 14000, uniform_scale=1.50),
+    Part("armor", 6, "gear__dominus_belt", (-0.148, 0.148, 0.440, 0.555, -0.128, 0.145), 9000, uniform_scale=0.95),
+    Part("armor", 7, "gear__dominus_legplates", (-0.126, 0.126, 0.135, 0.545, -0.125, 0.138), 22000, uniform_scale=1.30),
+    # The board already contains the authored boot pair; do not mirror it.
+    Part("armor", 8, "gear__dominus_boots", (-0.140, 0.140, 0.005, 0.205, -0.125, 0.150), 16000, uniform_scale=0.72),
+    Part("armor", 9, "gear__dominus_cloak", (-0.205, 0.205, 0.265, 0.690, -0.160, -0.086), 24000, uniform_scale=1.38),
 
-    Part("royal", 0, "gear__royal_cloak", (-0.215, 0.215, 0.150, 0.825, -0.165, -0.090), 26000),
-    Part("royal", 1, "gear__royal_underlayer", (-0.060, 0.060, 0.735, 0.835, 0.090, 0.145), 7000),
-    Part("royal", 2, "gear__royal_body", (-0.148, 0.148, 0.485, 0.820, -0.120, 0.135), 23000),
-    Part("royal", 3, "gear__royal_shoulders", (-0.192, 0.192, 0.690, 0.845, -0.125, 0.138), 12000),
-    Part("royal", 4, "gear__royal_hands", (-0.205, 0.205, 0.335, 0.510, -0.115, 0.135), 10000),
-    Part("royal", 5, "gear__royal_waist", (-0.150, 0.150, 0.440, 0.550, -0.120, 0.140), 9000),
-    Part("royal", 6, "gear__royal_head", (-0.090, 0.090, 0.895, 1.030, -0.095, 0.128), 12000),
-    Part("royal", 7, "gear__royal_legs", (-0.112, 0.112, 0.085, 0.525, -0.110, 0.125), 22000),
-    Part("royal", 8, "gear__royal_feet", (-0.140, 0.140, -0.012, 0.140, -0.115, 0.145), 16000),
+    Part("royal", 0, "gear__royal_cloak", (-0.215, 0.215, 0.150, 0.825, -0.165, -0.090), 26000, uniform_scale=1.03),
+    Part("royal", 1, "gear__royal_underlayer", (-0.060, 0.060, 0.735, 0.835, 0.090, 0.145), 7000, uniform_scale=0.70),
+    Part("royal", 2, "gear__royal_body", (-0.190, 0.190, 0.340, 0.855, -0.095, 0.115), 23000, uniform_scale=1.25, reference_labels=(2, 3, 4)),
+    Part("royal", 3, "gear__royal_shoulders", (-0.190, 0.190, 0.340, 0.855, -0.095, 0.115), 12000, uniform_scale=1.25, reference_labels=(2, 3, 4)),
+    Part("royal", 4, "gear__royal_hands", (-0.190, 0.190, 0.340, 0.855, -0.095, 0.115), 10000, uniform_scale=1.25, reference_labels=(2, 3, 4)),
+    Part("royal", 5, "gear__royal_waist", (-0.150, 0.150, 0.450, 0.540, -0.110, 0.130), 9000, uniform_scale=0.90),
+    Part("royal", 6, "gear__royal_head", (-0.090, 0.090, 0.965, 1.095, -0.095, 0.128), 12000, uniform_scale=0.76),
+    Part("royal", 7, "gear__royal_legs", (-0.112, 0.112, 0.085, 0.525, -0.110, 0.125), 22000, uniform_scale=0.96),
+    Part("royal", 8, "gear__royal_feet", (-0.140, 0.140, 0.010, 0.230, -0.115, 0.145), 16000, uniform_scale=0.74),
 
-    Part("weapons", 0, "gear__dominus_bow", (-0.260, -0.075, 0.110, 0.850, -0.175, -0.125), 15000, -7),
-    Part("weapons", 1, "gear__dominus_kite_shield", (-0.380, -0.070, 0.255, 0.755, 0.125, 0.190), 24000, 4),
-    Part("weapons", 2, "gear__dominus_dagger", (-0.185, -0.095, 0.245, 0.535, 0.115, 0.170), 11000, 12),
-    Part("weapons", 3, "gear__dominus_sword", (0.135, 0.260, 0.000, 0.665, 0.115, 0.172), 15000, -4),
-    Part("weapons", 4, "gear__dominus_quiver", (0.070, 0.225, 0.405, 0.925, -0.185, -0.125), 17000, -7),
-    Part("weapons", 5, "gear__dominus_thorn_whip", (-0.385, -0.145, 0.100, 0.655, 0.120, 0.178), 17000, 4),
+    Part("weapons", 0, "gear__dominus_bow", (-0.260, -0.075, 0.110, 0.850, -0.175, -0.125), 15000, -7, uniform_scale=0.79),
+    Part("weapons", 1, "gear__dominus_kite_shield", (-0.380, -0.070, 0.255, 0.755, 0.125, 0.190), 24000, 4, uniform_scale=0.76),
+    Part("weapons", 2, "gear__dominus_dagger", (-0.185, -0.095, 0.245, 0.535, 0.115, 0.170), 11000, 12, uniform_scale=0.82),
+    Part("weapons", 3, "gear__dominus_sword", (0.135, 0.260, 0.000, 0.665, 0.115, 0.172), 15000, -4, uniform_scale=1.15),
+    Part("weapons", 4, "gear__dominus_quiver", (0.070, 0.225, 0.405, 0.925, -0.185, -0.125), 17000, -7, uniform_scale=0.99),
+    Part("weapons", 5, "gear__dominus_thorn_whip", (-0.385, -0.145, 0.100, 0.655, 0.120, 0.178), 17000, 4, uniform_scale=1.08),
 
-    Part("jewelry", 0, "gear__royal_jewelry", (-0.100, 0.100, 0.655, 0.850, 0.105, 0.153), 18000),
-    Part("jewelry", 1, "gear__dominus_signet", (-0.183, -0.143, 0.365, 0.420, 0.105, 0.145), 10000, -8),
+    Part("jewelry", 0, "gear__royal_jewelry", (-0.100, 0.100, 0.655, 0.850, 0.105, 0.153), 18000, uniform_scale=0.20),
+    Part("jewelry", 1, "gear__dominus_signet", (-0.183, -0.143, 0.365, 0.420, 0.105, 0.145), 10000, -8, uniform_scale=0.10),
 )
 
 
@@ -259,21 +266,129 @@ def face_labels(source: Source) -> np.ndarray:
     return CLASSIFIERS[source.name](centers)
 
 
-def fitted_submesh(source: Source, selected_faces: np.ndarray, part: Part):
+def refine_body_face_labels(source: Source, labels: np.ndarray) -> np.ndarray:
+    """Move the detached linen collar out of the persistent head region."""
+    head_face_ids = np.flatnonzero(labels == 0)
+    head_faces = source.faces[head_face_ids]
+    vertices = np.unique(head_faces)
+    parent = {int(vertex): int(vertex) for vertex in vertices}
+
+    def find(vertex: int) -> int:
+        while parent[vertex] != vertex:
+            parent[vertex] = parent[parent[vertex]]
+            vertex = parent[vertex]
+        return vertex
+
+    def union(left: int, right: int) -> None:
+        left_root, right_root = find(left), find(right)
+        if left_root != right_root:
+            parent[right_root] = left_root
+
+    for a, b, c in head_faces:
+        union(int(a), int(b))
+        union(int(a), int(c))
+
+    components: dict[int, list[int]] = {}
+    for local_index, face in enumerate(head_faces):
+        components.setdefault(find(int(face[0])), []).append(local_index)
+    refined = labels.copy()
+    for local_indices in components.values():
+        global_face_ids = head_face_ids[np.asarray(local_indices, dtype=np.int64)]
+        points = source.positions[np.unique(source.faces[global_face_ids].reshape(-1))]
+        # The two collar surfaces end below the jaw/hair components.
+        if points[:, 1].max() < 0.90:
+            refined[global_face_ids] = 1
+    return refined
+
+
+def computed_normals(positions: np.ndarray, faces: np.ndarray) -> np.ndarray:
+    normals = np.zeros_like(positions, dtype=np.float64)
+    triangles = positions[faces]
+    face_normals = np.cross(triangles[:, 1] - triangles[:, 0], triangles[:, 2] - triangles[:, 0])
+    np.add.at(normals, faces[:, 0], face_normals)
+    np.add.at(normals, faces[:, 1], face_normals)
+    np.add.at(normals, faces[:, 2], face_normals)
+    lengths = np.linalg.norm(normals, axis=1)
+    normals /= np.maximum(lengths[:, None], 1e-12)
+    return normals
+
+
+def simplify_source(source: Source, target_faces: int) -> Source:
+    """Simplify a source once, before it is divided into visibility regions.
+
+    This is essential for the foundation body: simplifying independently after
+    cutting it into head/torso/arms/hands/legs/feet creates different border vertices
+    and visible seams.  A single global pass keeps every region in one unchanged
+    coordinate system and gives duplicated border vertices identical normals.
+    """
+    if len(source.faces) <= target_faces:
+        return source
+
+    _, _, collapses = fast_simplification.simplify(
+        source.positions,
+        source.faces,
+        target_count=target_faces,
+        agg=5.0,
+        return_collapses=True,
+        preserve_border=False,
+    )
+    positions, faces, mapping = fast_simplification.replay_simplification(
+        source.positions.astype(np.float32), source.faces, collapses
+    )
+    valid = mapping >= 0
+    uv_sum = np.zeros((len(positions), 2), dtype=np.float64)
+    uv_count = np.zeros(len(positions), dtype=np.int64)
+    np.add.at(uv_sum, mapping[valid], source.uvs[valid])
+    np.add.at(uv_count, mapping[valid], 1)
+    uv_count[uv_count == 0] = 1
+    uvs = uv_sum / uv_count[:, None]
+    normals = computed_normals(positions, faces)
+    print(f"{source.name:10s} global simplify={len(source.faces):7d} -> {len(faces):7d} faces")
+    return Source(
+        name=source.name,
+        document=source.document,
+        binary=source.binary,
+        positions=np.asarray(positions, dtype=np.float64),
+        normals=normals,
+        uvs=uvs,
+        faces=np.asarray(faces, dtype=np.int32),
+        images=source.images,
+    )
+
+
+def fitted_submesh(
+    source: Source,
+    selected_faces: np.ndarray,
+    part: Part,
+    reference_faces: np.ndarray | None = None,
+):
     if len(selected_faces) < 4:
         raise ValueError(f"{part.node}: selector returned only {len(selected_faces)} faces")
     source_faces = source.faces[selected_faces]
     used, inverse = np.unique(source_faces.reshape(-1), return_inverse=True)
     faces = inverse.reshape((-1, 3)).astype(np.int32)
     positions = source.positions[used].copy()
+    source_normals = source.normals[used].copy()
     uvs = source.uvs[used].copy()
 
-    low = positions.min(axis=0)
-    high = positions.max(axis=0)
+    reference_positions = (
+        source.positions[np.unique(source.faces[reference_faces].reshape(-1))]
+        if reference_faces is not None
+        else positions
+    )
+    low = reference_positions.min(axis=0)
+    high = reference_positions.max(axis=0)
     target_low = np.array((part.target[0], part.target[2], part.target[4]), dtype=np.float64)
     target_high = np.array((part.target[1], part.target[3], part.target[5]), dtype=np.float64)
     span = np.maximum(high - low, 1e-8)
-    positions = (positions - low) * ((target_high - target_low) / span) + target_low
+    if part.preserve_coordinates:
+        pass
+    elif part.uniform_scale is not None:
+        source_center = (low + high) * 0.5
+        target_center = (target_low + target_high) * 0.5
+        positions = (positions - source_center) * part.uniform_scale + target_center
+    else:
+        positions = (positions - low) * ((target_high - target_low) / span) + target_low
 
     if part.rotation_degrees:
         angle = math.radians(part.rotation_degrees)
@@ -293,6 +408,7 @@ def fitted_submesh(source: Source, selected_faces: np.ndarray, part: Part):
         faces = np.vstack((faces, faces[:, [0, 2, 1]] + vertex_offset))
 
     original_face_count = len(faces)
+    geometry_changed = part.mirror_x
     if original_face_count > part.faces:
         try:
             _, _, collapses = fast_simplification.simplify(
@@ -316,17 +432,17 @@ def fitted_submesh(source: Source, selected_faces: np.ndarray, part: Part):
             np.add.at(uv_count, mapping[valid], 1)
             uv_count[uv_count == 0] = 1
             uvs = uv_sum / uv_count[:, None]
+            geometry_changed = True
         except Exception as error:
             print(f"warning: {part.node} simplification failed ({error}); retaining source geometry")
 
-    normals = np.zeros_like(positions, dtype=np.float64)
-    triangles = positions[faces]
-    face_normals = np.cross(triangles[:, 1] - triangles[:, 0], triangles[:, 2] - triangles[:, 0])
-    np.add.at(normals, faces[:, 0], face_normals)
-    np.add.at(normals, faces[:, 1], face_normals)
-    np.add.at(normals, faces[:, 2], face_normals)
-    lengths = np.linalg.norm(normals, axis=1)
-    normals /= np.maximum(lengths[:, None], 1e-12)
+    # Foundation regions reuse normals from the globally simplified body. This
+    # prevents a lighting seam where two independently emitted nodes meet.
+    normals = (
+        source_normals
+        if part.preserve_coordinates and not geometry_changed
+        else computed_normals(positions, faces)
+    )
 
     print(
         f"{part.node:34s} source={original_face_count:7d} output={len(faces):6d} "
@@ -534,7 +650,9 @@ def main():
         parser.error("--texture-size must be at least 256")
 
     sources = {name: parse_glb(getattr(args, name), name) for name in CLASSIFIERS}
+    sources["body"] = simplify_source(sources["body"], 120000)
     labels = {name: face_labels(source) for name, source in sources.items()}
+    labels["body"] = refine_body_face_labels(sources["body"], labels["body"])
     builder = GlbBuilder()
     materials = {
         name: builder.add_material(source, args.texture_size)
@@ -543,9 +661,18 @@ def main():
 
     assigned_faces = {name: 0 for name in sources}
     for part in PARTS:
-        selected = np.flatnonzero(labels[part.source] == part.label)
+        selected = (
+            np.arange(len(sources[part.source].faces))
+            if part.label is None
+            else np.flatnonzero(labels[part.source] == part.label)
+        )
         assigned_faces[part.source] += len(selected)
-        arrays = fitted_submesh(sources[part.source], selected, part)
+        reference = (
+            np.flatnonzero(np.isin(labels[part.source], part.reference_labels))
+            if part.reference_labels
+            else None
+        )
+        arrays = fitted_submesh(sources[part.source], selected, part, reference)
         builder.add_mesh(part.node, materials[part.source], arrays)
 
     for name, source in sources.items():

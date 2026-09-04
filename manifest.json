@@ -3,8 +3,8 @@
   "channel": "stable",
   "enabled": true,
   "latest": {
-    "game_version": "1.60.1",
-    "android_version_code": 170,
+    "game_version": "1.61.0",
+    "android_version_code": 171,
     "min_updater_schema": 1
   },
   "manifest_url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/manifest.json",
@@ -16,9 +16,23 @@
       "sha256": "f4518e92d02ab35ba01761f1e9d90ceebfda0ed1c9e860edeb456afd84d54dfb",
       "size": 4563,
       "restart_required": true
+    },
+    {
+      "path": "assets/v107/valkorion_modular.glb",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/assets/v107/valkorion_modular.glb",
+      "sha256": "65fdb24c172dc8cb840b0185c42bd34d756f7841ffdb6f64125885f64c42b09c",
+      "size": 11324856,
+      "restart_required": true
+    },
+    {
+      "path": "patches/v1.61.0-valkorion-modular.js",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/patches/v1.61.0-valkorion-modular.js",
+      "sha256": "971e16c1f0f59d70a4ee37f365739771513862bc4d0de7eb54f73911eaaf2e0d",
+      "size": 13040,
+      "restart_required": true
     }
   ],
-  "notes": "Emergency visual rollback: removes the malformed v1.60.0 Valkorion model and restores the last working v1.59.2 Dominus presentation. Existing saves are preserved. Restart after applying.",
+  "notes": "Corrected Valkorion modular rebuild: restores the supplied foundation body at its intact authored proportions, with six shared-coordinate visibility regions and no independently stretched anatomy. Installs 27 uniformly scaled and fitted pieces covering the complete Dominus armor, Royal Lord outfit, sword, dagger, bow, quiver, kite shield, thorn whip, necklace, and signet. Coat sections share one transform; the authored boot pairs are retained without mirroring. Each mesh follows its real equipment slot, covered foundation regions hide cleanly, and unequipped items remain absent. Existing saves are preserved. Restart after applying.",
   "save_policy": {
     "managed": false,
     "preserve_always": true

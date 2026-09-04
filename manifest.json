@@ -3,7 +3,7 @@
   "channel": "stable",
   "enabled": true,
   "latest": {
-    "game_version": "1.59.1",
+    "game_version": "1.59.2",
     "android_version_code": 170,
     "min_updater_schema": 1
   },
@@ -11,14 +11,14 @@
   "release_base": "https://github.com/corinthianrattler-ui/aetherion-updates/releases/download/",
   "payloads": [
     {
-      "path": "patches/v1.59.1-dominus-armor.js",
-      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/patches/v1.59.1-dominus-armor.js",
-      "sha256": "2fcde51ffc5c2c72272d7d4e9302d817be48d1836e87c2cef4d0906bca9e0a1b",
-      "size": 6267,
+      "path": "patches/v1.59.2-dominus-art-fix.js",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/patches/v1.59.2-dominus-art-fix.js",
+      "sha256": "f4518e92d02ab35ba01761f1e9d90ceebfda0ed1c9e860edeb456afd84d54dfb",
+      "size": 4563,
       "restart_required": true
     }
   ],
-  "notes": "Dominus armor pass: Kingslayer material shifted to blackened steel, deep crimson and antique gold; Dominus armor pieces renamed and given rose-themed modular equipment art.",
+  "notes": "Dominus armor art repair: restores the real built-in armor photos for helmet, gorget, doublet, cuirass, pauldrons, gauntlets, belt, legplates, boots, cloak and weapons; removes the generated placeholder icons while keeping the Dominus Kingslayer material pass.",
   "save_policy": {
     "managed": false,
     "preserve_always": true

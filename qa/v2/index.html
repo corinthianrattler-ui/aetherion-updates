@@ -1,0 +1,37 @@
+<!doctype html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Valkorion v2 QA</title>
+<style>
+html,body{margin:0;background:#080708;color:#eadfdc;font:14px system-ui;height:100%}
+main{height:100%;display:grid;grid-template-rows:auto 1fr;background:linear-gradient(#160c10,#050405)}
+#tools{display:flex;flex-wrap:wrap;gap:5px;padding:7px;background:#0c090a;border-bottom:1px solid #634148;z-index:2}
+button{background:#28151a;color:#eadfdc;border:1px solid #80505a;border-radius:6px;padding:6px 9px}
+#stage{min-height:0;position:relative;background:radial-gradient(circle at 50% 42%,#31151c,#070607 68%)}
+canvas{display:block;width:100%;height:100%;touch-action:none}
+#status{position:absolute;left:8px;bottom:8px;background:#080708cc;padding:5px 8px;border-radius:5px}
+</style>
+<main><div id="tools">
+ <button data-set="foundation">Foundation</button><button data-set="royal">Royal</button><button data-set="armor">Armor</button>
+ <button data-set="weapons">Weapons</button><button data-y="0">Front</button><button data-y="1.5707963268">Left</button>
+ <button data-y="3.1415926536">Back</button><button data-y="-1.5707963268">Right</button>
+</div><div id="stage"><canvas id="view"></canvas><div id="status">Loading…</div></div></main>
+<script src="aetherion-three.min.js"></script>
+<script>
+(async()=>{
+ const canvas=document.getElementById('view'),stage=document.getElementById('stage'),status=document.getElementById('status');
+ const viewer=await AetherionThree.createViewer({canvas,container:stage,glb:'valkorion.glb',proceduralFallback:false,modelHeight:4.15,maxPixelRatio:1.5});
+ window.qaViewer=viewer;
+ const names=viewer.getNamedNodes().map(n=>n.name),gear=names.filter(n=>n.startsWith('gear__'));
+ const sets={
+  foundation:[],
+  royal:['gear__royal_head','gear__royal_underlayer','gear__royal_body','gear__royal_shoulders','gear__royal_hands','gear__royal_waist','gear__royal_legs','gear__royal_feet','gear__royal_cloak','gear__royal_jewelry','gear__dominus_signet'],
+  armor:['gear__dominus_lord_helm','gear__dominus_gorget','gear__dominus_pauldrons','gear__dominus_cuirass','gear__dominus_arming_doublet','gear__dominus_gauntlets','gear__dominus_belt','gear__dominus_legplates','gear__dominus_boots','gear__dominus_cloak'],
+  weapons:['gear__dominus_sword','gear__dominus_kite_shield','gear__dominus_dagger','gear__dominus_bow','gear__dominus_quiver','gear__dominus_thorn_whip']
+ };
+ function show(key){const on=new Set(sets[key]);viewer.setNodesVisible(Object.fromEntries(gear.map(n=>[n,on.has(n)])));viewer.render();status.textContent=key+' · '+on.size+' gear pieces'}
+ for(const b of document.querySelectorAll('[data-set]'))b.onclick=()=>show(b.dataset.set);
+ for(const b of document.querySelectorAll('[data-y]'))b.onclick=()=>{viewer.model.rotation.y=+b.dataset.y;viewer.render()};
+ show('foundation');
+})().catch(e=>{document.getElementById('status').textContent='ERROR '+e.message;console.error(e)});
+</script>

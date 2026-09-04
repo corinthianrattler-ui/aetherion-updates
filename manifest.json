@@ -3,7 +3,7 @@
   "channel": "stable",
   "enabled": true,
   "latest": {
-    "game_version": "1.60.0",
+    "game_version": "1.60.1",
     "android_version_code": 170,
     "min_updater_schema": 1
   },
@@ -11,21 +11,14 @@
   "release_base": "https://github.com/corinthianrattler-ui/aetherion-updates/releases/download/",
   "payloads": [
     {
-      "path": "assets/v106/valkorion_modular.glb",
-      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/assets/v106/valkorion_modular.glb",
-      "sha256": "7548879afc17c99883d88d81efc52316f42711d1f0e24cce38b7aa1a7dc788b0",
-      "size": 11043996,
-      "restart_required": true
-    },
-    {
-      "path": "patches/v1.60.0-valkorion-modular.js",
-      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/patches/v1.60.0-valkorion-modular.js",
-      "sha256": "ac0091ca6a666c0eb4097bc240e51247f0b43e75e5509d264b62a356d0b58a73",
-      "size": 12289,
+      "path": "patches/v1.59.2-dominus-art-fix.js",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/patches/v1.59.2-dominus-art-fix.js",
+      "sha256": "f4518e92d02ab35ba01761f1e9d90ceebfda0ed1c9e860edeb456afd84d54dfb",
+      "size": 4563,
       "restart_required": true
     }
   ],
-  "notes": "Valkorion modular equipment rebuild: installs the supplied foundation body, complete fitted Dominus armor, Royal Lord set, all six weapons, necklace and signet as 27 independent 3D equipment pieces. Every mesh follows its real equipment slot, appears only while that item is equipped, and returns to the same authored attachment position after loadout changes. Includes corrected sword/shield handedness, back-mounted bow and quiver, hip dagger, paired armored boots, strict quiver/weapon visibility, preserved body proportions and the v1.59.2 equipment-art repair. Existing saves are preserved.",
+  "notes": "Emergency visual rollback: removes the malformed v1.60.0 Valkorion model and restores the last working v1.59.2 Dominus presentation. Existing saves are preserved. Restart after applying.",
   "save_policy": {
     "managed": false,
     "preserve_always": true

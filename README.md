@@ -4,18 +4,11 @@ Public update channel for **Aetherion Reforged**.
 
 The Android updater reads `manifest.json` from this repository. Patch scripts and mobile-sized assets may be served directly from the stable branch; very large binary payloads belong in GitHub Releases.
 
-## Current stable patch — 1.60.0
+## Current stable patch — 1.60.1 rollback
 
-Valkorion now uses one fitted modular GLB built from the five supplied source models:
+The active manifest removes the malformed v1.60.0 Valkorion model and restores the last working v1.59.2 Dominus presentation. Devices that installed v1.60.0 receive this rollback as v1.60.1 so the updater treats it as a newer patch.
 
-- 5 foundation-body regions and 27 independently switchable equipment pieces
-- complete Dominus armor and Royal Lord clothing sets
-- sword, dagger, bow, quiver, kite shield, thorn whip, necklace, and signet
-- strict slot state: an equipment mesh is visible only while its matching item is equipped
-- corrected right-hand sword, left-hand shield/whip, left-hip dagger, back bow/quiver, and mirrored armor-boot pair
-- preserved character-creator height/frame scaling and save data
-
-The optimized release model is 10.53 MiB. It keeps the fitted positions and triangles intact while using mobile-sized 768 px textures and standard normalized glTF normal/UV packing. Its source-to-slot conversion is reproducible with `tools/build_valkorion_modular_glb.py`; Python dependencies are pinned in `tools/requirements-valkorion.txt`.
+The v1.60.0 model files remain in repository history for diagnosis only and are not part of the active payload set. Save data remains untouched.
 
 ## Update model
 
@@ -37,8 +30,6 @@ Every payload entry must include its exact byte size and SHA-256 hash. The updat
 Release checks:
 
 ```bash
-python3 tests/validate_v160_glb.py
 python3 tests/validate_manifest.py
-node tests/test_v160_patch.cjs
-node --check patches/v1.60.0-valkorion-modular.js
+node --check patches/v1.59.2-dominus-art-fix.js
 ```

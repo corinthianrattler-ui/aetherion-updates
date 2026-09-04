@@ -4,11 +4,17 @@ Public update channel for **Aetherion Reforged**.
 
 The Android updater reads `manifest.json` from this repository. Patch scripts and mobile-sized assets may be served directly from the stable branch; very large binary payloads belong in GitHub Releases.
 
-## Current stable patch — 1.61.1 rollback
+## Current stable patch — 1.62.0
 
-The active manifest removes the malformed v1.61.0 Valkorion model and restores the last working v1.59.2 Dominus presentation. Devices that installed v1.61.0 receive this rollback as v1.61.1 so the updater treats it as a newer patch.
+Valkorion's newly supplied Tripo fitted master replaces the malformed v1.61 armor while retaining the existing foundation, Royal Lord set, and weapons:
 
-The v1.61.0 files remain in repository history for diagnosis only and are not part of the active payload set. The replacement built from the newly supplied fitted Tripo model remains off the stable channel until it passes visual testing. Save data remains untouched.
+- 47 authored armor fragments retain their original shared scale and positions
+- 12 named equipment groups control helmet, gorget, pauldrons, cuirass, undercoat, gauntlets, belt, trousers, greaves, boots, cloak, and scabbard
+- the complete equipped set presents the intact armored master without the old body showing through
+- partial outfits keep the foundation underneath the supplied surface fragments, preventing body-shaped gaps
+- original black, red, and metal PBR textures remain embedded
+- the source armor was optimized for mobile and merged with preserved Royal Lord and weapon meshes into an 11.66 MiB GLB
+- unequipped groups remain hidden and saves remain untouched
 
 ## Update model
 
@@ -30,6 +36,8 @@ Every payload entry must include its exact byte size and SHA-256 hash. The updat
 Release checks:
 
 ```bash
+python3 tests/validate_v162_glb.py
+node tests/test_v162_patch.cjs
+node --check patches/v1.62.0-valkorion-fitted.js
 python3 tests/validate_manifest.py
-node --check patches/v1.59.2-dominus-art-fix.js
 ```

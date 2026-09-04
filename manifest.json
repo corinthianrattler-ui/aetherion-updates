@@ -3,8 +3,8 @@
   "channel": "stable",
   "enabled": true,
   "latest": {
-    "game_version": "1.61.1",
-    "android_version_code": 172,
+    "game_version": "1.62.0",
+    "android_version_code": 173,
     "min_updater_schema": 1
   },
   "manifest_url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/manifest.json",
@@ -16,9 +16,23 @@
       "sha256": "f4518e92d02ab35ba01761f1e9d90ceebfda0ed1c9e860edeb456afd84d54dfb",
       "size": 4563,
       "restart_required": true
+    },
+    {
+      "path": "assets/v108/valkorion_modular.glb",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/assets/v108/valkorion_modular.glb",
+      "sha256": "7106c679dbd6b31a8236f4da8db9c159cc3ea6eb144966481772aaf2f15ce41f",
+      "size": 12226192,
+      "restart_required": true
+    },
+    {
+      "path": "patches/v1.62.0-valkorion-fitted.js",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/patches/v1.62.0-valkorion-fitted.js",
+      "sha256": "a1a7e83ec6f45195b83d8d9f847bdbc713bebf805328cf4fc10256ea0017e101",
+      "size": 13228,
+      "restart_required": true
     }
   ],
-  "notes": "Emergency visual rollback: removes the malformed v1.61.0 Valkorion model and restores the last working v1.59.2 Dominus presentation while a fitted replacement is tested privately. Existing saves are preserved. Restart after applying.",
+  "notes": "Installs Valkorion's newly supplied fitted Tripo armor master. Its 47 original-position fragments are organized into 12 equipment-controlled groups for the helmet, gorget, pauldrons, cuirass, undercoat, gauntlets, belt, trousers, greaves, boots, cloak, and scabbard. Complete Dominus equipment shows the intact armored master; partial outfits retain the foundation as an underbody. The Royal Lord set and existing weapons remain available, unequipped groups remain absent, and saves are preserved. Restart after applying.",
   "save_policy": {
     "managed": false,
     "preserve_always": true

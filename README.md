@@ -4,12 +4,19 @@ Public update channel for **Aetherion Reforged**.
 
 The Android updater reads `manifest.json` from this repository. Patch scripts and mobile-sized assets may be served directly from the stable branch; very large binary payloads belong in GitHub Releases.
 
-## Current stable patch — 1.63.1 rollback
+## Current stable patch — 1.63.2
 
-The active manifest removes the over-compressed v1.63.0 Valkorion release and restores the last working Dominus presentation. Devices that installed v1.63.0 receive this rollback as v1.63.1 so the updater treats it as a newer patch.
+The two final Tripo masters are delivered as one aligned, modular Valkorion wardrobe without the destructive v1.63.0 simplification:
 
-The v1.63.0 files remain in repository history for diagnosis only and are not part of the active payload set. The replacement will retain the high-detail fitted model and use a delivery method that does not require destructive mesh simplification. Save data remains untouched.
+- the black under-suit human and complete Royal Lord costume share one fitted foundation
+- the Dominus armor includes the final chest, separate arming doublet, approved straight helmet and gauntlet pair, fitted back cape, and authored weapons
+- all 54 fitted pieces retain their 35 independent foundation/equipment groups
+- removing the cuirass reveals the separate gambeson/arming doublet; closed helmets and gauntlets hide only the covered body regions
+- all embedded textures and UV seams are retained
+- the validated 892,522-vertex, 752,438-triangle model is delivered as one 36.87 MiB GitHub Release asset
+- unequipped groups remain hidden and saves remain untouched
 
+The updater downloads the full-detail GLB from the v1.63.2 GitHub Release, verifies its exact SHA-256 checksum, and installs it at the normal managed asset path. The smaller malformed v1.63.0 file is no longer active.
 
 ## Update model
 
@@ -32,5 +39,7 @@ Release checks:
 
 ```bash
 python3 tests/validate_manifest.py
-node --check patches/v1.59.2-dominus-art-fix.js
+node tests/test_v163_patch.cjs
+node --check patches/v1.63.0-valkorion-final.js
+python3 tests/validate_v163_glb.py /path/to/downloaded/valkorion_final.glb
 ```

@@ -72,7 +72,7 @@ def check(condition: bool, message: str) -> None:
 
 def read_glb(path: Path) -> tuple[bytes, dict, int]:
     data = path.read_bytes()
-    check(len(data) <= 12 * 1024 * 1024, "release model exceeds the 12 MiB mobile budget")
+    check(len(data) <= 40 * 1024 * 1024, "release model exceeds the 40 MiB mobile budget")
     check(len(data) >= 28, "GLB is truncated")
     magic, version, total = struct.unpack_from("<4sII", data)
     check(magic == b"glTF" and version == 2, "not a glTF 2 binary")
@@ -123,15 +123,7 @@ def main(path: Path) -> None:
     check(len(document.get("textures", [])) == 58, "texture set changed")
     check(len(document.get("samplers", [])) == 3, "sampler set changed")
     check(not document.get("skins") and not document.get("animations"), "unexpected rig or animation data")
-    check(
-        set(document.get("extensionsUsed", []))
-        == {"KHR_mesh_quantization", "KHR_texture_transform"},
-        "release extension set changed",
-    )
-    check(
-        document.get("extensionsRequired") == ["KHR_mesh_quantization"],
-        "required release extension changed",
-    )
+    check(not document.get("extensionsUsed") and not document.get("extensionsRequired"), "release gained a loader extension")
 
     scene_index = document.get("scene", 0)
     check(0 <= scene_index < len(document.get("scenes", [])), "active scene index is invalid")
@@ -150,8 +142,6 @@ def main(path: Path) -> None:
     optimization = model_extras.get("optimization", {})
     check(optimization.get("attributeSeamsPreserved") is True, "seam-safe optimization metadata is missing")
     check(optimization.get("sourceTriangles") == 4_146_118, "source triangle count changed")
-    check(optimization.get("restoredParts") == ["part__royal_costume_ring"], "tiny signet restoration changed")
-    check(optimization.get("quantizationChildrenCollapsed") == 53, "quantized node normalization changed")
 
     armor_root = nodes[name_to_index[ARMOR_ROOT]]
     check("mesh" not in armor_root, "armor root must be transform-only")
@@ -186,7 +176,7 @@ def main(path: Path) -> None:
         name = node["name"]
         check(name.startswith("part__"), f"{name}: fitted part name changed")
         check(not node.get("children"), f"{name}: mesh node unexpectedly has children")
-        check("matrix" not in node and "rotation" not in node, f"{name}: unsupported fitted transform")
+        check(not any(key in node for key in ("matrix", "translation", "rotation", "scale")), f"{name}: transform would break authored fit")
         extras = node.get("extras", {})
         check(extras.get("aetherionPart") is True, f"{name}: part metadata missing")
         check(extras.get("slot") == leaf_parent[node_index], f"{name}: equipment group metadata mismatch")
@@ -211,9 +201,9 @@ def main(path: Path) -> None:
         normal = accessors[primitive["attributes"]["NORMAL"]]
         uv = accessors[primitive["attributes"]["TEXCOORD_0"]]
         indices = accessors[primitive["indices"]]
-        check(position["componentType"] in (5123, 5126) and position["type"] == "VEC3", f"{name}: position stream changed")
-        check(normal["componentType"] == 5120 and normal["type"] == "VEC3" and normal.get("normalized") is True, f"{name}: normal stream changed")
-        check(uv["componentType"] == 5123 and uv["type"] == "VEC2" and uv.get("normalized") is True, f"{name}: UV stream changed")
+        check(position["componentType"] == 5126 and position["type"] == "VEC3", f"{name}: position stream is not float VEC3")
+        check(normal["componentType"] == 5126 and normal["type"] == "VEC3", f"{name}: normal stream is not float VEC3")
+        check(uv["componentType"] == 5126 and uv["type"] == "VEC2", f"{name}: UV stream is not float VEC2")
         check(position["count"] == normal["count"] == uv["count"], f"{name}: vertex counts differ")
         check(indices["componentType"] in (5123, 5125) and indices["type"] == "SCALAR", f"{name}: index stream changed")
         check(indices["count"] >= 12 and indices["count"] % 3 == 0, f"{name}: invalid triangle count")
@@ -225,14 +215,6 @@ def main(path: Path) -> None:
         total_triangles += triangles
 
         low, high = position["min"], position["max"]
-        if position["componentType"] == 5123:
-            scale = node.get("scale")
-            translation = node.get("translation")
-            check(scale is not None and translation is not None, f"{name}: quantized position transform missing")
-            low = [low[i] * scale[i] + translation[i] for i in range(3)]
-            high = [high[i] * scale[i] + translation[i] for i in range(3)]
-        else:
-            check("scale" not in node and "translation" not in node, f"{name}: restored float mesh gained a transform")
         check(-0.41 <= low[0] <= high[0] <= 0.40, f"{name}: horizontal bounds escaped")
         check(-0.01 <= low[1] <= high[1] <= 1.06, f"{name}: vertical bounds escaped")
         check(-0.57 <= low[2] <= high[2] <= 0.30, f"{name}: depth bounds escaped")
@@ -242,8 +224,8 @@ def main(path: Path) -> None:
             gauntlet_bounds.append((low, high))
 
     check(referenced_meshes == set(range(54)), "every release mesh must be used exactly once")
-    check(total_vertices == 234_998, "optimized vertex total changed")
-    check(total_triangles == 397_747, "optimized triangle total changed")
+    check(total_vertices == 892_522, "optimized vertex total changed")
+    check(total_triangles == 752_438, "optimized triangle total changed")
     check(optimization.get("releaseVertices") == total_vertices, "root vertex metadata is stale")
     check(optimization.get("releaseTriangles") == total_triangles, "root triangle metadata is stale")
     check(document.get("extras", {}).get("attributeSeamsPreserved") is True, "document seam-safety metadata missing")

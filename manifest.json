@@ -3,8 +3,8 @@
   "channel": "stable",
   "enabled": true,
   "latest": {
-    "game_version": "1.63.1",
-    "android_version_code": 175,
+    "game_version": "1.63.2",
+    "android_version_code": 176,
     "min_updater_schema": 1
   },
   "manifest_url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/manifest.json",
@@ -16,9 +16,23 @@
       "sha256": "f4518e92d02ab35ba01761f1e9d90ceebfda0ed1c9e860edeb456afd84d54dfb",
       "size": 4563,
       "restart_required": true
+    },
+    {
+      "path": "assets/v109/valkorion_final.glb",
+      "url": "https://github.com/corinthianrattler-ui/aetherion-updates/releases/download/v1.63.2/valkorion_final.glb",
+      "sha256": "7c6006efb6b2966b78c3d65ae10605f63bb9fe2c1fa674b569d8dc52b1dffee5",
+      "size": 38658288,
+      "restart_required": true
+    },
+    {
+      "path": "patches/v1.63.0-valkorion-final.js",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/patches/v1.63.0-valkorion-final.js",
+      "sha256": "812196d1f7a3f8c651942bfd9ccb3baf8709406cc737ec6f1d159908176f2f6e",
+      "size": 12805,
+      "restart_required": true
     }
   ],
-  "notes": "Emergency visual rollback: removes the over-compressed v1.63.0 Valkorion model and restores the last working Dominus presentation while the full-detail model is prepared with a lossless delivery method. Existing saves are preserved. Restart after applying.",
+  "notes": "Installs the validated full-detail Valkorion wardrobe without the destructive v1.63.0 simplification. The original black under-suit human, Royal Lord costume, Dominus armor, approved helmet and gauntlet pair, fitted back cape, sword, dagger, bow, quiver, shield, scabbard, thorn whip, and signet are delivered as one 36.87 MiB GLB from GitHub Releases. All 54 fitted pieces retain their independent equipment groups, unequipped pieces remain absent, and saves are preserved. Restart after applying.",
   "save_policy": {
     "managed": false,
     "preserve_always": true

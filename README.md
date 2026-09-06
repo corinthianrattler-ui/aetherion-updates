@@ -4,17 +4,37 @@ Public update channel for **Aetherion Reforged**.
 
 The Android updater reads `manifest.json` from this repository. Patch scripts and mobile-sized assets may be served directly from the stable branch; very large binary payloads belong in GitHub Releases.
 
-## Current stable patch — 1.62.0
+## Current stable patch — 1.63.0
 
-Valkorion's newly supplied Tripo fitted master replaces the malformed v1.61 armor while retaining the existing foundation, Royal Lord set, and weapons:
+The two final Tripo masters are now one aligned, modular Valkorion wardrobe:
 
-- 47 authored armor fragments retain their original shared scale and positions
+- the new black under-suit human and complete Royal Lord costume share one fitted foundation
+- the Dominus armor uses the final chest, separate arming doublet, approved straight helmet and gauntlet pair, fitted back cape, and authored weapons
 - 12 named equipment groups control helmet, gorget, pauldrons, cuirass, undercoat, gauntlets, belt, trousers, greaves, boots, cloak, and scabbard
-- the complete equipped set presents the intact armored master without the old body showing through
-- partial outfits keep the foundation underneath the supplied surface fragments, preventing body-shaped gaps
-- original black, red, and metal PBR textures remain embedded
-- the source armor was optimized for mobile and merged with preserved Royal Lord and weapon meshes into an 11.66 MiB GLB
+- removing the cuirass reveals the separate gambeson/arming doublet; closed helmets and gauntlets hide only the covered body regions
+- the duplicate kit reference body and rejected old single gauntlet are excluded
+- all original embedded textures and UV seams are retained through seam-safe optimization
+- 4.15 million supplied triangles were reduced to 397,747 triangles and 234,998 vertices in a 10.99 MiB self-contained GLB
 - unequipped groups remain hidden and saves remain untouched
+
+The release model is built in two stages so texture seams are never reconstructed by nearest-neighbor UV transfer:
+
+```bash
+python3 tools/build_valkorion_final_glb.py \
+  --foundation /path/to/Valkorion_Human_And_Royal_Costume.glb.glb \
+  --kit /path/to/Valkorion_Complete_Kit_Clean.glb.glb \
+  --legacy assets/v108/valkorion_modular.glb \
+  --output /tmp/valkorion_full.glb \
+  --full-geometry
+
+gltfpack -i /tmp/valkorion_full.glb \
+  -o assets/v109/valkorion_final.glb \
+  -si 0.09 -se 0.05 -sa -kn -km -ke -vp 16 -vt 16
+
+python3 tools/finalize_valkorion_glb.py assets/v109/valkorion_final.glb \
+  --restore-source /tmp/valkorion_full.glb \
+  --target-ratio 0.09
+```
 
 ## Update model
 
@@ -36,8 +56,8 @@ Every payload entry must include its exact byte size and SHA-256 hash. The updat
 Release checks:
 
 ```bash
-python3 tests/validate_v162_glb.py
-node tests/test_v162_patch.cjs
-node --check patches/v1.62.0-valkorion-fitted.js
+python3 tests/validate_v163_glb.py
+node tests/test_v163_patch.cjs
+node --check patches/v1.63.0-valkorion-final.js
 python3 tests/validate_manifest.py
 ```

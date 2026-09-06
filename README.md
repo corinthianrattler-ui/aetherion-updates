@@ -4,19 +4,26 @@ Public update channel for **Aetherion Reforged**.
 
 The Android updater reads `manifest.json` from this repository. Patch scripts and assets are served directly from the stable branch so Android can fetch them without a release-page redirect.
 
-## Current stable patch — 1.64.0
+## Current stable patch — 1.65.0
 
-Version 1.64.0 is a world/UI integrity release for the retinue and logistics screens:
+Version 1.65.0 is a save-safe world economy, shop, and recruitment cleanup:
 
-- repairs the saved-gender/model mismatch that could show a named `Ser` with a female body while preserving legitimate `Dame` knights
-- assigns the correct unique portrait to Bannerless Knights, Archers, Crossbowmen, Men-at-Arms, Sergeants, Swordsmen, the starting Captain, Lesser Knights, and Footmen
-- replaces the reused full-character picture on every service item with 25 exact helmet, mail, clothing, gauntlet, boot, weapon, shield, and accessory images
-- restores illustrated personal-equipment slots and formats weights without floating-point garbage
-- limits Valkorion's armor-issuance controls to House Dominus while retaining foreign equipment for NPC/world systems
-- constrains Wagonwright class pictures to a phone-safe card height
-- migrates repaired identities and portraits once without deleting or rebuilding the save
+- guarantees Good Wine Skin at the Corvinus Provisioner, displays it first with an exact 20-silver price, and links Kael's panel directly to the filtered shelf
+- repairs the specialist-shop denomination bug that charged and paid ten times the displayed price
+- replaces identical 632-item settlement catalogs with finite regional selections of 14–30 goods per specialist while keeping every ordinary classified item available somewhere
+- puts all 12 existing court gifts into the Books, Maps & Gifts economy, with the complete selection in Solaris and restored Blood Keep
+- excludes issued kit, custom gear, House heirlooms, unique companion equipment, relics, and owner-bound property from ordinary buying and selling
+- corrects the ghost `Seals End` key to the real `Seal’s End` location and reconciles affected market, shop, and NPC records
+- restores shop search, paging, mobile controls, live stock counts, and delivery to every accessible container, including wagons
+- replaces nonexistent book-capital names with eight real licensed study centers and shows exact book prices
+- makes Kael recruitment idempotent, reconciles existing duplicates, and restores a missing person or companion record when the save says he was recruited
+- removes redundant generated shop rows and purge arrays, reducing audited v70 save state from about 861 KB to about 194 KB without touching player-owned items or progress
 
-The detailed findings and fixes are recorded in `AUDIT_v1.64.0.md`.
+The full findings, policy, migration boundaries, and measurements are recorded in `AUDIT_v1.65.0.md`.
+
+## Retinue integrity retained from 1.64.0
+
+The 1.64.0 overlay remains active. It repairs Bannerless identity/model coherence, every formation portrait, all 25 individual service-equipment images, illustrated personal-equipment slots, weight formatting, House Dominus issuance authority, and mobile Wagonwright image sizing. See `AUDIT_v1.64.0.md` for its detailed audit.
 
 ## Valkorion model retained from 1.63.3
 
@@ -55,7 +62,9 @@ Release checks:
 python3 tests/validate_manifest.py
 node tests/test_v163_patch.cjs
 node tests/test_v164_patch.cjs
+node tests/test_v165_patch.cjs
 node --check patches/v1.63.0-valkorion-final.js
 node --check patches/v1.64.0-world-ui-integrity.js
+node --check patches/v1.65.0-world-economy-cleanup.js
 python3 tests/validate_v163_glb.py /path/to/downloaded/valkorion_final.glb
 ```

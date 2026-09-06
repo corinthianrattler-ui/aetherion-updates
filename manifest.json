@@ -3,8 +3,8 @@
   "channel": "stable",
   "enabled": true,
   "latest": {
-    "game_version": "1.64.0",
-    "android_version_code": 178,
+    "game_version": "1.65.0",
+    "android_version_code": 179,
     "min_updater_schema": 1
   },
   "manifest_url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/manifest.json",
@@ -37,9 +37,16 @@
       "sha256": "697da6a1742dac4c4ed8fba2c55f129cbc4bbbc6ff62ef2f45f64b4fe5a765db",
       "size": 23679,
       "restart_required": true
+    },
+    {
+      "path": "patches/v1.65.0-world-economy-cleanup.js",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/patches/v1.65.0-world-economy-cleanup.js",
+      "sha256": "fbe3cd04cbb6e1ac3ad2e6faf7c1c7b06ed9bc1d5036bd17f2f1027e98413754",
+      "size": 47443,
+      "restart_required": true
     }
   ],
-  "notes": "Repairs Bannerless retainer identity, gender/model coherence, every role portrait, and all 25 individual knight/foot equipment images. Personal equipment slots now show the correct physical item and clean weight values. Valkorion may issue House Dominus armor only; foreign armories remain NPC-controlled. Wagonwright images are constrained for mobile screens. The validated full-detail Valkorion model remains unchanged and saves are preserved. Restart after applying.",
+  "notes": "Full save-safe world cleanup: Good Wine Skin is guaranteed and easy to buy from Corvinus for the exact displayed price; Kael recruitment is duplicate-safe and repairs damaged records. Shops now carry finite regional selections, all court gifts are obtainable, issued/custom/House gear stays in its authored acquisition systems, real study centers replace invalid names, Seal’s End is corrected, wagons accept purchases, and search/paging return. Redundant shop state is compacted without touching owned items or progress. The 1.64 retinue/UI repairs and full-detail Valkorion model remain active. Restart after applying.",
   "save_policy": {
     "managed": false,
     "preserve_always": true

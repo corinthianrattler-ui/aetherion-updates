@@ -1,0 +1,28 @@
+name: Publish full-detail Valkorion v1.63.2 asset
+
+on:
+  push:
+    branches:
+      - release-staging-v1632
+
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Reassemble and verify the authored GLB
+        run: |
+          cat release-staging/v1.63.2/valkorion_final.glb.part-* > valkorion_final.glb
+          test "$(stat -c%s valkorion_final.glb)" = "38658288"
+          echo "7c6006efb6b2966b78c3d65ae10605f63bb9fe2c1fa674b569d8dc52b1dffee5  valkorion_final.glb" | sha256sum -c -
+
+      - name: Create release and upload the full-detail model
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release view v1.63.2 >/dev/null 2>&1 || gh release create v1.63.2 --target "$GITHUB_SHA" --title "Aetherion v1.63.2 — Full-detail Valkorion" --notes "Lossless delivery of the validated 36.87 MiB fitted Valkorion wardrobe. No aggressive mesh simplification."
+          gh release upload v1.63.2 valkorion_final.glb --clobber

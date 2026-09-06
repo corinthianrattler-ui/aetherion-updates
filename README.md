@@ -4,7 +4,21 @@ Public update channel for **Aetherion Reforged**.
 
 The Android updater reads `manifest.json` from this repository. Patch scripts and assets are served directly from the stable branch so Android can fetch them without a release-page redirect.
 
-## Current stable patch — 1.63.3
+## Current stable patch — 1.64.0
+
+Version 1.64.0 is a world/UI integrity release for the retinue and logistics screens:
+
+- repairs the saved-gender/model mismatch that could show a named `Ser` with a female body while preserving legitimate `Dame` knights
+- assigns the correct unique portrait to Bannerless Knights, Archers, Crossbowmen, Men-at-Arms, Sergeants, Swordsmen, the starting Captain, Lesser Knights, and Footmen
+- replaces the reused full-character picture on every service item with 25 exact helmet, mail, clothing, gauntlet, boot, weapon, shield, and accessory images
+- restores illustrated personal-equipment slots and formats weights without floating-point garbage
+- limits Valkorion's armor-issuance controls to House Dominus while retaining foreign equipment for NPC/world systems
+- constrains Wagonwright class pictures to a phone-safe card height
+- migrates repaired identities and portraits once without deleting or rebuilding the save
+
+The detailed findings and fixes are recorded in `AUDIT_v1.64.0.md`.
+
+## Valkorion model retained from 1.63.3
 
 The two final Tripo masters are delivered as one aligned, modular Valkorion wardrobe without the destructive v1.63.0 simplification:
 
@@ -40,6 +54,8 @@ Release checks:
 ```bash
 python3 tests/validate_manifest.py
 node tests/test_v163_patch.cjs
+node tests/test_v164_patch.cjs
 node --check patches/v1.63.0-valkorion-final.js
+node --check patches/v1.64.0-world-ui-integrity.js
 python3 tests/validate_v163_glb.py /path/to/downloaded/valkorion_final.glb
 ```

@@ -16,13 +16,27 @@ jobs:
 
       - name: Reassemble and verify the authored GLB
         run: |
-          cat release-staging/v1.63.2/valkorion_final.glb.part-* > valkorion_final.glb
-          test "$(stat -c%s valkorion_final.glb)" = "38658288"
-          echo "7c6006efb6b2966b78c3d65ae10605f63bb9fe2c1fa674b569d8dc52b1dffee5  valkorion_final.glb" | sha256sum -c -
+          cat release-staging/v1.63.2/valkorion_final.glb.part-* > /tmp/valkorion_final.glb
+          test "$(stat -c%s /tmp/valkorion_final.glb)" = "38658288"
+          echo "7c6006efb6b2966b78c3d65ae10605f63bb9fe2c1fa674b569d8dc52b1dffee5  /tmp/valkorion_final.glb" | sha256sum -c -
+
+      - name: Put the verified GLB on the updater-compatible raw path
+        run: |
+          git fetch origin main
+          git checkout -B publish-main origin/main
+          mkdir -p assets/v109
+          cp /tmp/valkorion_final.glb assets/v109/valkorion_final.glb
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/v109/valkorion_final.glb
+          if ! git diff --cached --quiet; then
+            git commit -m "Host full-detail Valkorion GLB"
+            git push origin HEAD:main
+          fi
 
       - name: Create release and upload the full-detail model
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
           gh release view v1.63.2 >/dev/null 2>&1 || gh release create v1.63.2 --target "$GITHUB_SHA" --title "Aetherion v1.63.2 — Full-detail Valkorion" --notes "Lossless delivery of the validated 36.87 MiB fitted Valkorion wardrobe. No aggressive mesh simplification."
-          gh release upload v1.63.2 valkorion_final.glb --clobber
+          gh release upload v1.63.2 /tmp/valkorion_final.glb --clobber

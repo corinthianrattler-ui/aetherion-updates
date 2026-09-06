@@ -3,8 +3,8 @@
   "channel": "stable",
   "enabled": true,
   "latest": {
-    "game_version": "1.65.0",
-    "android_version_code": 179,
+    "game_version": "1.66.0",
+    "android_version_code": 180,
     "min_updater_schema": 1
   },
   "manifest_url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/manifest.json",
@@ -44,9 +44,16 @@
       "sha256": "fbe3cd04cbb6e1ac3ad2e6faf7c1c7b06ed9bc1d5036bd17f2f1027e98413754",
       "size": 47443,
       "restart_required": true
+    },
+    {
+      "path": "patches/v1.66.0-living-world-balance.js",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/patches/v1.66.0-living-world-balance.js",
+      "sha256": "49e73c70878ebc4f1bbcd6e372b19d962dde295f8c78e813073b0e642a3cd477",
+      "size": 73233,
+      "restart_required": true
     }
   ],
-  "notes": "Full save-safe world cleanup: Good Wine Skin is guaranteed and easy to buy from Corvinus for the exact displayed price; Kael recruitment is duplicate-safe and repairs damaged records. Shops now carry finite regional selections, all court gifts are obtainable, issued/custom/House gear stays in its authored acquisition systems, real study centers replace invalid names, Seal’s End is corrected, wagons accept purchases, and search/paging return. Redundant shop state is compacted without touching owned items or progress. The 1.64 retinue/UI repairs and full-detail Valkorion model remain active. Restart after applying.",
+  "notes": "Save-safe living-world balance pass: every weekly wage is now capped at 3 silver and recurring legacy wage resets are blocked; Ysabet costs 2s 8c/week and Halric, Libita, and Maevra cost 3s/week. Specialist shops now use canonical copper prices everywhere, with five Good Wine Skins first at the Corvinus Provisioner for exactly 6c; Kael recruitment remains duplicate-safe. Generated names, titles, genders, voices, and portraits are reconciled. All 1,122 items have visible gameplay routes, 101 unreachable actions are wired, and 191 broken image references reuse packaged art without adding download size. Private conversation remains, nearby group discussion is added, failed awareness generation falls back cleanly, and dialogue/narration are fuller and more natural. Custom and issued gear remain outside ordinary shops. Restart after applying.",
   "save_policy": {
     "managed": false,
     "preserve_always": true

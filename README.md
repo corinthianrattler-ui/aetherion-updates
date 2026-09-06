@@ -4,22 +4,26 @@ Public update channel for **Aetherion Reforged**.
 
 The Android updater reads `manifest.json` from this repository. Patch scripts and assets are served directly from the stable branch so Android can fetch them without a release-page redirect.
 
-## Current stable patch — 1.65.0
+## Current stable patch — 1.66.0
 
-Version 1.65.0 is a save-safe world economy, shop, and recruitment cleanup:
+Version 1.66.0 is a save-safe living-world balance and consistency pass:
 
-- guarantees Good Wine Skin at the Corvinus Provisioner, displays it first with an exact 20-silver price, and links Kael's panel directly to the filtered shelf
-- repairs the specialist-shop denomination bug that charged and paid ten times the displayed price
-- replaces identical 632-item settlement catalogs with finite regional selections of 14–30 goods per specialist while keeping every ordinary classified item available somewhere
-- puts all 12 existing court gifts into the Books, Maps & Gifts economy, with the complete selection in Solaris and restored Blood Keep
-- excludes issued kit, custom gear, House heirlooms, unique companion equipment, relics, and owner-bound property from ordinary buying and selling
-- corrects the ghost `Seals End` key to the real `Seal’s End` location and reconciles affected market, shop, and NPC records
-- restores shop search, paging, mobile controls, live stock counts, and delivery to every accessible container, including wagons
-- replaces nonexistent book-capital names with eight real licensed study centers and shows exact book prices
-- makes Kael recruitment idempotent, reconciles existing duplicates, and restores a missing person or companion record when the save says he was recruited
-- removes redundant generated shop rows and purge arrays, reducing audited v70 save state from about 861 KB to about 194 KB without touching player-owned items or progress
+- caps every ordinary weekly wage at 3 silver and applies a role/skill ladder from 4 copper labor through 30 copper realm-class specialists
+- fixes recurring code that restored 12–55 silver wages after migration; Ysabet is now 2s 8c/week and Halric, Libita, and Maevra are 3s/week
+- corrects specialist shops to use canonical copper values at the shelf, checkout, resale, item detail, codex, and legacy market
+- guarantees five Good Wine Skins at the Corvinus Provisioner, puts wine first, prices it at 6c, makes it drinkable, and retains duplicate-safe Kael recruitment
+- reconciles generated names, `Ser`/`Dame`, `Master`/`Mistress`, gender, voice, age, and portrait art across every generated settlement roster
+- repairs all missing person and item image references using packaged art, adding no image download
+- gives all 1,122 items an explicit visible use, equipment, craft, maintenance, study, commerce, gift, or authored-acquisition route and wires 101 previously unreachable item actions
+- preserves private generated conversation, adds public nearby-group conversation with several relevant speakers, and provides a grounded fallback if an awareness provider fails
+- replaces canned pseudo-archaic speech with natural medieval dialogue and expands terse narrator events into detailed, consequence-aware accounts
+- bounds conversation, worker, mission, and intelligence histories so richer writing does not grow saves indefinitely
 
-The full findings, policy, migration boundaries, and measurements are recorded in `AUDIT_v1.65.0.md`.
+The full findings, before/after measurements, wage and price tables, migration boundaries, and remaining recommendation are recorded in `AUDIT_v1.66.0.md`.
+
+## Shop foundation retained from 1.65.0
+
+The 1.65.0 overlay remains active beneath 1.66. It supplies finite regional selections of 14–30 goods per specialist, all 12 court gifts, custom/issued/House gear exclusions, corrected `Seal’s End` records, shop search and paging, delivery to wagons, real study centers, Kael record reconciliation, and compact shop state. Version 1.66 supersedes its old specialist-price calculation with the canonical copper standard. See `AUDIT_v1.65.0.md` for the original cleanup.
 
 ## Retinue integrity retained from 1.64.0
 
@@ -63,8 +67,10 @@ python3 tests/validate_manifest.py
 node tests/test_v163_patch.cjs
 node tests/test_v164_patch.cjs
 node tests/test_v165_patch.cjs
+node tests/test_v166_patch.cjs
 node --check patches/v1.63.0-valkorion-final.js
 node --check patches/v1.64.0-world-ui-integrity.js
 node --check patches/v1.65.0-world-economy-cleanup.js
+node --check patches/v1.66.0-living-world-balance.js
 python3 tests/validate_v163_glb.py /path/to/downloaded/valkorion_final.glb
 ```

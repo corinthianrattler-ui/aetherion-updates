@@ -3,8 +3,8 @@
   "channel": "stable",
   "enabled": true,
   "latest": {
-    "game_version": "1.63.2",
-    "android_version_code": 176,
+    "game_version": "1.63.3",
+    "android_version_code": 177,
     "min_updater_schema": 1
   },
   "manifest_url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/manifest.json",
@@ -19,7 +19,7 @@
     },
     {
       "path": "assets/v109/valkorion_final.glb",
-      "url": "https://github.com/corinthianrattler-ui/aetherion-updates/releases/download/v1.63.2/valkorion_final.glb",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/assets/v109/valkorion_final.glb",
       "sha256": "7c6006efb6b2966b78c3d65ae10605f63bb9fe2c1fa674b569d8dc52b1dffee5",
       "size": 38658288,
       "restart_required": true
@@ -32,7 +32,7 @@
       "restart_required": true
     }
   ],
-  "notes": "Installs the validated full-detail Valkorion wardrobe without the destructive v1.63.0 simplification. The original black under-suit human, Royal Lord costume, Dominus armor, approved helmet and gauntlet pair, fitted back cape, sword, dagger, bow, quiver, shield, scabbard, thorn whip, and signet are delivered as one 36.87 MiB GLB from GitHub Releases. All 54 fitted pieces retain their independent equipment groups, unequipped pieces remain absent, and saves are preserved. Restart after applying.",
+  "notes": "Installs the validated full-detail Valkorion wardrobe without the destructive v1.63.0 simplification. Version 1.63.3 repairs Android delivery by serving the same verified 36.87 MiB GLB from the updater-compatible raw GitHub path. The original black under-suit human, Royal Lord costume, Dominus armor, approved helmet and gauntlet pair, fitted back cape, sword, dagger, bow, quiver, shield, scabbard, thorn whip, and signet remain intact. All 54 fitted pieces retain their independent equipment groups, unequipped pieces remain absent, and saves are preserved. Restart after applying.",
   "save_policy": {
     "managed": false,
     "preserve_always": true

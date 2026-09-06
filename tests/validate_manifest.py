@@ -15,8 +15,8 @@ def main() -> None:
     manifest = json.loads((ROOT / "manifest.json").read_text(encoding="utf-8"))
     assert manifest["schema"] == 1
     assert manifest["enabled"] is True
-    assert manifest["latest"]["game_version"] == "1.63.2"
-    assert manifest["latest"]["android_version_code"] == 176
+    assert manifest["latest"]["game_version"] == "1.63.3"
+    assert manifest["latest"]["android_version_code"] == 177
     assert manifest["latest"]["min_updater_schema"] <= 1
     payloads = manifest["payloads"]
     assert [payload["path"] for payload in payloads] == [
@@ -29,8 +29,8 @@ def main() -> None:
     for payload in payloads:
         if payload["path"] == "assets/v109/valkorion_final.glb":
             assert payload["url"] == (
-                "https://github.com/corinthianrattler-ui/aetherion-updates/"
-                "releases/download/v1.63.2/valkorion_final.glb"
+                "https://raw.githubusercontent.com/corinthianrattler-ui/"
+                "aetherion-updates/main/assets/v109/valkorion_final.glb"
             )
             assert payload["size"] == 38_658_288
             assert payload["sha256"] == (
@@ -47,7 +47,7 @@ def main() -> None:
         assert payload["restart_required"] is True
 
     assert manifest["save_policy"]["preserve_always"] is True
-    print("manifest.json: 1.63.2 release payload sizes and SHA-256 hashes passed")
+    print("manifest.json: 1.63.3 raw payload sizes and SHA-256 hashes passed")
 
 
 if __name__ == "__main__":

@@ -4,22 +4,24 @@ Public update channel for **Aetherion Reforged**.
 
 The Android updater reads `manifest.json` from this repository. Patch scripts and assets are served directly from the stable branch so Android can fetch them without a release-page redirect.
 
-## Current stable patch — 1.66.0
+## Current stable patch — 1.66.1
 
-Version 1.66.0 is a save-safe living-world balance and consistency pass:
+Version 1.66.1 is a save-safe immersion correction for the Narrator and the new Sophia Help interface:
 
-- caps every ordinary weekly wage at 3 silver and applies a role/skill ladder from 4 copper labor through 30 copper realm-class specialists
-- fixes recurring code that restored 12–55 silver wages after migration; Ysabet is now 2s 8c/week and Halric, Libita, and Maevra are 3s/week
-- corrects specialist shops to use canonical copper values at the shelf, checkout, resale, item detail, codex, and legacy market
-- guarantees five Good Wine Skins at the Corvinus Provisioner, puts wine first, prices it at 6c, makes it drinkable, and retains duplicate-safe Kael recruitment
-- reconciles generated names, `Ser`/`Dame`, `Master`/`Mistress`, gender, voice, age, and portrait art across every generated settlement roster
-- repairs all missing person and item image references using packaged art, adding no image download
-- gives all 1,122 items an explicit visible use, equipment, craft, maintenance, study, commerce, gift, or authored-acquisition route and wires 101 previously unreachable item actions
-- preserves private generated conversation, adds public nearby-group conversation with several relevant speakers, and provides a grounded fallback if an awareness provider fails
-- replaces canned pseudo-archaic speech with natural medieval dialogue and expands terse narrator events into detailed, consequence-aware accounts
-- bounds conversation, worker, mission, and intelligence histories so richer writing does not grow saves indefinitely
+- removes the v1.66 mechanics/tutorial paragraphs that were incorrectly appended to short Narrator events
+- enforces first-person-limited narration restricted to what Valkorion can see, hear, physically feel, receive in a message, remember, or reasonably infer from visible evidence
+- keeps scenery, weather, local sound, physical consequences, observable reactions, story, and lore in narration while filtering UI, payroll, statistic, control, inventory-screen, and tutorial language
+- rewrites generic free-action and unidentified-command failures as events Valkorion actually experiences instead of directions to buttons or menus
+- migrates already-saved affected Narrator blocks, including the Libita company-ledger/payroll paragraph, without deleting any other story or progress
+- adds **Sophia, Goddess of Wisdom** as a separate Help modal available from both the Story header and Systems dock
+- gives Sophia her own clear female wisdom voice profile and seven focused help subjects; Sophia playback and help text never enter the story log
+- reuses packaged priestess art and adds no image, audio, or model download
 
-The full findings, before/after measurements, wage and price tables, migration boundaries, and remaining recommendation are recorded in `AUDIT_v1.66.0.md`.
+The exact correction, boundaries, migration behavior, before/after example, and validation results are recorded in `AUDIT_v1.66.1.md`.
+
+## Living-world foundation retained from 1.66.0
+
+Version 1.66.0 remains active beneath 1.66.1. It caps every ordinary weekly wage at 3 silver; keeps Ysabet at 2s 8c/week and Halric, Libita, and Maevra at 3s/week; uses canonical copper prices; guarantees five 6c Good Wine Skins at the Corvinus Provisioner for Kael; reconciles generated identities and portraits; gives all 1,122 items a gameplay route; repairs missing image references with packaged art; and supports both private and nearby-group conversation. Its original generic Narrator expansion is superseded by 1.66.1. See `AUDIT_v1.66.0.md` for the complete economy and content audit.
 
 ## Shop foundation retained from 1.65.0
 
@@ -68,9 +70,11 @@ node tests/test_v163_patch.cjs
 node tests/test_v164_patch.cjs
 node tests/test_v165_patch.cjs
 node tests/test_v166_patch.cjs
+node tests/test_v1661_patch.cjs
 node --check patches/v1.63.0-valkorion-final.js
 node --check patches/v1.64.0-world-ui-integrity.js
 node --check patches/v1.65.0-world-economy-cleanup.js
 node --check patches/v1.66.0-living-world-balance.js
+node --check patches/v1.66.1-immersive-narrator-sophia.js
 python3 tests/validate_v163_glb.py /path/to/downloaded/valkorion_final.glb
 ```

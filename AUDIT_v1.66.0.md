@@ -1,5 +1,7 @@
 # Aetherion Reforged v1.66.0 — Living World Balance Audit
 
+> Narrator expansion and help behavior in this historical report are superseded by v1.66.1. The economy, shop, wage, item, portrait, and conversation findings remain active.
+
 ## Release decision
 
 Version 1.66.0 is ready as a save-safe overlay. It corrects the wage, pricing, identity, portrait, item-purpose, dialogue, and narration defects found in the complete loaded game. It does not delete player property, quests, relationships, companions, crafted equipment, or progress. A restart is required after the updater installs the patch.

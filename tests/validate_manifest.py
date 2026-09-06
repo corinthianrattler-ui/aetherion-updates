@@ -15,8 +15,8 @@ def main() -> None:
     manifest = json.loads((ROOT / "manifest.json").read_text(encoding="utf-8"))
     assert manifest["schema"] == 1
     assert manifest["enabled"] is True
-    assert manifest["latest"]["game_version"] == "1.66.0"
-    assert manifest["latest"]["android_version_code"] == 180
+    assert manifest["latest"]["game_version"] == "1.66.1"
+    assert manifest["latest"]["android_version_code"] == 181
     assert manifest["latest"]["min_updater_schema"] <= 1
     payloads = manifest["payloads"]
     assert [payload["path"] for payload in payloads] == [
@@ -26,6 +26,7 @@ def main() -> None:
         "patches/v1.64.0-world-ui-integrity.js",
         "patches/v1.65.0-world-economy-cleanup.js",
         "patches/v1.66.0-living-world-balance.js",
+        "patches/v1.66.1-immersive-narrator-sophia.js",
     ]
     assert len({payload["path"] for payload in payloads}) == len(payloads)
 
@@ -50,7 +51,7 @@ def main() -> None:
         assert payload["restart_required"] is True
 
     assert manifest["save_policy"]["preserve_always"] is True
-    print("manifest.json: 1.66.0 raw payload sizes and SHA-256 hashes passed")
+    print("manifest.json: 1.66.1 raw payload sizes and SHA-256 hashes passed")
 
 
 if __name__ == "__main__":

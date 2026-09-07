@@ -3,8 +3,8 @@
   "channel": "stable",
   "enabled": true,
   "latest": {
-    "game_version": "1.67.0",
-    "android_version_code": 182,
+    "game_version": "1.68.0",
+    "android_version_code": 183,
     "min_updater_schema": 1
   },
   "manifest_url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/manifest.json",
@@ -65,9 +65,793 @@
       "sha256": "8daeac0f3df4612cf3f82571755a06aaede3613c47943e2f6966730ecd7a8c7f",
       "size": 62052,
       "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v168/00_quartermaster_original_unchanged.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v168/00_quartermaster_original_unchanged.webp",
+      "sha256": "84a754e8a3c649b70eff77f90cfb694339b515adbc0347b96157eeb1679c8199",
+      "size": 12000,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v168/01_carriage_driver_mature_man.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v168/01_carriage_driver_mature_man.webp",
+      "sha256": "9b88a5744f8819a0bb343dbbed3895ebba6ef502b226147930f5999e2e126e03",
+      "size": 161634,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v168/02_blacksmith_adult_woman.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v168/02_blacksmith_adult_woman.webp",
+      "sha256": "65ae7a65fec5d249014499c62ff12f89b05f0488325d117ce061cd88844ef5a3",
+      "size": 140532,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v168/03_farmer_young_man.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v168/03_farmer_young_man.webp",
+      "sha256": "fc269f5b676aae13bff6a7382c60537b82eaef83e9b63d7dd4bab21b854d27af",
+      "size": 237176,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v168/04_healer_elder_woman.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v168/04_healer_elder_woman.webp",
+      "sha256": "2fa01a34ee85d187d1c57ef71d791963e1aa21a20e1910c2e515f32e352dee70",
+      "size": 165982,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v168/05_merchant_elder_man.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v168/05_merchant_elder_man.webp",
+      "sha256": "299f67b5d1119386f13f1c39adf21ebf09d778d78247c57fc265998186e89869",
+      "size": 171052,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v168/06_hunter_young_woman.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v168/06_hunter_young_woman.webp",
+      "sha256": "a1fb5733437832ac5e8239dcde7666c4e7d1618c3a79056a564eaef88a5e9cd1",
+      "size": 185476,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v168/07_carpenter_young_man.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v168/07_carpenter_young_man.webp",
+      "sha256": "329b9b38f7ce45285b7c7df1b0632f11cd922e0d5d7610a49967b6d72220c530",
+      "size": 169616,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v168/08_innkeeper_mature_woman.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v168/08_innkeeper_mature_woman.webp",
+      "sha256": "122cae868c929c0987ffb73a3fcb51dd3886b0430a160cf1d62fd524798cd742",
+      "size": 142248,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v168/09_fisher_adult_man.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v168/09_fisher_adult_man.webp",
+      "sha256": "4aba0c1ae0c62c76263f283b5f3827ec7192e4f663e2a253639bf6e24a31bfff",
+      "size": 187042,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v168/10_town_guard_adult_woman.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v168/10_town_guard_adult_woman.webp",
+      "sha256": "1f7d8b73a04b05496fb84c8ff14f5efe4fb2ee8bd9988f23a109eeea762abcb4",
+      "size": 192602,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v168/11_scribe_adult_man.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v168/11_scribe_adult_man.webp",
+      "sha256": "35f7b76d9a1149219342cb766654d1c71c0e04265208b8bd665fea4bdfd8686d",
+      "size": 153596,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v168/12_midwife_mature_woman.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v168/12_midwife_mature_woman.webp",
+      "sha256": "353968ece37c901b356a85c012515aee609c781b97aa3c25250d82308b5c46c5",
+      "size": 146940,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v168/13_courtesan_adult_woman.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v168/13_courtesan_adult_woman.webp",
+      "sha256": "ad2e5d16a934d4d5a0c0df00a93d45f52e81a546af39178e72e62e80bf1c02eb",
+      "size": 135456,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v168/14_page_child_boy.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v168/14_page_child_boy.webp",
+      "sha256": "f566cdc709252116bb13dbe341a81d5b8e67096e74a2cf0eeb9a620e938ec003",
+      "size": 117812,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v168/15_shepherd_child_girl.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v168/15_shepherd_child_girl.webp",
+      "sha256": "3d82999ac0630e7b009f7d041d93a062c92b2781214f52854883a74c602086f5",
+      "size": 220680,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v168/16_potters_apprentice_teen_girl.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v168/16_potters_apprentice_teen_girl.webp",
+      "sha256": "3b48ab1eed2a3dbe72383c34e03265634c2c190136377ea130c65601f50c5ca9",
+      "size": 172108,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v168/17_village_infant_baby_boy.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v168/17_village_infant_baby_boy.webp",
+      "sha256": "0b7a6e7f61126f2216be8e8d4d40a8a69c595ced76850995b75112c266ffd57f",
+      "size": 125576,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v168/18_noble_infant_baby_girl.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v168/18_noble_infant_baby_girl.webp",
+      "sha256": "3bed76f633c1388230d4af3a466f8d86bc87dad07b5de3807908d2f9d8f70617",
+      "size": 120538,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v168/19_toddler_young_boy.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v168/19_toddler_young_boy.webp",
+      "sha256": "f502afaa953794eb00007bd5761763b61cef9df54e2c833fab6498e731138984",
+      "size": 180538,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v168/20_dwarf_miner_adult_woman.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v168/20_dwarf_miner_adult_woman.webp",
+      "sha256": "a88abe2457f1e24a381c04fe0b30f09683eedb11af455dfa15a09de9762f7362",
+      "size": 182924,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v168/21_dwarf_smith_elder_man.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v168/21_dwarf_smith_elder_man.webp",
+      "sha256": "f94b48551ecbed80a546149941f44b7adde36ca9392617836cab80dba58aa6d7",
+      "size": 161454,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v168/22_elf_herbalist_young_man.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v168/22_elf_herbalist_young_man.webp",
+      "sha256": "e8df2d092364bbf9c42c8329e1b194b4e886e6c20844a319d3c8dedd13679624",
+      "size": 197082,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v168/23_elf_scribe_mature_woman.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v168/23_elf_scribe_mature_woman.webp",
+      "sha256": "60d006ec3ffee213750a91372d89e683cc7feb22c9ab8d3a880c4bf690fe6c99",
+      "size": 154202,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v168/24_orc_teamster_mature_man.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v168/24_orc_teamster_mature_man.webp",
+      "sha256": "e5f134546c81c2c665b6855e6559298af2177d9b1946732af4047b81c06b353b",
+      "size": 179338,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v168/25_orc_guard_adult_woman.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v168/25_orc_guard_adult_woman.webp",
+      "sha256": "d68444663340ab2c220fe19f568d6e4ec13fd2f8acbdf978217e6d7dfcd1a5de",
+      "size": 187676,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v168/26_miller_mature_woman.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v168/26_miller_mature_woman.webp",
+      "sha256": "bbc7945b48096f0fd344d474a8c1dd711b78fb83fbca259270a533b9833494c0",
+      "size": 202798,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v168/27_steward_elder_man.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v168/27_steward_elder_man.webp",
+      "sha256": "54551bfabc63dcce2841052d7cfd131d12448ef802871623d08d1457a3a6247b",
+      "size": 128996,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v168/28_cook_adult_man.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v168/28_cook_adult_man.webp",
+      "sha256": "4418a6ef7cbc9dccaa60e11b3a920ff1aaa9995d478f612c726915eabbbe672c",
+      "size": 179282,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v168/29_laundress_elder_woman.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v168/29_laundress_elder_woman.webp",
+      "sha256": "4052e7cc53696b641e615c169499bfd98c5c402a1af1d19d63ef2740b0a42c8c",
+      "size": 171984,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v168/30_brewer_adult_woman.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v168/30_brewer_adult_woman.webp",
+      "sha256": "6797b2bfeba4297badfc0eb528ffc2dac60e7b503e26e236040b7a10d0241a22",
+      "size": 152898,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v168/31_baker_mature_man.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v168/31_baker_mature_man.webp",
+      "sha256": "c2240e24db813b5041c2f2a11222fbe493ca9a80973b809f2166d599f11305c5",
+      "size": 181430,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v168/32_butcher_adult_woman.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v168/32_butcher_adult_woman.webp",
+      "sha256": "324c7e5667b0be8eff501d79e46635d2002f80457b819df977abcaa1602aebdf",
+      "size": 184358,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v168/33_cellar_keeper_elder_man.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v168/33_cellar_keeper_elder_man.webp",
+      "sha256": "0a455f6d9ab1e4585a251fc376da2d28a72bac9cf85fabdb4c1ffb04054d32d6",
+      "size": 150750,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v168/34_farrier_mature_woman.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v168/34_farrier_mature_woman.webp",
+      "sha256": "e17b5f95e4c393b764ecb80ede0303e719caad07875936b534106b3a71045194",
+      "size": 187252,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v168/35_courier_young_man.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v168/35_courier_young_man.webp",
+      "sha256": "b7802a64112a652566c726c207775cef441be0119f357855d445c34fe7bab6e9",
+      "size": 187288,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v168/36_ferryman_elder_woman.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v168/36_ferryman_elder_woman.webp",
+      "sha256": "1421621df64ed7857650eea25092f8a15798f93cdfd0eaca0f13b397674e27af",
+      "size": 143232,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v168/37_armorer_adult_man.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v168/37_armorer_adult_man.webp",
+      "sha256": "e1154ad62ba5be03f3d99b54a7bbc32f9b7d6331618ebeb81d46c97092c80697",
+      "size": 133164,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v168/38_mason_adult_woman.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v168/38_mason_adult_woman.webp",
+      "sha256": "372f7040beae5f5450dad128a133fe3645f12b6c8a06caf63c0526d840dd845d",
+      "size": 195670,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v168/39_leatherworker_elder_man.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v168/39_leatherworker_elder_man.webp",
+      "sha256": "51f9d464ca5ec143149654bbfb0aff2521c7119665cf8e7cf312c3630308052c",
+      "size": 179284,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v168/40_tailor_young_woman.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v168/40_tailor_young_woman.webp",
+      "sha256": "71a9e56d19429e9b956898c7fbce495ccaf95e2dbca7bbf61d625cb0608aad7b",
+      "size": 149352,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v168/41_weaver_mature_man.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v168/41_weaver_mature_man.webp",
+      "sha256": "60f1a7752b4714fbaa420829810a7633574de8b27a23ff30d0f66d87c019fa08",
+      "size": 171374,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v168/42_market_trader_elder_woman.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v168/42_market_trader_elder_woman.webp",
+      "sha256": "68c86fabc22810a3bc568468724896fb6cc857a630d589ab77561954b59e2e59",
+      "size": 211326,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v168/43_moneychanger_mature_dwarf_man.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v168/43_moneychanger_mature_dwarf_man.webp",
+      "sha256": "30ff28b8990adf5fa42f0be90e3ccfa8607f2039d682b4811b67db80b29eb573",
+      "size": 165258,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v168/44_tax_collector_adult_woman.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v168/44_tax_collector_adult_woman.webp",
+      "sha256": "d36e9cdbe7b8815a725c461bd59019112a04f3ae8f25e9bc54b8924b17f9bde3",
+      "size": 159040,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v168/45_warehouse_keeper_mature_man.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v168/45_warehouse_keeper_mature_man.webp",
+      "sha256": "f73ded4b39a60149b481a4e12998baac85072774419106629f4a138ec138b0fb",
+      "size": 157994,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v168/46_porter_young_orc_woman.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v168/46_porter_young_orc_woman.webp",
+      "sha256": "2cd823df66addd80a2a354fc5de3020fcde5656ad87cbe3ca7aab47272625bb2",
+      "size": 177340,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v168/47_sailor_adult_elf_man.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v168/47_sailor_adult_elf_man.webp",
+      "sha256": "d1482a6784d623471c3a1e0af6ba7f09524ab30c4acd010ea8bcc967407804bc",
+      "size": 162528,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v168/48_harbor_pilot_elder_woman.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v168/48_harbor_pilot_elder_woman.webp",
+      "sha256": "c8d92242bead6077f7bf29d25f9db22a18cb265bf32ad103814f8cc0f5e0107b",
+      "size": 159332,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v168/49_quarry_worker_adult_dwarf_man.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v168/49_quarry_worker_adult_dwarf_man.webp",
+      "sha256": "a1e57d0b368986d898040f256e0725b4ba0020f10694725e544d195b96b4113a",
+      "size": 263806,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v168/50_apothecary_mature_elf_woman.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v168/50_apothecary_mature_elf_woman.webp",
+      "sha256": "00c10873c3ba5bf3a9f9d012500e8c0ceb9db2de90f369ee8cbf04cddca87c93",
+      "size": 186184,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v168/51_barber_surgeon_adult_man.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v168/51_barber_surgeon_adult_man.webp",
+      "sha256": "e10cf8514e9de5eeaaf79b1b62fa6209412337e8ae1a00aeada44cf66678fd19",
+      "size": 114516,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v168/52_nurse_young_man.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v168/52_nurse_young_man.webp",
+      "sha256": "cb75895bbc702434205cd7688601edca4ae2efffcc1dc086de896f2cc24914e5",
+      "size": 155580,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v168/53_shrine_keeper_elder_woman.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v168/53_shrine_keeper_elder_woman.webp",
+      "sha256": "3922c87f04dd94399d99613f08df7a5079a4fb3e57eb5b39e25d622bf2c53dfc",
+      "size": 234246,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v168/54_gravedigger_mature_man.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v168/54_gravedigger_mature_man.webp",
+      "sha256": "50583ed76c5685688e9cab0693b6543a8f7713af0c6f5542eb735cb365dccac4",
+      "size": 170574,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v168/55_bard_young_woman.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v168/55_bard_young_woman.webp",
+      "sha256": "7b877bd8ae7a4cf412250184bb0cda7cf03b4f3555f5b19a6d2dec8ae83994af",
+      "size": 113046,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v168/56_bounty_hunter_mature_orc_woman.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v168/56_bounty_hunter_mature_orc_woman.webp",
+      "sha256": "17f368fb5f830859ef0262c566a9cfcb95c6321e68ecb76eef29e4eee7040823",
+      "size": 204852,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v168/57_bailiff_elder_man.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v168/57_bailiff_elder_man.webp",
+      "sha256": "5892fe80f5506016d35a35a66b5da6e8819a822b66bf25e85c4c2813c027e532",
+      "size": 134878,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v168/58_noblewoman_elder_woman.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v168/58_noblewoman_elder_woman.webp",
+      "sha256": "2e43aaa387397dd4c146c629401f8e64f9bf65181bc9357233e577d2b585f345",
+      "size": 121258,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v168/59_house_knight_young_man.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v168/59_house_knight_young_man.webp",
+      "sha256": "eb3d615e4ff28bcd537d17b858ccd24182ea2cff7ba0d26c4441fb7960d5118b",
+      "size": 173518,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v168/60_midwifes_apprentice_teen_girl.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v168/60_midwifes_apprentice_teen_girl.webp",
+      "sha256": "460af4a3a980390cfa653a258b066520d38780b30f2269fa561686d138e915c7",
+      "size": 152238,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v168/61_stable_hand_teen_boy.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v168/61_stable_hand_teen_boy.webp",
+      "sha256": "c4e167fc121a34a853afc7eb050cff3c5e0a00922359030c46770d18c9191639",
+      "size": 172830,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v168/62_errand_runner_child_girl.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v168/62_errand_runner_child_girl.webp",
+      "sha256": "9c4ecab57ce28dc8520e78485268f65a3173c85025f31f7273042cbdd10f56dd",
+      "size": 181376,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v168/63_goatherd_child_boy.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v168/63_goatherd_child_boy.webp",
+      "sha256": "cc3eee5ade0dbd9e782568dbae33ab75e81b0ba6b971122ac0a1f3a3c3dd3128",
+      "size": 215924,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v168/64_orc_infant_baby_girl.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v168/64_orc_infant_baby_girl.webp",
+      "sha256": "38ad8a9bb2c81546d5f9506157ad52cc46e8478c4ada7060dcbb282a8f15a0fb",
+      "size": 183096,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v168/65_elf_infant_baby_boy.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v168/65_elf_infant_baby_boy.webp",
+      "sha256": "43ddbfb53e64e5950a584911d43a93a738a23b628722f015b6dbc086cdd045d9",
+      "size": 133734,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v168/66_solaran_knight_adult_woman.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v168/66_solaran_knight_adult_woman.webp",
+      "sha256": "4d3887633eaf3db59ac020bc7f27fdd9010c0f9c332d29f9249d018eb68b87ef",
+      "size": 189590,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v168/67_solaran_knight_elder_man.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v168/67_solaran_knight_elder_man.webp",
+      "sha256": "0dbb10c54ca07718969af637eedb6c639d461fdad59040b5e1eb1f65abcef6d4",
+      "size": 184372,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v168/68_solaran_lancer_young_woman.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v168/68_solaran_lancer_young_woman.webp",
+      "sha256": "49e055eea1fad9da49fe7a67cdb2e3bc0a3b8ffcc49e79879262ca1b483ac95c",
+      "size": 168262,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v168/69_solaris_royal_knight_mature_woman.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v168/69_solaris_royal_knight_mature_woman.webp",
+      "sha256": "e957bda8ff6a208d89f770ea14e04243d8f71c2884aaa3864c3221ac222086a6",
+      "size": 218220,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v168/70_solaris_sunshield_guard_elder_man.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v168/70_solaris_sunshield_guard_elder_man.webp",
+      "sha256": "1ac3d5da1152de3cd8bab40c36b190a107b0fa12c0d1b6ddfbfeb2dfa7f29efc",
+      "size": 177678,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v168/71_solaris_crown_lancer_adult_woman.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v168/71_solaris_crown_lancer_adult_woman.webp",
+      "sha256": "bbec2021063ca38d7b68520bbb4ca49f605a97df94c8abf596189678b7b1f9dc",
+      "size": 230130,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v168/72_raven_knight_adult_woman.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v168/72_raven_knight_adult_woman.webp",
+      "sha256": "ae466f63bdbd8d5829798698e1f1970ca5797a50705dd35bd71ecf93d3afb451",
+      "size": 177264,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v168/73_raven_knight_elder_man.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v168/73_raven_knight_elder_man.webp",
+      "sha256": "37e4ab97ffd56c3c725fed7cad4f5f29dc04bfd3a1765400da9edeab9c24edaa",
+      "size": 174874,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v168/74_corvinus_outrider_young_woman.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v168/74_corvinus_outrider_young_woman.webp",
+      "sha256": "3a2c0d329f540e82f69928827a44fffbca26abbf7898aa64b00954007af8b05a",
+      "size": 153950,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v168/75_highwatch_knight_mature_woman.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v168/75_highwatch_knight_mature_woman.webp",
+      "sha256": "d7b5f5ab28e2d21603fa0139e012c6bcef8349d06dc15b989f513cabb3d3a1fe",
+      "size": 177138,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v168/76_highwatch_knight_elder_man.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v168/76_highwatch_knight_elder_man.webp",
+      "sha256": "b6577c1e96c3083a2c876ceaaa80f1de9ec7cc02652efa0bb9d5d8b5cb36a7e0",
+      "size": 189200,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v168/77_hill_scout_rider_young_man.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v168/77_hill_scout_rider_young_man.webp",
+      "sha256": "18485acbdda27ba4b6b595f2802f46a553e321fde489617c6ce4548246338013",
+      "size": 187796,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v168/78_white_harbor_knight_adult_woman.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v168/78_white_harbor_knight_adult_woman.webp",
+      "sha256": "5bdf6110a4426f50dccd5babddc1883322e6173efdc7d61e65fe6b27d3496c50",
+      "size": 171868,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v168/79_white_harbor_knight_mature_man.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v168/79_white_harbor_knight_mature_man.webp",
+      "sha256": "d3600013a123f7c7d49c124cac50dce410313f6d18b1f21d91cd9dfbc1aa796c",
+      "size": 223164,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v168/80_coastal_scout_rider_young_woman.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v168/80_coastal_scout_rider_young_woman.webp",
+      "sha256": "6af1649751a715029d88e65ad12f81aec611360b9ca33a0902cdb740af635e73",
+      "size": 219152,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v168/81_northern_horse_raider_adult_woman.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v168/81_northern_horse_raider_adult_woman.webp",
+      "sha256": "2e843a6c23efcb0f5a4ad811f4f52fa6eec5a057ed73e0f51d3c551d70293834",
+      "size": 250052,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v168/82_northern_horse_raider_elder_man.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v168/82_northern_horse_raider_elder_man.webp",
+      "sha256": "843a7dcbf14de48f8a8d74ecaaef9d78531841a1427f21f9fed53501e87e0617",
+      "size": 278056,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v168/83_winterhold_rider_mature_woman.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v168/83_winterhold_rider_mature_woman.webp",
+      "sha256": "6cfee89e58033cdb09da2f5c983cd1b85250a2e74ebff9a6d91b85d05a34d5c6",
+      "size": 293318,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v168/84_winterhold_thane_elder_woman.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v168/84_winterhold_thane_elder_woman.webp",
+      "sha256": "386c87ef622e16033753d51edc505242be339866216bda878dd4ef4d37e67d32",
+      "size": 220868,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v168/85_forest_cavalier_adult_woman.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v168/85_forest_cavalier_adult_woman.webp",
+      "sha256": "aef7efb8a9202dee36efdbf60bc22ee395eabf767a2f38044f6998914379da3b",
+      "size": 177616,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v168/86_greenhall_forest_rider_mature_man.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v168/86_greenhall_forest_rider_mature_man.webp",
+      "sha256": "6ac9219f2781a5c17f20c67bbbe68e4c8943855b7e42d5ee3fbcf46654761cf2",
+      "size": 299430,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v168/87_shade_guard_adult_woman.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v168/87_shade_guard_adult_woman.webp",
+      "sha256": "79409f40ecdb6d6b0510ffb917428ef1fb73d18edc0d20243bea11601a85be1a",
+      "size": 167042,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v168/88_cavern_stalker_young_man.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v168/88_cavern_stalker_young_man.webp",
+      "sha256": "4917dd275d94395e2d1c1466576c325c9ff9dea9249569e82306a2319d53709a",
+      "size": 166030,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v168/89_ash_wastes_boar_rider_adult_woman.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v168/89_ash_wastes_boar_rider_adult_woman.webp",
+      "sha256": "1a6f3dde020cf00c66863aa6b59512cf07723643392df92abe84ca23d7b74c81",
+      "size": 215700,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v168/90_orc_raider_adult_man.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v168/90_orc_raider_adult_man.webp",
+      "sha256": "6f0dfbbb8d13b4e2eb84e2189ee07c29de8c6709e15997f3b616607a873e45ff",
+      "size": 174738,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v168/91_grimhorn_boar_knight_mature_man.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v168/91_grimhorn_boar_knight_mature_man.webp",
+      "sha256": "452a16c8828289d8358e48a35cd3ee472e8ba7ca644c0d0ba8c77163e2538ca5",
+      "size": 270916,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v168/92_grimhorn_boar_knight_adult_woman.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v168/92_grimhorn_boar_knight_adult_woman.webp",
+      "sha256": "bcd4b10fec3ea7388655d25955f003b726a4a6c4fa5c22c82d368ddb166702c7",
+      "size": 275682,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v168/93_mercenary_heavy_knight_adult_woman.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v168/93_mercenary_heavy_knight_adult_woman.webp",
+      "sha256": "dbd1978bc268f3554e6703c6856de4bf0aff539876aef354cdb2016caba1bed2",
+      "size": 236206,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v168/94_mercenary_heavy_knight_elder_man.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v168/94_mercenary_heavy_knight_elder_man.webp",
+      "sha256": "6858b113f4b0fc4125c8cf5bf58cbbb7c86bdeadd434206e44a76eac5ca7e3e0",
+      "size": 250586,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v168/95_free_company_rider_young_woman.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v168/95_free_company_rider_young_woman.webp",
+      "sha256": "95e55bb8c912190adfae66ea0ce7b8ae02525da78191bc4ebbeb00ca6b1373af",
+      "size": 201052,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v168/96_redmont_knight_mature_woman.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v168/96_redmont_knight_mature_woman.webp",
+      "sha256": "1975608bd1db2aed76657b12475d945d383a88dd5bb5636230ce4386b9d37ed7",
+      "size": 218098,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v168/97_redmont_knight_elder_man.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v168/97_redmont_knight_elder_man.webp",
+      "sha256": "e3611af6848a4cab2f43be3369675998e87ce52931e4eaeb8d3eeabf7726c1e3",
+      "size": 256480,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v168/98_redmont_rose_guard_adult_woman.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v168/98_redmont_rose_guard_adult_woman.webp",
+      "sha256": "fe0af23a9d3e026363cca1f1927042b5db2bc45801a9abe93b17617bd23f7034",
+      "size": 229360,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v168/99_dominus_rose_knight_adult_woman.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v168/99_dominus_rose_knight_adult_woman.webp",
+      "sha256": "370ff211f8167d4a3f832e3b0c10ef68b72410a7b913a2adb2e1411af77c74b4",
+      "size": 283320,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v168/100_dominus_rose_knight_elder_man.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v168/100_dominus_rose_knight_elder_man.webp",
+      "sha256": "1f3608a743717af440a132bdaa753f33ae29b42e55fc68d6cc1ae82daaf55366",
+      "size": 284520,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v168/101_dominus_imperial_cataphract_mature_woman.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v168/101_dominus_imperial_cataphract_mature_woman.webp",
+      "sha256": "4152be8a9ba7fa854a8b8addd24639588165848da9899107d6bdc7e46b608c11",
+      "size": 322278,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v168/102_dominus_marine_adult_woman.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v168/102_dominus_marine_adult_woman.webp",
+      "sha256": "e53820c3129dc01f83e1b595664776afd9188cc60101144ba4ad1253b222bcf2",
+      "size": 269200,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v168/103_hammer_guard_adult_dwarf_woman.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v168/103_hammer_guard_adult_dwarf_woman.webp",
+      "sha256": "3ae072dfee75f3f506968dcdc429671a59055c9df7e1b1e7f557a11c7879778a",
+      "size": 232704,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v168/104_forge_guard_elder_dwarf_man.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v168/104_forge_guard_elder_dwarf_man.webp",
+      "sha256": "82b6efa36d822d13050f92e75346e77856b6d9af4ca95bb33272a01da43f9f1d",
+      "size": 236648,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v168/105_greenhall_bladesinger_adult_woman.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v168/105_greenhall_bladesinger_adult_woman.webp",
+      "sha256": "6ddf360a74a070799ad8cd7da2f5fc7c9b0aa69ce4d249a24b2261d86cad507d",
+      "size": 195578,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v168/106_spellwarden_elder_elf_man.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v168/106_spellwarden_elder_elf_man.webp",
+      "sha256": "fe70629658d4b23c54528bdf07c334fe112a682abce2187b012e7619d819bf82",
+      "size": 181382,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v168/107_hexblade_adept_mature_woman.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v168/107_hexblade_adept_mature_woman.webp",
+      "sha256": "7efaa647242ef75c352d5f16b49dceb344b34ea8ce78a13ce141d1bffba53ff0",
+      "size": 176536,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v168/108_warchief_guard_elder_orc_man.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v168/108_warchief_guard_elder_orc_man.webp",
+      "sha256": "1dee2db16e79ba32328a2b3a72d2710767eb09fa03d090f46a22ea3ee04b8956",
+      "size": 259454,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v168/109_watchtower_sentinel_adult_woman.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v168/109_watchtower_sentinel_adult_woman.webp",
+      "sha256": "6fbb0e84bedfa4522d7bea4dd412b91b10e9f1171f364d5a93df725d71f19d89",
+      "size": 220554,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v168/110_quay_guard_elder_woman.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v168/110_quay_guard_elder_woman.webp",
+      "sha256": "01e6a6e8a2bcd13ebbb538ed75a537bdd4cfeb4aadcf481797eb8373f97583f5",
+      "size": 181688,
+      "restart_required": true
+    },
+    {
+      "path": "patches/v1.68.0-curated-npc-portraits.js",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/patches/v1.68.0-curated-npc-portraits.js",
+      "sha256": "690c503ef1fa82575855c4f2ddf6a51e1dead656816b0b5d6fd1097bab909fb8",
+      "size": 40647,
+      "restart_required": true
     }
   ],
-  "notes": "Save-safe whole-world integrity update. Every packaged image is classified, and person portraits now obey exact identity, sex, age band, race, and intended-use tags. Merric Pike and generated residents, workers, candidates, retainers, prisoners, relatives, agents, surgeons, and specialists are repaired deterministically; named-character art is preserved; formation, occupation, scene, item, transport, and animal art cannot return as faces. Starting footmen receive stable names and ages. Active legacy morale writes now preserve the 0-100 scale. Missing legacy map, tower, duel, pleasure-video, music, and effect references use valid packaged media or offline synthesis. Retained systems include the 3s weekly wage ceiling, Ysabet at 2s 8c, Halric/Libita/Maevra at 3s, five 6c Good Wine Skins at Corvinus, duplicate-safe Kael recruitment, craft-only custom gear, useful-item routes, private and nearby-group conversation, first-person immersive Narrator, and separate Sophia Help. No large asset was added. Restart after applying.",
+  "notes": "Save-safe curated portrait update. Installs 110 new lore-matched, labeled full-body NPC portraits plus the unchanged original Quartermaster role portrait. Every image is explicitly tagged for sex, visual age band, race, occupation, faction, mounted status, and individual-person use. Routing is deterministic and location-aware; one curated face cannot be assigned twice in the active world. Exact named-character art remains locked, including Quartermaster Halric Morn, Kael, Valkorion, Alexus, Libita, Nessa, surgeons, officers, and unique companions. Incompatible or unavailable art falls back without changing identity or save progress. The 19.91 MiB library covers human, dwarf, elf, dark-elf, ordinary-orc, Grimhorn beast-orc, civilian, child, infant, elder, knight, guard, rider, and lore-faction roles. All prior economy, shop, wine, wage, dialogue, Narrator, Sophia Help, item-purpose, and world-integrity repairs remain active. Restart after applying.",
   "save_policy": {
     "managed": false,
     "preserve_always": true

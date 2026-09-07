@@ -15,10 +15,19 @@ def main() -> None:
     manifest = json.loads((ROOT / "manifest.json").read_text(encoding="utf-8"))
     assert manifest["schema"] == 1
     assert manifest["enabled"] is True
-    assert manifest["latest"]["game_version"] == "1.67.0"
-    assert manifest["latest"]["android_version_code"] == 182
+    assert manifest["latest"]["game_version"] == "1.68.0"
+    assert manifest["latest"]["android_version_code"] == 183
     assert manifest["latest"]["min_updater_schema"] <= 1
     payloads = manifest["payloads"]
+    portrait_root = ROOT / "custom" / "npc-portraits" / "v168"
+    portrait_paths = [
+        str(path.relative_to(ROOT))
+        for path in sorted(
+            portrait_root.glob("*.webp"),
+            key=lambda path: int(path.name.split("_", 1)[0]),
+        )
+    ]
+    assert len(portrait_paths) == 111
     assert [payload["path"] for payload in payloads] == [
         "patches/v1.59.2-dominus-art-fix.js",
         "assets/v109/valkorion_final.glb",
@@ -28,6 +37,8 @@ def main() -> None:
         "patches/v1.66.0-living-world-balance.js",
         "patches/v1.66.1-immersive-narrator-sophia.js",
         "patches/v1.67.0-identity-world-integrity.js",
+        *portrait_paths,
+        "patches/v1.68.0-curated-npc-portraits.js",
     ]
     assert len({payload["path"] for payload in payloads}) == len(payloads)
 
@@ -52,7 +63,9 @@ def main() -> None:
         assert payload["restart_required"] is True
 
     assert manifest["save_policy"]["preserve_always"] is True
-    print("manifest.json: 1.67.0 raw payload sizes and SHA-256 hashes passed")
+    assert "110 new lore-matched" in manifest["notes"]
+    assert "Quartermaster Halric Morn" in manifest["notes"]
+    print("manifest.json: 1.68.0 raw payload sizes and SHA-256 hashes passed")
 
 
 if __name__ == "__main__":

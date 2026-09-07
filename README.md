@@ -4,20 +4,25 @@ Public update channel for **Aetherion Reforged**.
 
 The Android updater reads `manifest.json` from this repository. Patch scripts and assets are served directly from the stable branch so Android can fetch them without a release-page redirect.
 
-## Current stable patch — 1.67.0
+## Current stable patch — 1.68.0
 
-Version 1.67.0 is a save-safe identity and whole-world integrity update:
+Version 1.68.0 installs the save-safe curated NPC portrait library:
 
-- classifies all 1,966 packaged images and restricts person portraits by identity, sex, age band, race, and intended use
-- repairs Merric Pike and every audited generated resident, worker, candidate, retainer, prisoner, relative, agent, surgeon, and specialist without deleting people or progress
-- preserves exact authored faces for named characters and prevents occupational, formation, scene, item, animal, and transport art from returning as an individual's portrait
-- gives the starting footmen stable individual names and ages, reconciles titles and voices, and keeps family portraits compact and deterministic
-- fixes active legacy morale paths that could incorrectly collapse the 0–100 scale to 0–5
-- replaces missing legacy map, tower, duel, pleasure-video, instrument, and effect references with valid packaged art or lightweight offline synthesis
-- retains the 3-silver weekly wage ceiling, five 6-copper Good Wine Skins at Corvinus, craft-only custom gear, useful-item routes, private/group conversations, immersive Narrator, and separate Sophia Help interface
-- adds no large media download and requires only this JavaScript overlay
+- adds 110 new lore-matched full-body character plates and retains the unchanged original Quartermaster role portrait: 111 unique WebP assets, 19.91 MiB total
+- gives every asset explicit sex, visual-age, race, occupation, faction, mounted-status, person-use, and visible-label metadata
+- routes portraits only when the individual and art agree; a wrong job, faction, sex, age band, or species is rejected rather than forced into the UI
+- distinguishes humans, dwarves, elves, dark elves, ordinary Ash Wastes orcs, and the heavier Grimhorn beast-orcs
+- maps Solara/Solaris, Corvinus, Highwatch, White Harbor, Frostreach, Winterhold, Eternal Glades, Greenhall, Lorien Ford Underrealm, Ash Wastes, Grimhorn, Blood Keep, Redmont, House Dominus, and Stonevein art to their own people and locations
+- assigns each curated face at most once in the active world, then uses an identity-safe packaged fallback instead of cloning the same person across a roster
+- protects all exact named-character portraits; Quartermaster Halric Morn continues using `assets/v29/portraits/quartermaster_halric.webp`, while the retained square Quartermaster art is correctly classified for unnamed Quartermasters
+- preserves user-selected portraits and saved progress, recomputes age-dependent family art without bloating saves, and includes a missing-image fallback
+- retains every shop, Good Wine Skin, 3-silver wage ceiling, item-purpose, dialogue, Narrator, Sophia Help, and world-integrity repair from 1.65–1.67
 
-The complete findings and validation results are recorded in `AUDIT_v1.67.0.md`.
+The complete routing matrix and validation results are recorded in `AUDIT_v1.68.0.md`.
+
+## Identity foundation retained from 1.67.0
+
+Version 1.67.0 remains active beneath 1.68.0. It classifies all 1,966 APK-packaged images; repairs generated names, sex, age, titles, voices, morale scale, and legacy display references; preserves authored named faces; and prevents formation, occupation-reference, scene, item, animal, and transport art from being treated as an individual face. Version 1.68 extends that policy with the new, explicitly tagged person-eligible library. See `AUDIT_v1.67.0.md` for the underlying whole-world audit.
 
 ## Narrator and Help foundation retained from 1.66.1
 
@@ -87,11 +92,14 @@ node tests/test_v165_patch.cjs
 node tests/test_v166_patch.cjs
 node tests/test_v1661_patch.cjs
 node tests/test_v167_patch.cjs
+node tests/test_v168_patch.cjs
+python3 tests/validate_v168_portraits.py
 node --check patches/v1.63.0-valkorion-final.js
 node --check patches/v1.64.0-world-ui-integrity.js
 node --check patches/v1.65.0-world-economy-cleanup.js
 node --check patches/v1.66.0-living-world-balance.js
 node --check patches/v1.66.1-immersive-narrator-sophia.js
 node --check patches/v1.67.0-identity-world-integrity.js
+node --check patches/v1.68.0-curated-npc-portraits.js
 python3 tests/validate_v163_glb.py /path/to/downloaded/valkorion_final.glb
 ```

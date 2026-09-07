@@ -51,8 +51,8 @@ def main() -> None:
         "channel": "stable",
         "enabled": True,
         "latest": {
-            "game_version": "1.68.0",
-            "android_version_code": 183,
+            "game_version": "1.68.1",
+            "android_version_code": 184,
             "min_updater_schema": 1,
         },
         "manifest_url": RAW_BASE + "manifest.json",
@@ -62,7 +62,12 @@ def main() -> None:
         ),
         "payloads": [payload(path) for path in paths],
         "notes": (
-            "Save-safe curated portrait update. Installs 110 new lore-matched, labeled "
+            "Startup and gameplay hotfix for the curated portrait update. Removes "
+            "whole-world identity and portrait scans from render, list-view, portrait-view, "
+            "daily-tick, and already-migrated save paths; save migration now runs once per "
+            "version and new NPC creation remains checked at its source. A 1,219-person "
+            "stress save now performs zero portrait-record checks across repeated redraws. "
+            "The library still installs 110 new lore-matched, labeled "
             "full-body NPC portraits plus the unchanged original Quartermaster role "
             "portrait. Every image is explicitly tagged for sex, visual age band, race, "
             "occupation, faction, mounted status, and individual-person use. Routing is "
@@ -74,7 +79,8 @@ def main() -> None:
             "human, dwarf, elf, dark-elf, ordinary-orc, Grimhorn beast-orc, civilian, "
             "child, infant, elder, knight, guard, rider, and lore-faction roles. All prior "
             "economy, shop, wine, wage, dialogue, Narrator, Sophia Help, item-purpose, "
-            "and world-integrity repairs remain active. Restart after applying."
+            "and world-integrity repairs remain active. Existing saves are preserved. "
+            "Restart after applying."
         ),
         "save_policy": {"managed": False, "preserve_always": True},
     }

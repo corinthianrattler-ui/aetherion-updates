@@ -4,7 +4,20 @@ Public update channel for **Aetherion Reforged**.
 
 The Android updater reads `manifest.json` from this repository. Patch scripts and assets are served directly from the stable branch so Android can fetch them without a release-page redirect.
 
-## Current stable patch — 1.68.0
+## Current stable patch — 1.68.1
+
+Version 1.68.1 repairs the startup and gameplay freeze introduced by the portrait integration:
+
+- removes whole-world portrait and identity scans from ordinary redraws, people lists, portrait views, daily ticks, and already-migrated save loads
+- changes both v1.67 and v1.68 migration hooks to run once per version instead of once per render
+- keeps identity checks at actual NPC creation points, so new people still receive compatible, unused art without taxing unrelated screens
+- adds a 1,219-record stress regression: 25 render, list, and migration cycles now perform zero portrait-record checks instead of 91,425
+- preserves existing saves, names, identities, exact character art, custom portraits, assignments, and all 111 curated portrait files
+- updates only the two affected JavaScript payloads; the 19.91 MiB art library is not downloaded again on an already-current installation
+
+The cause, repair boundary, and validation evidence are recorded in `AUDIT_v1.68.1.md`.
+
+## Curated portrait foundation retained from 1.68.0
 
 Version 1.68.0 installs the save-safe curated NPC portrait library:
 
@@ -22,7 +35,7 @@ The complete routing matrix and validation results are recorded in `AUDIT_v1.68.
 
 ## Identity foundation retained from 1.67.0
 
-Version 1.67.0 remains active beneath 1.68.0. It classifies all 1,966 APK-packaged images; repairs generated names, sex, age, titles, voices, morale scale, and legacy display references; preserves authored named faces; and prevents formation, occupation-reference, scene, item, animal, and transport art from being treated as an individual face. Version 1.68 extends that policy with the new, explicitly tagged person-eligible library. See `AUDIT_v1.67.0.md` for the underlying whole-world audit.
+Version 1.67.0 remains active beneath 1.68.1. It classifies all 1,966 APK-packaged images; repairs generated names, sex, age, titles, voices, morale scale, and legacy display references; preserves authored named faces; and prevents formation, occupation-reference, scene, item, animal, and transport art from being treated as an individual face. Version 1.68 extends that policy with the new, explicitly tagged person-eligible library. See `AUDIT_v1.67.0.md` for the underlying whole-world audit.
 
 ## Narrator and Help foundation retained from 1.66.1
 

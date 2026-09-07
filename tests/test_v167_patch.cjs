@@ -5,6 +5,7 @@ const fs = require('node:fs');
 const vm = require('node:vm');
 
 const patch = fs.readFileSync('patches/v1.67.0-identity-world-integrity.js', 'utf8');
+const v168Patch = fs.readFileSync('patches/v1.68.0-curated-npc-portraits.js', 'utf8');
 const testConsole = Object.create(console);
 testConsole.warn = () => {};
 const context = { console: testConsole };
@@ -315,6 +316,10 @@ assert.doesNotMatch(legacyPortraitPaths.equipmentModal, /class="bigPic" src="ass
 vm.runInContext(`v15Convert('wrong_knight');v16Swear('wrong_knight')`, context);
 assert.match(vm.runInContext(`S.people.find(p=>p.id==='wrong_knight').portrait`, context), /^assets\/dynasty\/female_young_/);
 
+const passiveChecks = api.runtime.recordsChecked;
+vm.runInContext(`for(let i=0;i<25;i++){render();migrateState(S);dailyTick()}`, context);
+assert.equal(api.runtime.recordsChecked, passiveChecks, 'redraws, daily ticks, and already-migrated saves must not rescan identity records');
+
 const idempotence = vm.runInContext(`(() => {
  const before=JSON.stringify(S);
  AetherionV167Integrity.repairState(S);
@@ -329,4 +334,15 @@ assert.equal(idempotence.audit.missingAges.length, 0);
 assert.equal(idempotence.audit.roleArt.length, 0);
 assert.equal(idempotence.audit.missingAssets.length, 0);
 
-console.log('v1.67.0 portrait, identity, age, roster, and save-integrity patch: all assertions passed');
+vm.runInContext(`(0,eval)(${JSON.stringify(v168Patch)})`, context, { filename: 'aetherion-updater-v168-eval.js' });
+const stackedV168 = context.AetherionV168Portraits;
+assert.equal(stackedV168.version, '1.68.1');
+const stackedChecks = {v167:api.runtime.recordsChecked,v168:stackedV168.runtime.recordsChecked};
+vm.runInContext(`for(let i=0;i<25;i++){render();migrateState(S);dailyTick()}`, context);
+assert.deepEqual(
+ {v167:api.runtime.recordsChecked,v168:stackedV168.runtime.recordsChecked},
+ stackedChecks,
+ 'the real v1.67 + v1.68 updater stack must remain scan-free after migration'
+);
+
+console.log('v1.67.0 identity and v1.68.1 stacked-load integrity: all assertions passed');

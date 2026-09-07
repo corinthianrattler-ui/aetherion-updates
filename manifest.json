@@ -3,8 +3,8 @@
   "channel": "stable",
   "enabled": true,
   "latest": {
-    "game_version": "1.68.0",
-    "android_version_code": 183,
+    "game_version": "1.68.1",
+    "android_version_code": 184,
     "min_updater_schema": 1
   },
   "manifest_url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/manifest.json",
@@ -62,8 +62,8 @@
     {
       "path": "patches/v1.67.0-identity-world-integrity.js",
       "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/patches/v1.67.0-identity-world-integrity.js",
-      "sha256": "8daeac0f3df4612cf3f82571755a06aaede3613c47943e2f6966730ecd7a8c7f",
-      "size": 62052,
+      "sha256": "ffd9b08fb431e395bddde61bf331daf45b0192078f9b5d9597fff0eefb416806",
+      "size": 61837,
       "restart_required": true
     },
     {
@@ -846,12 +846,12 @@
     {
       "path": "patches/v1.68.0-curated-npc-portraits.js",
       "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/patches/v1.68.0-curated-npc-portraits.js",
-      "sha256": "690c503ef1fa82575855c4f2ddf6a51e1dead656816b0b5d6fd1097bab909fb8",
-      "size": 40647,
+      "sha256": "21e81b2ee02714fdafa934cf78a2aaa6dc3a09580045428d0f4261dd99bebffa",
+      "size": 39352,
       "restart_required": true
     }
   ],
-  "notes": "Save-safe curated portrait update. Installs 110 new lore-matched, labeled full-body NPC portraits plus the unchanged original Quartermaster role portrait. Every image is explicitly tagged for sex, visual age band, race, occupation, faction, mounted status, and individual-person use. Routing is deterministic and location-aware; one curated face cannot be assigned twice in the active world. Exact named-character art remains locked, including Quartermaster Halric Morn, Kael, Valkorion, Alexus, Libita, Nessa, surgeons, officers, and unique companions. Incompatible or unavailable art falls back without changing identity or save progress. The 19.91 MiB library covers human, dwarf, elf, dark-elf, ordinary-orc, Grimhorn beast-orc, civilian, child, infant, elder, knight, guard, rider, and lore-faction roles. All prior economy, shop, wine, wage, dialogue, Narrator, Sophia Help, item-purpose, and world-integrity repairs remain active. Restart after applying.",
+  "notes": "Startup and gameplay hotfix for the curated portrait update. Removes whole-world identity and portrait scans from render, list-view, portrait-view, daily-tick, and already-migrated save paths; save migration now runs once per version and new NPC creation remains checked at its source. A 1,219-person stress save now performs zero portrait-record checks across repeated redraws. The library still installs 110 new lore-matched, labeled full-body NPC portraits plus the unchanged original Quartermaster role portrait. Every image is explicitly tagged for sex, visual age band, race, occupation, faction, mounted status, and individual-person use. Routing is deterministic and location-aware; one curated face cannot be assigned twice in the active world. Exact named-character art remains locked, including Quartermaster Halric Morn, Kael, Valkorion, Alexus, Libita, Nessa, surgeons, officers, and unique companions. Incompatible or unavailable art falls back without changing identity or save progress. The 19.91 MiB library covers human, dwarf, elf, dark-elf, ordinary-orc, Grimhorn beast-orc, civilian, child, infant, elder, knight, guard, rider, and lore-faction roles. All prior economy, shop, wine, wage, dialogue, Narrator, Sophia Help, item-purpose, and world-integrity repairs remain active. Existing saves are preserved. Restart after applying.",
   "save_policy": {
     "managed": false,
     "preserve_always": true

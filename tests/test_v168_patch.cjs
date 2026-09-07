@@ -68,8 +68,8 @@ vm.runInContext(`
 vm.runInContext(`(0,eval)(${JSON.stringify(patch)})`, context, {filename:'aetherion-updater-eval.js'});
 
 const api = context.AetherionV168Portraits;
-assert.equal(api.version, '1.68.0');
-assert.equal(api.policy, 'curated-npc-portraits-v1.68.0');
+assert.equal(api.version, '1.68.1');
+assert.equal(api.policy, 'curated-npc-portraits-v1.68.1');
 assert.equal(api.auditRegistry().errors.length, 0);
 assert.equal(api.registry.length, 111);
 assert.equal(new Set(api.registry.map(row => row.path)).size, 111);
@@ -151,9 +151,21 @@ assert.equal(api.compatible({name:'Wrong',gender:'F',age:47,role:'House Knight',
 assert.equal(api.compatible({name:'Wrong',gender:'F',age:47,role:'Cook',location:'Highwatch Keep'}, api.byNumber[75]).reason, 'wrong-role');
 
 const beforeRender = vm.runInContext('S.people.map(p=>p.portrait)', context);
-vm.runInContext('render()', context);
+vm.runInContext(`S.people.push(...Array.from({length:1200},(_,i)=>({
+ id:'stress_'+i,name:'Stress Record '+i,gender:i%2?'F':'M',age:20+i%45,
+ role:'Villager',category:'Civilian',portrait:'user/portraits/stress_'+i+'.webp'
+})))`, context);
+const checksBeforeRedraws = api.runtime.recordsChecked;
+vm.runInContext('for(let i=0;i<25;i++){render();peopleCards(S.people);migrateState(S)}', context);
 const afterRender = vm.runInContext('S.people.map(p=>p.portrait)', context);
-assert.deepEqual(afterRender, beforeRender, 'render-time integrity passes must not churn stable portrait assignments');
+assert.deepEqual(afterRender.slice(0, beforeRender.length), beforeRender, 'render-time integrity passes must not churn stable portrait assignments');
+assert.equal(api.runtime.recordsChecked, checksBeforeRedraws, 'redraws, list views, and already-migrated saves must perform zero whole-world portrait rescans');
+
+const freshWorker = vm.runInContext("mkPerson('Rhea Malt','Brewer','Workers',{gender:'F',age:32,location:'Corvinus Keep'})", context);
+assert.equal(freshWorker.portrait, `${assetRoot}/30_brewer_adult_woman.webp`, 'newly generated people still receive a compatible unused curated portrait');
+vm.runInContext(`S.people.push(${JSON.stringify(freshWorker)})`, context);
+const secondBrewer = vm.runInContext("mkPerson('Talia Hops','Brewer','Workers',{gender:'F',age:34,location:'Corvinus Keep'})", context);
+assert.notEqual(secondBrewer.portrait, freshWorker.portrait, 'newly generated people cannot clone a curated face already active in the world');
 const stateAudit = api.auditState();
 assert.equal(stateAudit.wrong.length, 0);
 assert.equal(stateAudit.duplicates.length, 0);
@@ -162,4 +174,4 @@ assert.equal(vm.runInContext('S.meta.v168PortraitLibrary.installedAssets', conte
 assert.equal(vm.runInContext('S.meta.v168PortraitLibrary.newPortraits', context), 110);
 assert.equal(vm.runInContext('persistCalls', context), 1);
 
-console.log('v1.68.0 curated portrait registry, routing, uniqueness, and named-art protection passed');
+console.log('v1.68.1 curated portrait registry, routing, uniqueness, redraw safety, and named-art protection passed');

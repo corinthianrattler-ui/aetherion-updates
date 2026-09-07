@@ -15,8 +15,8 @@ def main() -> None:
     manifest = json.loads((ROOT / "manifest.json").read_text(encoding="utf-8"))
     assert manifest["schema"] == 1
     assert manifest["enabled"] is True
-    assert manifest["latest"]["game_version"] == "1.68.0"
-    assert manifest["latest"]["android_version_code"] == 183
+    assert manifest["latest"]["game_version"] == "1.68.1"
+    assert manifest["latest"]["android_version_code"] == 184
     assert manifest["latest"]["min_updater_schema"] <= 1
     payloads = manifest["payloads"]
     portrait_root = ROOT / "custom" / "npc-portraits" / "v168"
@@ -63,9 +63,11 @@ def main() -> None:
         assert payload["restart_required"] is True
 
     assert manifest["save_policy"]["preserve_always"] is True
+    assert "Startup and gameplay hotfix" in manifest["notes"]
+    assert "zero portrait-record checks" in manifest["notes"]
     assert "110 new lore-matched" in manifest["notes"]
     assert "Quartermaster Halric Morn" in manifest["notes"]
-    print("manifest.json: 1.68.0 raw payload sizes and SHA-256 hashes passed")
+    print("manifest.json: 1.68.1 raw payload sizes and SHA-256 hashes passed")
 
 
 if __name__ == "__main__":

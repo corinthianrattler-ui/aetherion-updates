@@ -4,7 +4,22 @@ Public update channel for **Aetherion Reforged**.
 
 The Android updater reads `manifest.json` from this repository. Patch scripts and assets are served directly from the stable branch so Android can fetch them without a release-page redirect.
 
-## Current stable patch — 1.68.1
+## Current stable patch — 1.69.0
+
+Version 1.69.0 adds a recoverable update path directly to the game:
+
+- adds **Game Updates** to both the opening screen and Systems dock
+- checks without changing the running game, then stores and SHA-256 verifies complete patch source before activation
+- activates a staged release only after the player chooses to restart
+- keeps the APK's built-in version and the previous downloaded release as rollback paths
+- automatically rolls back an update that cannot complete its startup health check
+- provides **Safe Start once** and **Use built-in version** without touching game saves
+- retains Android's safer universal-file-access restriction; the stable channel carries bounded patch source as data instead
+- requires a newly signed APK for unusually large code or asset releases that cannot fit safely in local patch storage
+
+The updater architecture, trust boundary, and recovery behavior are recorded in `AUDIT_v1.69.0.md`.
+
+## Portrait startup hotfix retained from 1.68.1
 
 Version 1.68.1 repairs the startup and gameplay freeze introduced by the portrait integration:
 
@@ -106,6 +121,7 @@ node tests/test_v166_patch.cjs
 node tests/test_v1661_patch.cjs
 node tests/test_v167_patch.cjs
 node tests/test_v168_patch.cjs
+node tests/test_v169_updater.cjs
 python3 tests/validate_v168_portraits.py
 node --check patches/v1.63.0-valkorion-final.js
 node --check patches/v1.64.0-world-ui-integrity.js
@@ -114,5 +130,7 @@ node --check patches/v1.66.0-living-world-balance.js
 node --check patches/v1.66.1-immersive-narrator-sophia.js
 node --check patches/v1.67.0-identity-world-integrity.js
 node --check patches/v1.68.0-curated-npc-portraits.js
+node --check patches/v1.69.0-safe-updater.js
+node --check channel.js
 python3 tests/validate_v163_glb.py /path/to/downloaded/valkorion_final.glb
 ```

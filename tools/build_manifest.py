@@ -45,14 +45,15 @@ def main() -> None:
         "patches/v1.67.0-identity-world-integrity.js",
         *portraits,
         "patches/v1.68.0-curated-npc-portraits.js",
+        "patches/v1.69.0-safe-updater.js",
     ]
     manifest = {
         "schema": 1,
         "channel": "stable",
         "enabled": True,
         "latest": {
-            "game_version": "1.68.1",
-            "android_version_code": 184,
+            "game_version": "1.69.0",
+            "android_version_code": 185,
             "min_updater_schema": 1,
         },
         "manifest_url": RAW_BASE + "manifest.json",
@@ -62,7 +63,13 @@ def main() -> None:
         ),
         "payloads": [payload(path) for path in paths],
         "notes": (
-            "Startup and gameplay hotfix for the curated portrait update. Removes "
+            "Safe in-game update and recovery release. Adds Game Updates to the opening "
+            "screen and Systems dock; receives complete patch source before activation; "
+            "enforces per-module SHA-256 checks, strict size limits, and trusted asset "
+            "origins; stages updates locally; retains the previous release; automatically "
+            "rolls back an update that cannot finish starting; and provides Safe Start once "
+            "plus a permanent return to the built-in version without deleting game saves. "
+            "It also retains the startup and gameplay hotfix for the curated portrait update. Removes "
             "whole-world identity and portrait scans from render, list-view, portrait-view, "
             "daily-tick, and already-migrated save paths; save migration now runs once per "
             "version and new NPC creation remains checked at its source. A 1,219-person "

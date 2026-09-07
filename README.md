@@ -4,7 +4,21 @@ Public update channel for **Aetherion Reforged**.
 
 The Android staged updater reads `channel.js` from this repository through a MIME-safe GitHub Contents response. `manifest.json` records the exact sizes and SHA-256 hashes of managed payloads.
 
-## Current stable APK — 1.69.2
+## Current stable APK — 1.70.0
+
+Version 1.70.0 restores the finished character and tournament work to Android build 187:
+
+- replaces the old simplified Valkorion and the exploded wardrobe export with the centered, assembled 40-piece `Valkorion_Complete_Kit_Clean` model
+- keeps the model interactive in the Wardrobe Trunk with one bounded WebGL canvas, touch rotation, front reset, and no stray black overlay
+- adds persistent, playable **Jousting Lists**, **Armored Duel Ring**, and **Archery Butts** systems at Corvinus Keep
+- uses the corrected heraldic jousting, duel, and archery scenes; rejected empty/rain-only scene variants are not bundled
+- shares time, energy, coin, wounds, skills, Nobility standing, renown, and championships with the existing save state
+- retains all content from the 1.69.2 APK, including the opening-menu and permanent Systems-dock **Game Updates** access
+- preserves the existing package name and signing identity so it installs directly over Android build 186 without deleting saves
+
+The finished GLB is bundled in the APK because its 106,006,128-byte source exceeds GitHub's ordinary single-file repository limit. Its exact SHA-256 is recorded in [`assets/v170/README.md`](assets/v170/README.md).
+
+## Update transport retained from 1.69.2
 
 Version 1.69.2 repairs the Android update-channel transport and bundles the startup fix:
 
@@ -147,6 +161,10 @@ node tests/test_v168_patch.cjs
 node tests/test_v169_updater.cjs
 node tests/test_v1691_start_menu_access.cjs
 node tests/test_v1692_updater.cjs
+node tests/test_v170_updater.cjs
+node tests/test_v170_valkorion.cjs
+node tests/test_v170_tournaments.cjs
+python3 tests/validate_v170_assets.py /path/to/extracted/assets/game
 python3 tests/validate_v168_portraits.py
 node --check patches/v1.63.0-valkorion-final.js
 node --check patches/v1.64.0-world-ui-integrity.js
@@ -158,6 +176,9 @@ node --check patches/v1.68.0-curated-npc-portraits.js
 node --check patches/v1.69.0-safe-updater.js
 node --check patches/v1.69.1-start-menu-access.js
 node --check patches/v1.69.2-safe-updater.js
+node --check patches/v1.70.0-safe-updater.js
+node --check patches/v1.70.0-valkorion-complete.js
+node --check patches/v1.70.0-tournaments.js
 node --check channel.js
 python3 tests/validate_v163_glb.py /path/to/downloaded/valkorion_final.glb
 ```

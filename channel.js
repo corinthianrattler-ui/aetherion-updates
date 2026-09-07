@@ -4,14 +4,14 @@
   schema:2,
   channel:'stable',
   release:{
-   version:'1.69.2',
-   build:186,
-   minimumBundled:'1.69.2',
-   releasedAt:'2026-09-07T10:29:43Z',
+   version:'1.70.0',
+   build:187,
+   minimumBundled:'1.70.0',
+   releasedAt:'2026-09-07T12:09:14Z',
    notes:[
-    'Android can reach the stable update channel through a MIME-safe GitHub response.',
-    'The opening menu and Game Updates control are bundled and remain reachable with an autosave.',
-    'Existing saves, timelines, and staged-update rollback protections remain unchanged.'
+    'The finished 40-piece assembled Valkorion kit replaces the old simplified and exploded model files.',
+    'Jousting, armored dueling, and archery are playable at the Corvinus Keep Tournament Grounds with their approved heraldic scenes.',
+    'Game Updates remains on the opening screen and in the live Systems dock. Existing saves and rollback protections remain unchanged.'
    ],
    modules:[],
    assets:{}

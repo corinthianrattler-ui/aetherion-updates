@@ -48,14 +48,20 @@ def main() -> None:
         "patches/v1.69.0-safe-updater.js",
         "patches/v1.69.1-start-menu-access.js",
         "patches/v1.69.2-safe-updater.js",
+        "patches/v1.70.0-safe-updater.js",
+        "patches/v1.70.0-valkorion-complete.js",
+        "patches/v1.70.0-tournaments.js",
+        "assets/v170/jousting-arena.png",
+        "assets/v170/duel-arena.png",
+        "assets/v170/archery-range.png",
     ]
     manifest = {
         "schema": 1,
         "channel": "stable",
         "enabled": True,
         "latest": {
-            "game_version": "1.69.2",
-            "android_version_code": 186,
+            "game_version": "1.70.0",
+            "android_version_code": 187,
             "min_updater_schema": 1,
         },
         "manifest_url": RAW_BASE + "manifest.json",
@@ -65,7 +71,12 @@ def main() -> None:
         ),
         "payloads": [payload(path) for path in paths],
         "notes": (
-            "Android update-channel transport repair. The bundled updater now retrieves the "
+            "Android build 187 restores the finished 40-piece assembled Valkorion kit and "
+            "playable Corvinus Keep jousting, armored-duel, and archery tournaments with the "
+            "corrected heraldic scenes. The 106,006,128-byte finished GLB is bundled in the full "
+            "APK because it exceeds GitHub's ordinary single-file repository limit. Rejected "
+            "exploded, simplified, empty-arena, and rain-only variants are not active. Existing "
+            "saves and all prior game systems are preserved. The bundled updater retrieves the "
             "stable channel through GitHub's JavaScript-safe Contents response, decodes the "
             "exact channel bytes locally, and retains a script-safe CDN fallback; it no longer "
             "asks Android to execute GitHub's raw text/plain response. The startup access repair "

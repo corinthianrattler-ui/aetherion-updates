@@ -36,7 +36,7 @@ Entries consume game time, energy, and coin. Outcomes persist renown, championsh
 - target SDK: `36`
 - signing schemes: APK Signature Scheme v2 and v3
 - signing certificate SHA-256: `CA8042F4758D9A056EB0748EDFAAD0CFD8A436EA7D35907C28B32C3F3AFD5EB8`
-- APK SHA-256: `561381bbbaac819a31556042c0742717286b3b58654b66f7a2b45c46304c9307`
+- APK SHA-256: `b05a5dcf6d88d692b6f0a8682ef0831d850e950340e3144975bee9839f7e4a13`
 
 The package name and signing identity match the previous Android release, so installation upgrades the existing app and preserves its app data.
 

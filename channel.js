@@ -1,74 +1,19 @@
 /* Aetherion Reforged safe update channel. This file carries verified staged patch source. */
 (()=>{
- const source=`/* Aetherion Reforged v1.69.1 — always-reachable opening menu and updater access. */
-'use strict';
-(()=>{
- const VERSION='1.69.1';
- const SAVE_KEY='aetherion_exiled_v03_autosave';
- const existing=window.AetherionStartAccess||{};
- if(existing.version===VERSION)return;
- let openingShown=false;
-
- function makeButton(label){
-  const control=document.createElement('button');
-  control.type='button';
-  control.className='small aetherion-update-button';
-  control.dataset.aetherionUpdates='true';
-  control.textContent=label;
-  control.addEventListener('click',()=>window.AetherionUpdater?.open?.());
-  return control;
- }
- function ensureButtons(){
-  document.querySelectorAll?.('.startBtns').forEach(host=>{
-   if(!host.querySelector('[data-aetherion-updates]'))host.appendChild(makeButton('GAME UPDATES'));
-  });
-  document.querySelectorAll?.('.dockTabs').forEach(host=>{
-   if(!host.querySelector('[data-aetherion-updates]'))host.appendChild(makeButton('GAME UPDATES'));
-  });
- }
- function showOpeningMenu(){
-  if(openingShown)return true;
-  const app=document.getElementById('app');
-  if(!app||typeof renderStart!=='function')return false;
-  if(!localStorage.getItem(SAVE_KEY)){
-   openingShown=true;
-   ensureButtons();
-   return true;
-  }
-  try{if(typeof flushPersist==='function')flushPersist()}catch(_){ }
-  try{if(typeof stopSpeech==='function')stopSpeech()}catch(_){ }
-  try{if(typeof stopMusic==='function')stopMusic()}catch(_){ }
-  renderStart();
-  openingShown=true;
-  ensureButtons();
-  return true;
- }
- function mount(){
-  ensureButtons();
-  if(!showOpeningMenu())setTimeout(showOpeningMenu,0);
- }
-
- const observer=typeof MutationObserver==='function'?new MutationObserver(ensureButtons):null;
- observer?.observe(document.documentElement,{childList:true,subtree:true});
- Object.assign(existing,{version:VERSION,show:showOpeningMenu,mount,ensureButtons});
- window.AetherionStartAccess=existing;
- if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',mount,{once:true});else mount();
-})();
-`;
  const feed={
   schema:2,
   channel:'stable',
   release:{
-   version:'1.69.1',
-   build:185,
-   minimumBundled:'1.69.0',
-   releasedAt:'2026-09-07T06:30:00Z',
+   version:'1.69.2',
+   build:186,
+   minimumBundled:'1.69.2',
+   releasedAt:'2026-09-07T10:29:43Z',
    notes:[
-    'Every launch now stops at the opening menu, including when an autosave exists.',
-    'Continue and Game Updates remain reachable without deleting any save.',
-    'Game Updates also remains available in the live Systems dock.'
+    'Android can reach the stable update channel through a MIME-safe GitHub response.',
+    'The opening menu and Game Updates control are bundled and remain reachable with an autosave.',
+    'Existing saves, timelines, and staged-update rollback protections remain unchanged.'
    ],
-   modules:[{id:'v1691-start-menu-access',sha256:'f4fd2374426bda01589ed2a220cc4dfeeaacf24b377b8f1355199ffb2212ee75',source}],
+   modules:[],
    assets:{}
   }
  };

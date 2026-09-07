@@ -2,9 +2,21 @@
 
 Public update channel for **Aetherion Reforged**.
 
-The Android updater reads `manifest.json` from this repository. Patch scripts and assets are served directly from the stable branch so Android can fetch them without a release-page redirect.
+The Android staged updater reads `channel.js` from this repository through a MIME-safe GitHub Contents response. `manifest.json` records the exact sizes and SHA-256 hashes of managed payloads.
 
-## Current stable patch — 1.69.1
+## Current stable APK — 1.69.2
+
+Version 1.69.2 repairs the Android update-channel transport and bundles the startup fix:
+
+- replaces the rejected raw `text/plain` script request with GitHub Contents JSONP, then decodes and evaluates the exact `channel.js` bytes locally
+- retains a JavaScript MIME-type CDN fallback if the primary GitHub API request cannot complete
+- limits the decoded channel document to 100,000 bytes before execution
+- bundles both the safe updater and the title-menu access repair into Android build 186
+- preserves the existing signing identity so the APK installs over build 185 without clearing app data
+
+The transport cause, trust boundary, and regression checks are recorded in `AUDIT_v1.69.2.md`.
+
+## Startup access repair retained from 1.69.1
 
 Version 1.69.1 repairs startup access for installations with an autosave:
 
@@ -134,6 +146,7 @@ node tests/test_v167_patch.cjs
 node tests/test_v168_patch.cjs
 node tests/test_v169_updater.cjs
 node tests/test_v1691_start_menu_access.cjs
+node tests/test_v1692_updater.cjs
 python3 tests/validate_v168_portraits.py
 node --check patches/v1.63.0-valkorion-final.js
 node --check patches/v1.64.0-world-ui-integrity.js
@@ -144,6 +157,7 @@ node --check patches/v1.67.0-identity-world-integrity.js
 node --check patches/v1.68.0-curated-npc-portraits.js
 node --check patches/v1.69.0-safe-updater.js
 node --check patches/v1.69.1-start-menu-access.js
+node --check patches/v1.69.2-safe-updater.js
 node --check channel.js
 python3 tests/validate_v163_glb.py /path/to/downloaded/valkorion_final.glb
 ```

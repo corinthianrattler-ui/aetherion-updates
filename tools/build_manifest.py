@@ -47,14 +47,15 @@ def main() -> None:
         "patches/v1.68.0-curated-npc-portraits.js",
         "patches/v1.69.0-safe-updater.js",
         "patches/v1.69.1-start-menu-access.js",
+        "patches/v1.69.2-safe-updater.js",
     ]
     manifest = {
         "schema": 1,
         "channel": "stable",
         "enabled": True,
         "latest": {
-            "game_version": "1.69.1",
-            "android_version_code": 185,
+            "game_version": "1.69.2",
+            "android_version_code": 186,
             "min_updater_schema": 1,
         },
         "manifest_url": RAW_BASE + "manifest.json",
@@ -64,9 +65,13 @@ def main() -> None:
         ),
         "payloads": [payload(path) for path in paths],
         "notes": (
-            "Startup access repair. Every app launch now stops at the opening menu, even "
-            "when an autosave exists, so Continue and Game Updates remain reachable without "
-            "deleting any timeline. Game Updates is also kept in the live Systems dock. "
+            "Android update-channel transport repair. The bundled updater now retrieves the "
+            "stable channel through GitHub's JavaScript-safe Contents response, decodes the "
+            "exact channel bytes locally, and retains a script-safe CDN fallback; it no longer "
+            "asks Android to execute GitHub's raw text/plain response. The startup access repair "
+            "is bundled into the APK: every app launch now stops at the opening menu, even when "
+            "an autosave exists, so Continue and Game Updates remain reachable without deleting "
+            "any timeline. Game Updates is also kept in the live Systems dock. "
             "The safe updater receives complete patch source before activation; "
             "enforces per-module SHA-256 checks, strict size limits, and trusted asset "
             "origins; stages updates locally; retains the previous release; automatically "

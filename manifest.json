@@ -3,8 +3,8 @@
   "channel": "stable",
   "enabled": true,
   "latest": {
-    "game_version": "1.66.1",
-    "android_version_code": 181,
+    "game_version": "1.67.0",
+    "android_version_code": 182,
     "min_updater_schema": 1
   },
   "manifest_url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/manifest.json",
@@ -58,9 +58,16 @@
       "sha256": "c483a61a0b2f26ab9b61f9e769fa2a273d91fde1b066fc2d6a424fc2ff1aa239",
       "size": 24255,
       "restart_required": true
+    },
+    {
+      "path": "patches/v1.67.0-identity-world-integrity.js",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/patches/v1.67.0-identity-world-integrity.js",
+      "sha256": "8daeac0f3df4612cf3f82571755a06aaede3613c47943e2f6966730ecd7a8c7f",
+      "size": 62052,
+      "restart_required": true
     }
   ],
-  "notes": "Save-safe Narrator correction: story narration is now first-person and limited to what Valkorion can see, hear, feel, receive, remember, or infer from visible evidence. The v1.66 payroll, interface, state, and tutorial filler is blocked globally and removed from affected saved story entries, including Libita's ledger scene. Free-action and command failures stay in-world. Sophia, Goddess of Wisdom is now separate system help with Story-header and Systems-dock buttons, seven mechanics topics, packaged art, and a distinct female voice that never enters the story log. The retained v1.66 economy remains active: 3s maximum weekly pay, 2s 8c Ysabet, 3s Halric/Libita/Maevra, five 6c Good Wine Skins at the Corvinus Provisioner, duplicate-safe Kael recruitment, coherent people and portraits, useful items, and ordinary shops without custom or issued gear. No large asset was added. Restart after applying.",
+  "notes": "Save-safe whole-world integrity update. Every packaged image is classified, and person portraits now obey exact identity, sex, age band, race, and intended-use tags. Merric Pike and generated residents, workers, candidates, retainers, prisoners, relatives, agents, surgeons, and specialists are repaired deterministically; named-character art is preserved; formation, occupation, scene, item, transport, and animal art cannot return as faces. Starting footmen receive stable names and ages. Active legacy morale writes now preserve the 0-100 scale. Missing legacy map, tower, duel, pleasure-video, music, and effect references use valid packaged media or offline synthesis. Retained systems include the 3s weekly wage ceiling, Ysabet at 2s 8c, Halric/Libita/Maevra at 3s, five 6c Good Wine Skins at Corvinus, duplicate-safe Kael recruitment, craft-only custom gear, useful-item routes, private and nearby-group conversation, first-person immersive Narrator, and separate Sophia Help. No large asset was added. Restart after applying.",
   "save_policy": {
     "managed": false,
     "preserve_always": true

@@ -4,9 +4,24 @@ Public update channel for **Aetherion Reforged**.
 
 The Android updater reads `manifest.json` from this repository. Patch scripts and assets are served directly from the stable branch so Android can fetch them without a release-page redirect.
 
-## Current stable patch — 1.66.1
+## Current stable patch — 1.67.0
 
-Version 1.66.1 is a save-safe immersion correction for the Narrator and the new Sophia Help interface:
+Version 1.67.0 is a save-safe identity and whole-world integrity update:
+
+- classifies all 1,966 packaged images and restricts person portraits by identity, sex, age band, race, and intended use
+- repairs Merric Pike and every audited generated resident, worker, candidate, retainer, prisoner, relative, agent, surgeon, and specialist without deleting people or progress
+- preserves exact authored faces for named characters and prevents occupational, formation, scene, item, animal, and transport art from returning as an individual's portrait
+- gives the starting footmen stable individual names and ages, reconciles titles and voices, and keeps family portraits compact and deterministic
+- fixes active legacy morale paths that could incorrectly collapse the 0–100 scale to 0–5
+- replaces missing legacy map, tower, duel, pleasure-video, instrument, and effect references with valid packaged art or lightweight offline synthesis
+- retains the 3-silver weekly wage ceiling, five 6-copper Good Wine Skins at Corvinus, craft-only custom gear, useful-item routes, private/group conversations, immersive Narrator, and separate Sophia Help interface
+- adds no large media download and requires only this JavaScript overlay
+
+The complete findings and validation results are recorded in `AUDIT_v1.67.0.md`.
+
+## Narrator and Help foundation retained from 1.66.1
+
+Version 1.66.1 remains active beneath 1.67.0 as the immersion correction for the Narrator and Sophia Help interface:
 
 - removes the v1.66 mechanics/tutorial paragraphs that were incorrectly appended to short Narrator events
 - enforces first-person-limited narration restricted to what Valkorion can see, hear, physically feel, receive in a message, remember, or reasonably infer from visible evidence
@@ -71,10 +86,12 @@ node tests/test_v164_patch.cjs
 node tests/test_v165_patch.cjs
 node tests/test_v166_patch.cjs
 node tests/test_v1661_patch.cjs
+node tests/test_v167_patch.cjs
 node --check patches/v1.63.0-valkorion-final.js
 node --check patches/v1.64.0-world-ui-integrity.js
 node --check patches/v1.65.0-world-economy-cleanup.js
 node --check patches/v1.66.0-living-world-balance.js
 node --check patches/v1.66.1-immersive-narrator-sophia.js
+node --check patches/v1.67.0-identity-world-integrity.js
 python3 tests/validate_v163_glb.py /path/to/downloaded/valkorion_final.glb
 ```

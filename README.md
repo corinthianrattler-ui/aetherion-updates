@@ -4,7 +4,18 @@ Public update channel for **Aetherion Reforged**.
 
 The Android updater reads `manifest.json` from this repository. Patch scripts and assets are served directly from the stable branch so Android can fetch them without a release-page redirect.
 
-## Current stable patch — 1.69.0
+## Current stable patch — 1.69.1
+
+Version 1.69.1 repairs startup access for installations with an autosave:
+
+- every app launch now stops at the opening menu instead of silently consuming the autosave and jumping into the game
+- the opening menu keeps **Continue** and **Game Updates** visible without deleting the autosave or any manual timeline
+- **Game Updates** is independently restored in the live Systems dock after every UI redraw
+- opening the title menu stops background speech and music cleanly; continuing resumes the normal game render
+
+The startup cause, save-preservation boundary, and regression checks are recorded in `AUDIT_v1.69.1.md`.
+
+## Safe updater foundation retained from 1.69.0
 
 Version 1.69.0 adds a recoverable update path directly to the game:
 
@@ -122,6 +133,7 @@ node tests/test_v1661_patch.cjs
 node tests/test_v167_patch.cjs
 node tests/test_v168_patch.cjs
 node tests/test_v169_updater.cjs
+node tests/test_v1691_start_menu_access.cjs
 python3 tests/validate_v168_portraits.py
 node --check patches/v1.63.0-valkorion-final.js
 node --check patches/v1.64.0-world-ui-integrity.js
@@ -131,6 +143,7 @@ node --check patches/v1.66.1-immersive-narrator-sophia.js
 node --check patches/v1.67.0-identity-world-integrity.js
 node --check patches/v1.68.0-curated-npc-portraits.js
 node --check patches/v1.69.0-safe-updater.js
+node --check patches/v1.69.1-start-menu-access.js
 node --check channel.js
 python3 tests/validate_v163_glb.py /path/to/downloaded/valkorion_final.glb
 ```

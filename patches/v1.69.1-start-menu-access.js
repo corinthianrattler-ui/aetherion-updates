@@ -1,6 +1,4 @@
-/* Aetherion Reforged safe update channel. This file carries verified staged patch source. */
-(()=>{
- const source=`/* Aetherion Reforged v1.69.1 — always-reachable opening menu and updater access. */
+/* Aetherion Reforged v1.69.1 — always-reachable opening menu and updater access. */
 'use strict';
 (()=>{
  const VERSION='1.69.1';
@@ -53,24 +51,4 @@
  Object.assign(existing,{version:VERSION,show:showOpeningMenu,mount,ensureButtons});
  window.AetherionStartAccess=existing;
  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',mount,{once:true});else mount();
-})();
-`;
- const feed={
-  schema:2,
-  channel:'stable',
-  release:{
-   version:'1.69.1',
-   build:185,
-   minimumBundled:'1.69.0',
-   releasedAt:'2026-09-07T06:30:00Z',
-   notes:[
-    'Every launch now stops at the opening menu, including when an autosave exists.',
-    'Continue and Game Updates remain reachable without deleting any save.',
-    'Game Updates also remains available in the live Systems dock.'
-   ],
-   modules:[{id:'v1691-start-menu-access',sha256:'f4fd2374426bda01589ed2a220cc4dfeeaacf24b377b8f1355199ffb2212ee75',source}],
-   assets:{}
-  }
- };
- window.AetherionUpdater?.receiveChannel?.(feed);
 })();

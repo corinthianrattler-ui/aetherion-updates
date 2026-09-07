@@ -15,7 +15,7 @@ def main() -> None:
     manifest = json.loads((ROOT / "manifest.json").read_text(encoding="utf-8"))
     assert manifest["schema"] == 1
     assert manifest["enabled"] is True
-    assert manifest["latest"]["game_version"] == "1.69.0"
+    assert manifest["latest"]["game_version"] == "1.69.1"
     assert manifest["latest"]["android_version_code"] == 185
     assert manifest["latest"]["min_updater_schema"] <= 1
     payloads = manifest["payloads"]
@@ -40,6 +40,7 @@ def main() -> None:
         *portrait_paths,
         "patches/v1.68.0-curated-npc-portraits.js",
         "patches/v1.69.0-safe-updater.js",
+        "patches/v1.69.1-start-menu-access.js",
     ]
     assert len({payload["path"] for payload in payloads}) == len(payloads)
 
@@ -64,12 +65,13 @@ def main() -> None:
         assert payload["restart_required"] is True
 
     assert manifest["save_policy"]["preserve_always"] is True
-    assert "Safe in-game update and recovery release" in manifest["notes"]
+    assert "Startup access repair" in manifest["notes"]
+    assert "Continue and Game Updates remain reachable" in manifest["notes"]
     assert "automatically rolls back" in manifest["notes"]
     assert "zero portrait-record checks" in manifest["notes"]
     assert "110 new lore-matched" in manifest["notes"]
     assert "Quartermaster Halric Morn" in manifest["notes"]
-    print("manifest.json: 1.69.0 raw payload sizes and SHA-256 hashes passed")
+    print("manifest.json: 1.69.1 raw payload sizes and SHA-256 hashes passed")
 
 
 if __name__ == "__main__":

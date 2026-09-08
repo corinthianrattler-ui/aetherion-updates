@@ -1,0 +1,61 @@
+name: Publish Aetherion v1.72 mobile model assets
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/publish-v172-assets.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Download the verified fitted source models
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p input release
+          gh release download v1.71.0 --pattern 'valkorion-base-lord.glb' --dir input
+          gh release download v1.71.0 --pattern 'valkorion-armored.glb' --dir input
+          gh release download v1.71.0 --pattern 'libita-gothic-gown.glb' --dir input
+          echo '963d66d60d4e7b1dcfdeb43f44bc764683ddf2f8a4a4ffe4dbd63a530d186d47  input/valkorion-base-lord.glb' | sha256sum -c -
+          echo 'de12485beeebd6be86e9354e25a2071a1203fb94a6b8b660fd8c7d01acaecba1  input/valkorion-armored.glb' | sha256sum -c -
+          echo '5941aa40b5c08b2e71b04a39665a11129d5960312361d513fa3f76d34b0df2f9  input/libita-gothic-gown.glb' | sha256sum -c -
+      - name: Build bounded-error mobile models
+        shell: bash
+        run: |
+          set -euo pipefail
+          npx --yes @gltf-transform/cli@4.5.0 simplify input/valkorion-base-lord.glb release/valkorion-base-lord.glb --ratio 0.45 --error 0.0005 --lock-border true
+          npx --yes @gltf-transform/cli@4.5.0 simplify input/valkorion-armored.glb release/valkorion-armored.glb --ratio 0.30 --error 0.001 --lock-border true
+          npx --yes @gltf-transform/cli@4.5.0 simplify input/libita-gothic-gown.glb release/alexus-gothic-gown.glb --ratio 0.30 --error 0.001 --lock-border true
+          echo 'c15bee80cec479f90b7a53d5fb08fb12099f7750c3847335ba14a5bd064acd72  release/valkorion-base-lord.glb' | sha256sum -c -
+          echo '5e203593a2289b6f74d191630cad5cbe3c760065f2980c057a9dacabe87479fe  release/valkorion-armored.glb' | sha256sum -c -
+          echo '12ba557524188ccb30b11bec2e5b84a6053b1796727999aef57ea211ee946399  release/alexus-gothic-gown.glb' | sha256sum -c -
+      - name: Publish v1.72.0 release assets
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          cat > release-notes.md <<'NOTES'
+          Aetherion Reforged v1.72.0 (Android build 189)
+
+          - Repairs Continue from the Opening Menu
+          - Removes the floating gold update overlay and Android blue tap flash
+          - Loads Valkorion's base, Lord, and complete armor models locally
+          - Loads the gothic-gown model for his twin sister, Lady Alexus Dominus
+          - Removes repeated page watchers, idle rendering, and repeated geometry scans
+          - Keeps every fitted part, material, texture, and authored transform
+          NOTES
+          if gh release view v1.72.0 >/dev/null 2>&1; then
+            gh release upload v1.72.0 release/*.glb --clobber
+            gh release edit v1.72.0 --title 'Aetherion Reforged v1.72.0' --notes-file release-notes.md
+          else
+            gh release create v1.72.0 release/*.glb --target "$GITHUB_SHA" --title 'Aetherion Reforged v1.72.0' --notes-file release-notes.md
+          fi

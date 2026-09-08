@@ -33,7 +33,7 @@ def main() -> None:
             "version": "1.72.1",
             "build": 190,
             "minimumBundled": "1.72.0",
-            "releasedAt": "2026-09-08T18:58:00Z",
+            "releasedAt": "2026-09-08T11:23:00Z",
             "notes": [
                 "Repairs the live v80 wardrobe hook that prevented the supplied 3D character models from replacing the flat portrait fallback.",
                 "Valkorion's base body, Lord's royal set, and complete 40-piece armor now connect to the Wardrobe Trunk viewer.",

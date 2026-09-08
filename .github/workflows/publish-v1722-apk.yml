@@ -1,0 +1,64 @@
+name: Publish Aetherion v1.72.2 APK
+on:
+  push:
+    paths:
+      - .github/workflows/publish-v1722-apk.yml
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Download and verify signed APK
+        shell: bash
+        env:
+          URL_00: "https://ucfca9adf7a3f341633539be5e21.dl.dropboxusercontent.com/cd/0/get/DHu__vlVqnVHRTJ_E-4N088BBlhQ3ld6eAqgwTcoO1blW9VR3Xr5cQTXrRKaMIQWIzF1EzOuTjcGd1-T7WNTPdrYwQ4yEn5BDpzw6oQqqLZdDVMsZyA_mOZyz5byf5T1jDJndrcMTavPyMIACmC_wucr2QxScYrf1f4NZ5nruskOhw/file?c_luid=649d2ac6"
+          URL_01: "https://uc824c43a6a9a72291e730179fff.dl.dropboxusercontent.com/cd/0/get/DHvHqoMQUDJ8rzAoyeWn32NLXaRzIhoAW9SadvoM3mTVaKEIHwjgmCh9EI-zwnXA88Sa7yV1squlKYqPegAGbL8HK6-Gw9Uo2TYj1SEZgxNBcp175PlTRam7nY3L6K_xYCmLAHu2o-6aM8JEMeOIF43zvXNipk7dauHHuj3_OCRKeQ/file?c_luid=649d2ac6"
+          URL_02: "https://uc52b8c0b8ff10ef8ab8e5913efe.dl.dropboxusercontent.com/cd/0/get/DHud9Yp2HyWZeCXH7tE-p1_EK5dQbc6_1nJV19Yio-_9yCkJ3BrTGxmykFEbg7lmrZVehzMCXhvvWW4VVlPdQv4mmzLuRfvPytAYFffdOT3MmisKQMc8IskDoafjmITwkpx5vl_qHTqTV7zt2W_XU0uvL54_pdpqPLsEGiRBAx_HQw/file?c_luid=649d2ac6"
+          URL_03: "https://uc637cb76d93cbd7c2699dc3fae5.dl.dropboxusercontent.com/cd/0/get/DHtFJAzoyW9umywX0sWqNqaq069Xyc6O8O5KXDIqRXLC9Q9NAEIQoY-aJKNK7kXThuZCFQmGsFAFkTcB9XTJMn3iWql43JmoS5LZRpespBXIhWMuNl6NhXyi1QuWXiZmG8loZhQxWvqx1ZKHuGH8_AppLRB39DZQFdnlRAxiRypk2Q/file?c_luid=649d2ac6"
+          URL_04: "https://uc8dae36f938cbd97a374877c4e9.dl.dropboxusercontent.com/cd/0/get/DHsfDa0Wj77wOKcuxi9wfwlFhr79N-5qcFmADTwSOstnVr9VJcex88C7-1XAEANaCbDoIAYwEyyviYTMhsH6kgPoheMukWJtwcsvM5-UuxQzZrkbZovdkNIA9QywaFW3ROkECCGRAFyCbrowDfhvcQQjw9ybo7zdTRJlAOMprBTQaQ/file?c_luid=649d2ac6"
+          URL_05: "https://uc87d97f722012fa077fe4f42450.dl.dropboxusercontent.com/cd/0/get/DHsfpbXdPTq7hE0tzev34Ey_UI627UW8vQbS7lzeIkFw88srBw1NiewJDNCT-27dXf1vDj_R_eKyssHYxnf5UNmNZFBejeMJ1aHOzuJAOehu6sjw10vUHm714YeF0g7Oi78f4nQHdbPJNtz7ZbdpZKyjjWybWegrT_EKhmfo-pfPlA/file?c_luid=649d2ac6"
+          URL_06: "https://uc973925f391f511c2f90388dce8.dl.dropboxusercontent.com/cd/0/get/DHsM5hPmkO2Xjtvdn_BMRI1V-Ri38g6toyvcbxDQ5fLoPcTtKBO03_2Kwuz1kPnNQJVrGxA8IMMcSOZ-kDOliogaQ5HyZTp3SBaMMW9unT-A6RuPPt29-CE1HGJB7fwl_Zpf1jLkNojmXLIBCzqICYex9uQAg4_km_eovClzgDht-g/file?c_luid=649d2ac6"
+          URL_07: "https://uc777a1d69f796b00afd7285d341.dl.dropboxusercontent.com/cd/0/get/DHvCn40rwyKXY9jcWrD1AwV9Io9Z24FTsTJr_QizERse2OCkIiFa3ibUrS48VxfspBNlbtvHc9wHRhDY33ytJjglV0EqosZwoaFE9r3kdRAthr6GlFOwG545zUMCM_HzQIxb6O6TeCmc0vevV2MVys7BflUgmBFfm1WyR3_VU6V_6Q/file?c_luid=649d2ac6"
+          URL_08: "https://uc50d8fd97d2dd3e721f1b01c384.dl.dropboxusercontent.com/cd/0/get/DHu2X-JWAE3fdcFQVSooLzyCojXq1dljbZtNHrfP23JseyqYTNWSnKUsDgJHMDRifmJjbd3Dm0LWjA_gbH88HJbnKFv8mG_Anyp9Mz2iB3uiyYVBOdC_H7KPwLgHqDAO1sdYILl8ohxkTbjfNoAPmcFZU3pO4MCmZ-Fc6d1kb6Gg8A/file?c_luid=649d2ac6"
+          URL_09: "https://uc653b97938e0ad24dbf618b9b50.dl.dropboxusercontent.com/cd/0/get/DHs2odsVROqO4WUn7tzLMmskAamz8lAhglRx7p04GBdLVQ3FO074_5eaw9zCjWI6U_hhU1eP-bDWH51gqejU9smmmBDpfThqJs8mQQ_wV7zGLpliN6D8Sop6wgPBl62v2bhJAZlWEIhCOF3b7bW0_jASpweaaAS48KFtLOLatsLRMg/file?c_luid=649d2ac6"
+          URL_10: "https://ucd0b64df973bbf9ea4b5f8c59c7.dl.dropboxusercontent.com/cd/0/get/DHs_a78vBeCxHTrRkH_PcloJVMfAl6t1FYsx5b2BjRGIaVjg_Zj5pkm8gON_tdpzQGA5LfVK_wUZxhl_xPXmvtMlOXcBho_TqaIGCk5rkf-iEZZkqpnrNBQonXUpDLWsee_WnWUFsLDNMjOHYSYp6yszQWSJey7KfCjgEoBjRDXEWw/file?c_luid=649d2ac6"
+          URL_11: "https://uc2098a8920e992baf26981c1c79.dl.dropboxusercontent.com/cd/0/get/DHvFYhr-WmJrhc4xHjeqto8mPvViW9ndX9-Wo9dSEq8G49eNgI8um_poL_v0xEHIfSAN6kyZHUEHmAdWnMy2MUeWv_maLzOArF90a0NkzVhxu2Pt8cUcx_-jsSSYjvboJCM9m4l9tjhww0OZi5r9TjrjXcHhclwVvDAKl3Nd61Q2VQ/file?c_luid=649d2ac6"
+          URL_12: "https://ucfc9b3f23fd4f250cc2714c4cd5.dl.dropboxusercontent.com/cd/0/get/DHv9GKKwO5yaDPAJXKJ-o06sr9i4SGT5edw-cck0PSnCt0RWYEL4cbiVgQ48mt9FCpWokj07YCrE0Ai7r-MkAHIO7XAHdSLj0w_TA5_sXfpE8XN6FhEvVlTSZp7nXbq-mkkCK5kXvwJjRIu1yObtUoA28Bun0ZbiSf9DW5BFF0o8yQ/file?c_luid=649d2ac6"
+          URL_13: "https://uc7f71e3b046fa880a7919c94cc9.dl.dropboxusercontent.com/cd/0/get/DHsegHtUexW9fFOEJzQk0f0u-QEQx03qQaRWAd1Xc6qM7xY8DWPEgAZm3FHTHg539hFGqcFX_FzMnviDthDvTWoGo5huM-nouDnWJv9axh-cOAi-bt0SkdLZImF2HsSyD-o25IC90DsC63bSA1Iip20JPoDamUE8K97kzeqeTmccOw/file?c_luid=649d2ac6"
+          URL_14: "https://uc68f01a9cbb0e6090018f16f139.dl.dropboxusercontent.com/cd/0/get/DHtsjKf2yM2TI3XK9r9WHgnidezTSY25wlI7X_5j1GgCmlz_sOgitc8eiyhCeromtqfoSBYzHBshJadXhlHRdhuLQDqVPo84Wnro3jLsLGhjZSJ6ZBt2FO6EXk076TQSazXXQKwMyyC8d7KwHoAUJ07S0I1tJi4h9r1HUfl3xgFfWg/file?c_luid=649d2ac6"
+        run: |
+          set -euo pipefail
+          mkdir -p staging
+          curl --fail --location --silent --show-error --retry 3 --output staging/part-00 "$URL_00"
+          curl --fail --location --silent --show-error --retry 3 --output staging/part-01 "$URL_01"
+          curl --fail --location --silent --show-error --retry 3 --output staging/part-02 "$URL_02"
+          curl --fail --location --silent --show-error --retry 3 --output staging/part-03 "$URL_03"
+          curl --fail --location --silent --show-error --retry 3 --output staging/part-04 "$URL_04"
+          curl --fail --location --silent --show-error --retry 3 --output staging/part-05 "$URL_05"
+          curl --fail --location --silent --show-error --retry 3 --output staging/part-06 "$URL_06"
+          curl --fail --location --silent --show-error --retry 3 --output staging/part-07 "$URL_07"
+          curl --fail --location --silent --show-error --retry 3 --output staging/part-08 "$URL_08"
+          curl --fail --location --silent --show-error --retry 3 --output staging/part-09 "$URL_09"
+          curl --fail --location --silent --show-error --retry 3 --output staging/part-10 "$URL_10"
+          curl --fail --location --silent --show-error --retry 3 --output staging/part-11 "$URL_11"
+          curl --fail --location --silent --show-error --retry 3 --output staging/part-12 "$URL_12"
+          curl --fail --location --silent --show-error --retry 3 --output staging/part-13 "$URL_13"
+          curl --fail --location --silent --show-error --retry 3 --output staging/part-14 "$URL_14"
+          cat staging/part-* > Aetherion_Reforged_v1.72.2_ANDROID_ASSET_FIX.apk
+          test "$(stat -c%s Aetherion_Reforged_v1.72.2_ANDROID_ASSET_FIX.apk)" = "479054145"
+          echo "bf4e05c85180b08f4937a40d032b35fd021c91f658d3d6c34e8fd9ef38422bd3  Aetherion_Reforged_v1.72.2_ANDROID_ASSET_FIX.apk" | sha256sum --check --strict
+      - name: Publish release asset
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          apk=Aetherion_Reforged_v1.72.2_ANDROID_ASSET_FIX.apk
+          if gh release view v1.72.2 >/dev/null 2>&1; then
+            gh release upload v1.72.2 "$apk" --clobber
+          else
+            gh release create v1.72.2 "$apk" --target "${GITHUB_SHA}" --title "Aetherion Reforged v1.72.2 (Android build 191)" --notes "Native Android asset-route repair for the supplied Valkorion and Lady Alexus 3D models. Includes the Continue, update-button, touch-color, and performance repairs. APK SHA-256: bf4e05c85180b08f4937a40d032b35fd021c91f658d3d6c34e8fd9ef38422bd3"
+          fi

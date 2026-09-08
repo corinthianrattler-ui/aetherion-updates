@@ -15,8 +15,8 @@ def main() -> None:
     manifest = json.loads((ROOT / "manifest.json").read_text(encoding="utf-8"))
     assert manifest["schema"] == 1
     assert manifest["enabled"] is True
-    assert manifest["latest"]["game_version"] == "1.70.0"
-    assert manifest["latest"]["android_version_code"] == 187
+    assert manifest["latest"]["game_version"] == "1.71.0"
+    assert manifest["latest"]["android_version_code"] == 188
     assert manifest["latest"]["min_updater_schema"] <= 1
     payloads = manifest["payloads"]
     portrait_root = ROOT / "custom" / "npc-portraits" / "v168"
@@ -48,6 +48,12 @@ def main() -> None:
         "assets/v170/jousting-arena.png",
         "assets/v170/duel-arena.png",
         "assets/v170/archery-range.png",
+        "patches/v1.71.0-safe-updater.js",
+        "patches/v1.71.0-update-center.js",
+        "patches/v1.71.0-character-models.js",
+        "assets/v171/valkorion-base-lord.glb",
+        "assets/v171/valkorion-armored.glb",
+        "assets/v171/libita-gothic-gown.glb",
     ]
     assert len({payload["path"] for payload in payloads}) == len(payloads)
 
@@ -68,10 +74,19 @@ def main() -> None:
         actual_hash = hashlib.sha256(data).hexdigest()
         assert payload["size"] == len(data), f"{payload['path']}: size mismatch"
         assert payload["sha256"] == actual_hash, f"{payload['path']}: SHA-256 mismatch"
-        assert payload["url"].endswith("/" + payload["path"]), f"{payload['path']}: URL mismatch"
+        if payload["path"].startswith("assets/v171/"):
+            assert payload["url"] == (
+                "https://github.com/corinthianrattler-ui/aetherion-updates/"
+                f"releases/download/v1.71.0/{path.name}"
+            ), f"{payload['path']}: release URL mismatch"
+        else:
+            assert payload["url"].endswith("/" + payload["path"]), f"{payload['path']}: URL mismatch"
         assert payload["restart_required"] is True
 
     assert manifest["save_policy"]["preserve_always"] is True
+    assert "Version 1.71.0 installs the supplied fitted Valkorion base body" in manifest["notes"]
+    assert "Libita Savitas gothic-ball-gown model" in manifest["notes"]
+    assert "100 MB Tripo/GitHub upload ceiling" in manifest["notes"]
     assert "Android build 187 restores the finished 40-piece assembled Valkorion kit" in manifest["notes"]
     assert "raw text/plain response" in manifest["notes"]
     assert "Continue and Game Updates remain reachable" in manifest["notes"]
@@ -79,7 +94,7 @@ def main() -> None:
     assert "zero portrait-record checks" in manifest["notes"]
     assert "110 new lore-matched" in manifest["notes"]
     assert "Quartermaster Halric Morn" in manifest["notes"]
-    print("manifest.json: 1.70.0 raw payload sizes and SHA-256 hashes passed")
+    print("manifest.json: 1.71.0 payload sizes, release URLs, and SHA-256 hashes passed")
 
 
 if __name__ == "__main__":

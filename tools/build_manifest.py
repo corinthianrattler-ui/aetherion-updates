@@ -10,6 +10,15 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 RAW_BASE = "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/"
+V171_RELEASE_BASE = (
+    "https://github.com/corinthianrattler-ui/"
+    "aetherion-updates/releases/download/v1.71.0/"
+)
+V171_ASSETS = {
+    "assets/v171/valkorion-base-lord.glb",
+    "assets/v171/valkorion-armored.glb",
+    "assets/v171/libita-gothic-gown.glb",
+}
 PORTRAIT_ROOT = ROOT / "custom" / "npc-portraits" / "v168"
 
 
@@ -19,9 +28,10 @@ def portrait_number(path: Path) -> int:
 
 def payload(path: str) -> dict[str, object]:
     data = (ROOT / path).read_bytes()
+    url = V171_RELEASE_BASE + Path(path).name if path in V171_ASSETS else RAW_BASE + path
     return {
         "path": path,
-        "url": RAW_BASE + path,
+        "url": url,
         "sha256": hashlib.sha256(data).hexdigest(),
         "size": len(data),
         "restart_required": True,
@@ -54,14 +64,20 @@ def main() -> None:
         "assets/v170/jousting-arena.png",
         "assets/v170/duel-arena.png",
         "assets/v170/archery-range.png",
+        "patches/v1.71.0-safe-updater.js",
+        "patches/v1.71.0-update-center.js",
+        "patches/v1.71.0-character-models.js",
+        "assets/v171/valkorion-base-lord.glb",
+        "assets/v171/valkorion-armored.glb",
+        "assets/v171/libita-gothic-gown.glb",
     ]
     manifest = {
         "schema": 1,
         "channel": "stable",
         "enabled": True,
         "latest": {
-            "game_version": "1.70.0",
-            "android_version_code": 187,
+            "game_version": "1.71.0",
+            "android_version_code": 188,
             "min_updater_schema": 1,
         },
         "manifest_url": RAW_BASE + "manifest.json",
@@ -71,7 +87,18 @@ def main() -> None:
         ),
         "payloads": [payload(path) for path in paths],
         "notes": (
-            "Android build 187 restores the finished 40-piece assembled Valkorion kit and "
+            "Version 1.71.0 installs the supplied fitted Valkorion base body, Lord's royal "
+            "armor, complete armored kit, and Libita Savitas gothic-ball-gown model in "
+            "Android build 188. The permanent Game Updates button shows the exact channel "
+            "address, received bytes, percentage, verification, install, and restart states. "
+            "The release preserves all model "
+            "part names and authored transforms; only the six weapon meshes received a 1% "
+            "upload-size pass, leaving Valkorion's body, armor, helmet, and cape geometry "
+            "untouched. Each GLB is below the 100 MB Tripo/GitHub upload ceiling. Base and "
+            "Lord modes switch fitted-node visibility without rebuilding or separating the "
+            "figure, complete armor changes the loaded source cleanly, and Libita's model "
+            "loads only inside her person or equipment view. Android build 187 restores the "
+            "finished 40-piece assembled Valkorion kit and "
             "playable Corvinus Keep jousting, armored-duel, and archery tournaments with the "
             "corrected heraldic scenes. The 106,006,128-byte finished GLB is bundled in the full "
             "APK because it exceeds GitHub's ordinary single-file repository limit. Rejected "

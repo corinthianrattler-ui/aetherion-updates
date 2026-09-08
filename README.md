@@ -4,7 +4,35 @@ Public update channel for **Aetherion Reforged**.
 
 The Android staged updater reads `channel.js` from this repository through a MIME-safe GitHub Contents response. `manifest.json` records the exact sizes and SHA-256 hashes of managed payloads.
 
-## Current stable APK — 1.70.0
+## Current full build — 1.71.0 (Android build 188)
+
+Version 1.71.0 bundles the new fitted character models directly in the full APK:
+
+- uses the supplied royal Valkorion model as two exact modes: the intact
+  ten-piece clothed base body and the complete 23-piece Lord's royal set with
+  gothic jewelry
+- switches to the supplied 40-piece complete kit whenever Valkorion equips
+  Dominus or House armor
+- adds the supplied 28-piece female-and-gown model to Libita Savitas's person
+  and equipment views, loading it only when her modal is opened
+- preserves the original model transforms and part names; base/Lord switching
+  changes visibility only, so fitted pieces are not exploded or rebuilt
+- keeps all body, armor, helmet, and cape geometry untouched; only the six
+  weapon meshes received a 1% size pass so the complete kit fits below the
+  100 MB Tripo/GitHub ceiling
+- retains touch rotation, front reset, bounded canvases, portrait fallbacks,
+  rollback protection, tournaments, and every earlier game system
+- adds a permanent gold **Game Updates** button above the Systems bar, plus the
+  same route in the Opening Menu and live Systems dock
+- displays the exact update address and shows connection, received bytes,
+  percentage, checksum verification, install, and restart states on screen
+- signs Android build 188 with both APK Signature Scheme v1 and the modern v2
+  whole-file signature required by current Android versions
+
+Exact model structure, hashes, upload sizes, and seam-protection checks are in
+[`assets/v171/README.md`](assets/v171/README.md) and `AUDIT_v1.71.0.md`.
+
+## Previous full APK foundation — 1.70.0
 
 Version 1.70.0 restores the finished character and tournament work to Android build 187:
 
@@ -164,6 +192,10 @@ node tests/test_v1692_updater.cjs
 node tests/test_v170_updater.cjs
 node tests/test_v170_valkorion.cjs
 node tests/test_v170_tournaments.cjs
+node tests/test_v171_character_models.cjs
+node tests/test_v171_channel.cjs
+node tests/test_v171_update_center.cjs
+python3 tests/validate_v171_models.py
 python3 tests/validate_v170_assets.py /path/to/extracted/assets/game
 python3 tests/validate_v168_portraits.py
 node --check patches/v1.63.0-valkorion-final.js
@@ -179,6 +211,9 @@ node --check patches/v1.69.2-safe-updater.js
 node --check patches/v1.70.0-safe-updater.js
 node --check patches/v1.70.0-valkorion-complete.js
 node --check patches/v1.70.0-tournaments.js
+node --check patches/v1.71.0-character-models.js
+node --check patches/v1.71.0-safe-updater.js
+node --check patches/v1.71.0-update-center.js
 node --check channel.js
 python3 tests/validate_v163_glb.py /path/to/downloaded/valkorion_final.glb
 ```

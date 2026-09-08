@@ -32,7 +32,7 @@ assert(crypto.createHash('sha256').update(source).digest('hex')===payload.sha256
 let feed=null;
 const channelWindow={AetherionUpdater:{receiveChannel(value){feed=value}}};
 vm.runInNewContext(fs.readFileSync('channel.js','utf8'),{window:channelWindow},{filename:'channel.js'});
-assert(feed?.release?.version==='1.72.1','stable channel version was not updated');
+assert(feed?.release?.version==='1.72.2','stable channel version was not updated');
 assert(feed.release.minimumBundled==='1.72.0','stable channel does not require the affected v1.72 APK');
 assert(!feed.release.modules.some(module=>module.id.includes('start-menu')),'bundled startup patch was unnecessarily offered for download');
 console.log('v1.69.1 start access: title gate, save preservation, updater buttons, and idempotence passed');

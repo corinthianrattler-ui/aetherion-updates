@@ -10,13 +10,13 @@ vm.runInNewContext(fs.readFileSync('channel.js','utf8'),{window},{filename:'chan
 assert(feed,'channel did not deliver a release');
 assert.equal(feed.schema,2);
 assert.equal(feed.channel,'stable');
-assert.equal(feed.release.version,'1.72.1');
-assert.equal(feed.release.build,190);
+assert.equal(feed.release.version,'1.72.2');
+assert.equal(feed.release.build,191);
 assert.equal(feed.release.minimumBundled,'1.72.0');
 assert.equal(feed.release.modules.length,1);
 
 const modules=[
- ['v1721-character-loader-hotfix','patches/v1.72.1-character-loader-hotfix.js']
+ ['v1722-full-apk-path','patches/v1.72.2-update-center.js']
 ];
 for(let index=0;index<modules.length;index++){
  const [id,path]=modules[index],entry=feed.release.modules[index],source=fs.readFileSync(path,'utf8');
@@ -24,7 +24,8 @@ for(let index=0;index<modules.length;index++){
  assert.equal(entry.sha256,crypto.createHash('sha256').update(source).digest('hex'));
 }
 
-assert.deepEqual(Object.keys(feed.release.assets),[],'the hotfix must reuse APK-local models without a 103 MB network stream');
+assert.deepEqual(Object.keys(feed.release.assets),[],'the native repair must use APK-local models without a large network stream');
 assert(fs.statSync('channel.js').size<=100000);
-assert(feed.release.notes.some(note=>note.includes('live v80 wardrobe hook')));
-console.log('v1.72.1 channel: exact hotfix checksum, APK-local models, build floor, and size limit passed');
+assert(feed.release.notes.some(note=>note.includes('required full APK')));
+assert(feed.release.notes.some(note=>note.includes('DOWNLOAD FULL APK')));
+console.log('v1.72.2 channel: exact full-APK handoff, APK-local models, build floor, and size limit passed');

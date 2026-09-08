@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build the bounded stable channel for the v1.72.1 wardrobe-loader repair."""
+"""Build the bounded stable channel for the v1.72.2 native asset-loader release."""
 
 from __future__ import annotations
 
@@ -11,7 +11,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 RAW = "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/"
 PATCHES = [
-    ("v1721-character-loader-hotfix", "patches/v1.72.1-character-loader-hotfix.js"),
+    ("v1722-full-apk-path", "patches/v1.72.2-update-center.js"),
 ]
 
 
@@ -30,20 +30,20 @@ def main() -> None:
         "schema": 2,
         "channel": "stable",
         "release": {
-            "version": "1.72.1",
-            "build": 190,
+            "version": "1.72.2",
+            "build": 191,
             "minimumBundled": "1.72.0",
-            "releasedAt": "2026-09-08T11:23:00Z",
+            "releasedAt": "2026-09-08T14:15:00Z",
             "notes": [
-                "Repairs the live v80 wardrobe hook that prevented the supplied 3D character models from replacing the flat portrait fallback.",
-                "Valkorion's base body, Lord's royal set, and complete 40-piece armor now connect to the Wardrobe Trunk viewer.",
-                "Lady Alexus's fitted gothic-gown model uses the same corrected loader path in her person and equipment views.",
-                "The verified v1.72 model files are unchanged; this update corrects only the loader connection.",
+                "Android build 191 is a required full APK: it replaces the blocked file:// model path with a secure internal HTTPS-style asset route.",
+                "The supplied Valkorion base body, Lord's royal set, complete 40-piece armor, and Lady Alexus model are bundled in that APK.",
+                "The full build uses shape-preserving mobile quantization, not mesh simplification, so fitted armor surfaces remain intact while memory use drops.",
+                "This staged patch adds the visible DOWNLOAD FULL APK path; installing the native APK is what activates the corrected 3D asset route.",
             ],
             "modules": modules,
-            # Build 189 already contains the verified GLBs. Keeping this empty
-            # makes the hotfix use those local files instead of streaming the
-            # same 103 MB back from GitHub when the wardrobe opens.
+            # The model payload is part of the signed APK. It cannot be fixed by
+            # a JavaScript-only staged update because Android blocks file://
+            # pages from reading GLB bytes.
             "assets": {},
         },
     }
@@ -59,7 +59,7 @@ def main() -> None:
     assert len(encoded) <= 100_000, "channel exceeds the bundled safe-updater limit"
     (ROOT / "channel.js").write_bytes(encoded)
     print(
-        f"channel.js: {len(modules)} modules, 0 remote assets, {len(encoded):,} bytes"
+        f"channel.js: {len(modules)} full-APK handoff module, 0 remote assets, {len(encoded):,} bytes"
     )
 
 

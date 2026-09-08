@@ -96,14 +96,18 @@ def main() -> None:
         "patches/v1.72.1-character-models.js",
         "patches/v1.72.1-runtime-repair.js",
         "patches/v1.72.1-character-loader-hotfix.js",
+        "patches/v1.72.2-safe-updater.js",
+        "patches/v1.72.2-update-center.js",
+        "patches/v1.72.2-character-models.js",
+        "patches/v1.72.2-runtime-repair.js",
     ]
     manifest = {
         "schema": 1,
         "channel": "stable",
         "enabled": True,
         "latest": {
-            "game_version": "1.72.1",
-            "android_version_code": 190,
+            "game_version": "1.72.2",
+            "android_version_code": 191,
             "min_updater_schema": 1,
         },
         "manifest_url": RAW_BASE + "manifest.json",
@@ -111,8 +115,31 @@ def main() -> None:
             "https://github.com/corinthianrattler-ui/"
             "aetherion-updates/releases/download/"
         ),
+        "android_apk": {
+            "version": "1.72.2",
+            "version_code": 191,
+            "filename": "Aetherion_Reforged_v1.72.2_ANDROID_ASSET_FIX.apk",
+            "url": (
+                "https://github.com/corinthianrattler-ui/aetherion-updates/"
+                "releases/download/v1.72.2/"
+                "Aetherion_Reforged_v1.72.2_ANDROID_ASSET_FIX.apk"
+            ),
+            "size": 479054145,
+            "sha256": "bf4e05c85180b08f4937a40d032b35fd021c91f658d3d6c34e8fd9ef38422bd3",
+            "signing_certificate_sha256": (
+                "ca8042f4758d9a056eb0748edfaad0cfd8a436ea7d35907c28b32c3f3afd5eb8"
+            ),
+        },
         "payloads": [payload(path) for path in paths],
         "notes": (
+            "Version 1.72.2 replaces the Android file:// game origin with a secure internal "
+            "HTTPS-style asset route, allowing the bundled Three.js loader to read the supplied "
+            "Valkorion and Lady Alexus GLBs. The full APK is required because this correction is "
+            "inside the native WebView shell; the staged channel adds a visible full-APK download "
+            "path and does not pretend JavaScript alone can replace it. File access remains disabled. "
+            "The APK's three fitted models use shape-preserving KHR_mesh_quantization without mesh "
+            "simplification, cutting their combined bytes and GPU attribute memory while retaining "
+            "all 23 base/Lord parts, 40 armor parts, 28 Lady Alexus parts, materials, and transforms. "
             "Version 1.72.1 repairs the live v80 wardrobe connection that was skipped when "
             "historical v97/v98 viewer globals were absent. The supplied Valkorion base, "
             "Lord, complete 40-piece armor, and Lady Alexus models now replace the flat "

@@ -15,9 +15,17 @@ def main() -> None:
     manifest = json.loads((ROOT / "manifest.json").read_text(encoding="utf-8"))
     assert manifest["schema"] == 1
     assert manifest["enabled"] is True
-    assert manifest["latest"]["game_version"] == "1.72.1"
-    assert manifest["latest"]["android_version_code"] == 190
+    assert manifest["latest"]["game_version"] == "1.72.2"
+    assert manifest["latest"]["android_version_code"] == 191
     assert manifest["latest"]["min_updater_schema"] <= 1
+    apk = manifest["android_apk"]
+    assert apk["version"] == "1.72.2"
+    assert apk["version_code"] == 191
+    assert apk["filename"] == "Aetherion_Reforged_v1.72.2_ANDROID_ASSET_FIX.apk"
+    assert apk["url"].endswith("/v1.72.2/" + apk["filename"])
+    assert apk["size"] == 479054145
+    assert apk["sha256"] == "bf4e05c85180b08f4937a40d032b35fd021c91f658d3d6c34e8fd9ef38422bd3"
+    assert apk["signing_certificate_sha256"] == "ca8042f4758d9a056eb0748edfaad0cfd8a436ea7d35907c28b32c3f3afd5eb8"
     payloads = manifest["payloads"]
     portrait_root = ROOT / "custom" / "npc-portraits" / "v168"
     portrait_paths = [
@@ -66,6 +74,10 @@ def main() -> None:
         "patches/v1.72.1-character-models.js",
         "patches/v1.72.1-runtime-repair.js",
         "patches/v1.72.1-character-loader-hotfix.js",
+        "patches/v1.72.2-safe-updater.js",
+        "patches/v1.72.2-update-center.js",
+        "patches/v1.72.2-character-models.js",
+        "patches/v1.72.2-runtime-repair.js",
     ]
     assert len({payload["path"] for payload in payloads}) == len(payloads)
 
@@ -101,6 +113,8 @@ def main() -> None:
         assert payload["restart_required"] is True
 
     assert manifest["save_policy"]["preserve_always"] is True
+    assert "Version 1.72.2 replaces the Android file:// game origin" in manifest["notes"]
+    assert "shape-preserving KHR_mesh_quantization without mesh simplification" in manifest["notes"]
     assert "Version 1.72.1 repairs the live v80 wardrobe connection" in manifest["notes"]
     assert "Version 1.72.0 repairs Continue" in manifest["notes"]
     assert "Lady Alexus Dominus's gothic-ball-gown model" in manifest["notes"]
@@ -112,7 +126,7 @@ def main() -> None:
     assert "zero portrait-record checks" in manifest["notes"]
     assert "110 new lore-matched" in manifest["notes"]
     assert "Quartermaster Halric Morn" in manifest["notes"]
-    print("manifest.json: 1.72.1 payload sizes, release URLs, and SHA-256 hashes passed")
+    print("manifest.json: 1.72.2 payload sizes, release URLs, and SHA-256 hashes passed")
 
 
 if __name__ == "__main__":

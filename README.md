@@ -4,7 +4,31 @@ Public update channel for **Aetherion Reforged**.
 
 The Android staged updater reads `channel.js` from this repository through a MIME-safe GitHub Contents response. `manifest.json` records the exact sizes and SHA-256 hashes of managed payloads.
 
-## Current full build — 1.72.1 (Android build 190)
+## Current full build — 1.72.2 (Android build 191)
+
+Version 1.72.2 is the native Android model-loader correction:
+
+- serves packaged game files through the secure
+  `https://appassets.androidplatform.net/assets/` origin instead of
+  `file:///android_asset/`, so WebView can actually read the bundled GLBs
+- keeps Android file access and universal-file access disabled
+- loads Valkorion's base body, Lord's royal set, complete 40-piece armor, and
+  Lady Alexus's gothic-gown model as verified local binary data
+- preserves every fitted mesh and authored transform; mobile optimization uses
+  attribute quantization only and does not simplify or fracture model surfaces
+- reduces the three runtime models from 103.4 MB to 75.7 MB and releases each
+  source buffer after Three.js finishes parsing it
+- reconnects the Wardrobe Trunk after every equipment render without a
+  full-page observer or continuous idle rendering
+- shows an explicit in-panel model error instead of silently hiding failures
+  behind the old flat portrait
+- adds a full-APK address and download control inside Game Updates; external
+  links open in the Android browser
+
+This repair requires the full signed APK because the failed asset route lived
+in the native WebView shell. Details are recorded in `AUDIT_v1.72.2.md`.
+
+## Previous full build — 1.72.1 (Android build 190)
 
 Version 1.72.1 is the armor-loader correction:
 
@@ -242,7 +266,12 @@ node tests/test_v1721_character_loader_hotfix.cjs
 node tests/test_v1721_character_models.cjs
 node tests/test_v1721_update_center.cjs
 node tests/test_v1721_runtime_repair.cjs
+node tests/test_v1722_android_shell.cjs
+node tests/test_v1722_character_models.cjs
+node tests/test_v1722_update_center.cjs
+node tests/test_v1722_runtime_repair.cjs
 python3 tests/validate_v172_models.py
+python3 tests/validate_v1722_mobile_models.py /path/to/APK/assets/game/assets/v172
 python3 tests/validate_v170_assets.py /path/to/extracted/assets/game
 python3 tests/validate_v168_portraits.py
 node --check patches/v1.63.0-valkorion-final.js
@@ -270,6 +299,10 @@ node --check patches/v1.72.1-character-models.js
 node --check patches/v1.72.1-safe-updater.js
 node --check patches/v1.72.1-update-center.js
 node --check patches/v1.72.1-runtime-repair.js
+node --check patches/v1.72.2-character-models.js
+node --check patches/v1.72.2-safe-updater.js
+node --check patches/v1.72.2-update-center.js
+node --check patches/v1.72.2-runtime-repair.js
 node --check channel.js
 python3 tests/validate_v163_glb.py /path/to/downloaded/valkorion_final.glb
 ```

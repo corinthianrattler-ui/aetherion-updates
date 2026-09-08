@@ -57,8 +57,9 @@ jobs:
         run: |
           set -euo pipefail
           apk=Aetherion_Reforged_v1.72.2_ANDROID_ASSET_FIX.apk
-          if gh release view v1.72.2 >/dev/null 2>&1; then
-            gh release upload v1.72.2 "$apk" --clobber
+          repo="$GITHUB_REPOSITORY"
+          if gh release view v1.72.2 --repo "$repo" >/dev/null 2>&1; then
+            gh release upload v1.72.2 "$apk" --repo "$repo" --clobber
           else
-            gh release create v1.72.2 "$apk" --target "${GITHUB_SHA}" --title "Aetherion Reforged v1.72.2 (Android build 191)" --notes "Native Android asset-route repair for the supplied Valkorion and Lady Alexus 3D models. Includes the Continue, update-button, touch-color, and performance repairs. APK SHA-256: bf4e05c85180b08f4937a40d032b35fd021c91f658d3d6c34e8fd9ef38422bd3"
+            gh release create v1.72.2 "$apk" --repo "$repo" --target "${GITHUB_SHA}" --title "Aetherion Reforged v1.72.2 (Android build 191)" --notes "Native Android asset-route repair for the supplied Valkorion and Lady Alexus 3D models. Includes the Continue, update-button, touch-color, and performance repairs. APK SHA-256: bf4e05c85180b08f4937a40d032b35fd021c91f658d3d6c34e8fd9ef38422bd3"
           fi

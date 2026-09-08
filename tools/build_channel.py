@@ -10,17 +10,8 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 RAW = "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/"
-RELEASE = (
-    "https://github.com/corinthianrattler-ui/"
-    "aetherion-updates/releases/download/v1.72.0/"
-)
 PATCHES = [
     ("v1721-character-loader-hotfix", "patches/v1.72.1-character-loader-hotfix.js"),
-]
-ASSETS = [
-    "assets/v172/valkorion-base-lord.glb",
-    "assets/v172/valkorion-armored.glb",
-    "assets/v172/alexus-gothic-gown.glb",
 ]
 
 
@@ -50,7 +41,10 @@ def main() -> None:
                 "The verified v1.72 model files are unchanged; this update corrects only the loader connection.",
             ],
             "modules": modules,
-            "assets": {path: RELEASE + Path(path).name for path in ASSETS},
+            # Build 189 already contains the verified GLBs. Keeping this empty
+            # makes the hotfix use those local files instead of streaming the
+            # same 103 MB back from GitHub when the wardrobe opens.
+            "assets": {},
         },
     }
     payload = json.dumps(feed, ensure_ascii=False, separators=(",", ":"))
@@ -65,7 +59,7 @@ def main() -> None:
     assert len(encoded) <= 100_000, "channel exceeds the bundled safe-updater limit"
     (ROOT / "channel.js").write_bytes(encoded)
     print(
-        f"channel.js: {len(modules)} modules, {len(ASSETS)} assets, {len(encoded):,} bytes"
+        f"channel.js: {len(modules)} modules, 0 remote assets, {len(encoded):,} bytes"
     )
 
 

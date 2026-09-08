@@ -20,6 +20,8 @@ but no live wardrobe render ever requested them.
   compatibility paths.
 - Ship a narrow staged hotfix that reconnects the already-loaded v1.72 model
   controller without replacing model files.
+- Leave the channel's remote-asset map empty so affected build 189 installations
+  use their bundled GLBs instead of streaming the same 103 MB again.
 - Bundle the corrected full model patch in Android build 190, followed by the
   same idempotent connection hotfix as a defensive check.
 

@@ -24,18 +24,7 @@ for(let index=0;index<modules.length;index++){
  assert.equal(entry.sha256,crypto.createHash('sha256').update(source).digest('hex'));
 }
 
-const expected=[
- 'assets/v172/valkorion-base-lord.glb',
- 'assets/v172/valkorion-armored.glb',
- 'assets/v172/alexus-gothic-gown.glb'
-];
-assert.deepEqual(Object.keys(feed.release.assets),expected);
-for(const path of expected){
- assert.equal(
-  feed.release.assets[path],
-  `https://github.com/corinthianrattler-ui/aetherion-updates/releases/download/v1.72.0/${path.split('/').pop()}`
- );
-}
+assert.deepEqual(Object.keys(feed.release.assets),[],'the hotfix must reuse APK-local models without a 103 MB network stream');
 assert(fs.statSync('channel.js').size<=100000);
 assert(feed.release.notes.some(note=>note.includes('live v80 wardrobe hook')));
-console.log('v1.72.1 channel: exact hotfix checksum, trusted model routes, build floor, and size limit passed');
+console.log('v1.72.1 channel: exact hotfix checksum, APK-local models, build floor, and size limit passed');

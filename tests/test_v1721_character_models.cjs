@@ -3,7 +3,7 @@ const assert=require('node:assert/strict');
 const fs=require('node:fs');
 const vm=require('node:vm');
 
-const source=fs.readFileSync('patches/v1.72.0-character-models.js','utf8');
+const source=fs.readFileSync('patches/v1.72.1-character-models.js','utf8');
 function classes(){
  const values=new Set();
  return{values,add:(...names)=>names.forEach(name=>values.add(name)),remove:(...names)=>names.forEach(name=>values.delete(name))};
@@ -73,11 +73,11 @@ const context={
 };
 context.window=context;
 vm.createContext(context);
-vm.runInContext(source,context,{filename:'v1.72.0-character-models.js'});
+vm.runInContext(source,context,{filename:'v1.72.1-character-models.js'});
 
 (async()=>{
  const api=context.AetherionCharacterModelsV172;
- assert.equal(api.version,'1.72.0');
+ assert.equal(api.version,'1.72.1');
  assert.equal(api.mode(),'base');
  assert.equal(api.playerKind(),'foundation');
  assert.equal(context.v80Sync,api.sync,'the bundled v80 sync hook must be replaced when legacy v97/v98 globals are absent');
@@ -132,5 +132,5 @@ vm.runInContext(source,context,{filename:'v1.72.0-character-models.js'});
  assert.equal(context.closeModal(),'modal-closed');assert.equal(closeCalls,1);
  assert.equal(api.state().alexus.ready,false,'closing Lady Alexus must release her large viewer');
  assert.equal(fitCalls,0,'a fitted multi-million-vertex model must not be rescanned on every screen render');
- console.log('v1.72.0 character models: optimized loading, base/Lord/armor switching, Lady Alexus mount, and viewer disposal passed');
+ console.log('v1.72.1 character models: live v80 hook, base/Lord/armor switching, Lady Alexus mount, and viewer disposal passed');
 })().catch(error=>{console.error(error);process.exitCode=1});

@@ -15,8 +15,8 @@ def main() -> None:
     manifest = json.loads((ROOT / "manifest.json").read_text(encoding="utf-8"))
     assert manifest["schema"] == 1
     assert manifest["enabled"] is True
-    assert manifest["latest"]["game_version"] == "1.72.0"
-    assert manifest["latest"]["android_version_code"] == 189
+    assert manifest["latest"]["game_version"] == "1.72.1"
+    assert manifest["latest"]["android_version_code"] == 190
     assert manifest["latest"]["min_updater_schema"] <= 1
     payloads = manifest["payloads"]
     portrait_root = ROOT / "custom" / "npc-portraits" / "v168"
@@ -61,6 +61,11 @@ def main() -> None:
         "assets/v172/valkorion-base-lord.glb",
         "assets/v172/valkorion-armored.glb",
         "assets/v172/alexus-gothic-gown.glb",
+        "patches/v1.72.1-safe-updater.js",
+        "patches/v1.72.1-update-center.js",
+        "patches/v1.72.1-character-models.js",
+        "patches/v1.72.1-runtime-repair.js",
+        "patches/v1.72.1-character-loader-hotfix.js",
     ]
     assert len({payload["path"] for payload in payloads}) == len(payloads)
 
@@ -96,6 +101,7 @@ def main() -> None:
         assert payload["restart_required"] is True
 
     assert manifest["save_policy"]["preserve_always"] is True
+    assert "Version 1.72.1 repairs the live v80 wardrobe connection" in manifest["notes"]
     assert "Version 1.72.0 repairs Continue" in manifest["notes"]
     assert "Lady Alexus Dominus's gothic-ball-gown model" in manifest["notes"]
     assert "50 MB mobile and Tripo target" in manifest["notes"]
@@ -106,7 +112,7 @@ def main() -> None:
     assert "zero portrait-record checks" in manifest["notes"]
     assert "110 new lore-matched" in manifest["notes"]
     assert "Quartermaster Halric Morn" in manifest["notes"]
-    print("manifest.json: 1.72.0 payload sizes, release URLs, and SHA-256 hashes passed")
+    print("manifest.json: 1.72.1 payload sizes, release URLs, and SHA-256 hashes passed")
 
 
 if __name__ == "__main__":

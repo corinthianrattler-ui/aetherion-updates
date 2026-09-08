@@ -4,7 +4,25 @@ Public update channel for **Aetherion Reforged**.
 
 The Android staged updater reads `channel.js` from this repository through a MIME-safe GitHub Contents response. `manifest.json` records the exact sizes and SHA-256 hashes of managed payloads.
 
-## Current full build — 1.72.0 (Android build 189)
+## Current full build — 1.72.1 (Android build 190)
+
+Version 1.72.1 is the armor-loader correction:
+
+- connects the supplied character-model controller to the live `v80` Wardrobe
+  Trunk viewer actually bundled in the Android app
+- prevents missing historical `v97`/`v98` viewer globals from aborting that
+  connection before Valkorion's model can load
+- replaces the flat white-clothes portrait fallback with Valkorion's base body,
+  Lord's royal set, or complete 40-piece armor as his equipment changes
+- applies the same corrected model path to Lady Alexus's fitted gothic gown
+- reuses the exact verified v1.72 GLB files; no model geometry, fitted parts,
+  materials, textures, or transforms were changed
+- retains the Continue, menu, touch-color, and mobile-performance repairs from
+  1.72.0
+
+The failure and regression coverage are recorded in `AUDIT_v1.72.1.md`.
+
+## Previous full build — 1.72.0 (Android build 189)
 
 Version 1.72.0 is the mobile repair build:
 
@@ -220,6 +238,10 @@ node tests/test_v172_character_models.cjs
 node tests/test_v172_channel.cjs
 node tests/test_v172_update_center.cjs
 node tests/test_v172_runtime_repair.cjs
+node tests/test_v1721_character_loader_hotfix.cjs
+node tests/test_v1721_character_models.cjs
+node tests/test_v1721_update_center.cjs
+node tests/test_v1721_runtime_repair.cjs
 python3 tests/validate_v172_models.py
 python3 tests/validate_v170_assets.py /path/to/extracted/assets/game
 python3 tests/validate_v168_portraits.py
@@ -243,6 +265,11 @@ node --check patches/v1.72.0-character-models.js
 node --check patches/v1.72.0-safe-updater.js
 node --check patches/v1.72.0-update-center.js
 node --check patches/v1.72.0-runtime-repair.js
+node --check patches/v1.72.1-character-loader-hotfix.js
+node --check patches/v1.72.1-character-models.js
+node --check patches/v1.72.1-safe-updater.js
+node --check patches/v1.72.1-update-center.js
+node --check patches/v1.72.1-runtime-repair.js
 node --check channel.js
 python3 tests/validate_v163_glb.py /path/to/downloaded/valkorion_final.glb
 ```

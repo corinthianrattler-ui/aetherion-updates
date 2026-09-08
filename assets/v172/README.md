@@ -14,3 +14,6 @@ unchanged.
 Together they are 103,423,728 bytes, down from 234,686,708 bytes. Each file is
 below 50 MB for the intended mobile and Tripo upload path, and none requires a
 non-core glTF decoder extension.
+
+Version 1.72.1 reuses these exact verified bytes and repairs only the live v80
+Wardrobe Trunk loader connection.

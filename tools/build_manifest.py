@@ -91,14 +91,19 @@ def main() -> None:
         "assets/v172/valkorion-base-lord.glb",
         "assets/v172/valkorion-armored.glb",
         "assets/v172/alexus-gothic-gown.glb",
+        "patches/v1.72.1-safe-updater.js",
+        "patches/v1.72.1-update-center.js",
+        "patches/v1.72.1-character-models.js",
+        "patches/v1.72.1-runtime-repair.js",
+        "patches/v1.72.1-character-loader-hotfix.js",
     ]
     manifest = {
         "schema": 1,
         "channel": "stable",
         "enabled": True,
         "latest": {
-            "game_version": "1.72.0",
-            "android_version_code": 189,
+            "game_version": "1.72.1",
+            "android_version_code": 190,
             "min_updater_schema": 1,
         },
         "manifest_url": RAW_BASE + "manifest.json",
@@ -108,7 +113,12 @@ def main() -> None:
         ),
         "payloads": [payload(path) for path in paths],
         "notes": (
-            "Version 1.72.0 repairs Continue, removes the floating gold update control and "
+            "Version 1.72.1 repairs the live v80 wardrobe connection that was skipped when "
+            "historical v97/v98 viewer globals were absent. The supplied Valkorion base, "
+            "Lord, complete 40-piece armor, and Lady Alexus models now replace the flat "
+            "portrait fallback in their actual viewers. The verified v1.72 model files are "
+            "unchanged; Android build 190 corrects the loader hook and retains every v1.72 "
+            "mobile optimization. Version 1.72.0 repairs Continue, removes the floating gold update control and "
             "Android blue tap flash, and keeps Game Updates inside the opening menu and Systems. "
             "Android build 189 uses the supplied fitted Valkorion base body, Lord's royal "
             "armor, complete armored kit, and his twin sister Lady Alexus Dominus's gothic-ball-gown model. The release "

@@ -1,7 +1,7 @@
-/* Aetherion Reforged v1.72.0 — mobile-fitted Valkorion and Lady Alexus models. */
+/* Aetherion Reforged v1.72.1 — mobile-fitted Valkorion and Lady Alexus models. */
 'use strict';
 (()=>{
- const VERSION='1.72.0';
+ const VERSION='1.72.1';
  const ROOT='ROOT';
  const MODELS=Object.freeze({
   base:'assets/v172/valkorion-base-lord.glb',
@@ -108,7 +108,7 @@
   for(const node of named(viewer))map[node.name]=node.name===ROOT||selected==='lord'||node.name.startsWith(HUMAN_PREFIX);
   try{viewer.setNodesVisible?.(map)}catch(error){
    for(const[name,shown]of Object.entries(map))try{viewer.setNodeVisible?.(name,shown)}catch(_){ }
-   console.warn?.('[Aetherion 1.72.0 Valkorion visibility]',error);
+   console.warn?.('[Aetherion 1.72.1 Valkorion visibility]',error);
   }
   return map;
  }
@@ -157,7 +157,7 @@
    box.innerHTML='<b>CHARACTER MODEL COULD NOT OPEN</b><span>The wardrobe still works. Reopen Equipment to retry.</span>';
    node.appendChild(box);
   }catch(_){ }
-  console.error?.('[Aetherion 1.72.0 Valkorion]',error);
+  console.error?.('[Aetherion 1.72.1 Valkorion]',error);
  }
  async function syncValkorion(){
   if(typeof currentTab!=='undefined'&&currentTab!=='equipment')return state();
@@ -257,12 +257,12 @@
    if(error?.code==='AETHERION_STALE_MODEL')return null;
    runtime.alexus.error=String(error?.message||error);card.classList?.remove?.('v172-alexus-loading');card.classList?.add?.('v172-alexus-error');
    const host=card?.querySelector?.('.v172-alexus-host');if(host)host.textContent='3D MODEL COULD NOT OPEN — close and reopen Alexus to retry.';
-   console.error?.('[Aetherion 1.72.0 Alexus]',error);return null;
+   console.error?.('[Aetherion 1.72.1 Alexus]',error);return null;
   }
  }
  function scheduleAlexus(){
   if(runtime.alexus.scheduled)return null;runtime.alexus.scheduled=true;
-  const run=()=>{runtime.alexus.scheduled=false;mountAlexus().catch(error=>console.error?.('[Aetherion 1.72.0 Alexus mount]',error))};
+  const run=()=>{runtime.alexus.scheduled=false;mountAlexus().catch(error=>console.error?.('[Aetherion 1.72.1 Alexus mount]',error))};
   if(typeof requestAnimationFrame==='function')requestAnimationFrame(run);else setTimeout(run,0);
  }
  function wrapPersonViews(){
@@ -271,12 +271,12 @@
    if(typeof openPerson==='function'){
     const base=openPerson;openPerson=function(id,...args){const target=isAlexus(id),out=base.call(this,id,...args);if(target){tagAlexusModel();scheduleAlexus()}return out};
    }
-  }catch(error){console.warn?.('[Aetherion 1.72.0 Alexus profile hook]',error)}
+  }catch(error){console.warn?.('[Aetherion 1.72.1 Alexus profile hook]',error)}
   try{
    if(typeof v16PersonEquipment==='function'){
     const base=v16PersonEquipment;v16PersonEquipment=function(id,...args){const target=isAlexus(id),out=base.call(this,id,...args);if(target){tagAlexusModel();scheduleAlexus()}return out};
    }
-  }catch(error){console.warn?.('[Aetherion 1.72.0 Alexus equipment hook]',error)}
+  }catch(error){console.warn?.('[Aetherion 1.72.1 Alexus equipment hook]',error)}
   try{
    if(typeof closeModal==='function'){
     const base=closeModal;closeModal=function(...args){
@@ -284,7 +284,7 @@
      const out=base.apply(this,args);if(hadAlexus&&typeof currentTab!=='undefined'&&currentTab==='equipment')setTimeout(scheduleValkorion,0);return out;
     };
    }
-  }catch(error){console.warn?.('[Aetherion 1.72.0 Alexus close hook]',error)}
+  }catch(error){console.warn?.('[Aetherion 1.72.1 Alexus close hook]',error)}
  }
  function installStyles(){
   if(typeof document!=='object'||document.getElementById?.('aetherion-v172-character-models'))return;
@@ -318,7 +318,7 @@
   if(typeof v98Sync==='function')v98Sync=syncValkorion;
   if(typeof v98PlayerKind==='function')v98PlayerKind=playerKind;
   if(typeof v98ApplyCreator==='function')v98ApplyCreator=applyCreator;
- }catch(error){console.warn?.('[Aetherion 1.72.0 viewer hooks]',error)}
- setTimeout(()=>{try{tagAlexusModel();if(typeof currentTab!=='undefined'&&currentTab==='equipment')scheduleValkorion()}catch(error){console.warn?.('[Aetherion 1.72.0 start]',error)}},100);
+ }catch(error){console.warn?.('[Aetherion 1.72.1 viewer hooks]',error)}
+ setTimeout(()=>{try{tagAlexusModel();if(typeof currentTab!=='undefined'&&currentTab==='equipment')scheduleValkorion()}catch(error){console.warn?.('[Aetherion 1.72.1 start]',error)}},100);
  window.AetherionCharacterModelsV172=Object.freeze({version:VERSION,models:MODELS,labels:LABELS,mode,playerKind,sync:syncValkorion,schedule:scheduleValkorion,mountAlexus,state});
 })();

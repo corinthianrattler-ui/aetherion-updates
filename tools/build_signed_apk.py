@@ -17,7 +17,7 @@ import zipfile
 from cryptography import x509
 from cryptography.hazmat.primitives import hashes, serialization
 from cryptography.hazmat.primitives.asymmetric import padding, rsa
-from cryptography.hazmat.primitives.serialization import pkcs7
+from cryptography.hazmat.primitives.serialization import pkcs7, pkcs12
 from cryptography.x509.oid import NameOID
 
 
@@ -259,6 +259,23 @@ def make_signer() -> tuple[rsa.RSAPrivateKey, x509.Certificate]:
         .add_extension(x509.BasicConstraints(ca=False, path_length=None), critical=True)
         .sign(key, hashes.SHA256())
     )
+    return key, certificate
+
+
+def load_signer(
+    archive: Path,
+    password_environment: str,
+) -> tuple[rsa.RSAPrivateKey, x509.Certificate]:
+    password = os.environ.get(password_environment)
+    if password is None:
+        raise ValueError(
+            f"signing password environment variable {password_environment!r} is not set"
+        )
+    key, certificate, _ = pkcs12.load_key_and_certificates(
+        archive.read_bytes(), password.encode("utf-8")
+    )
+    if not isinstance(key, rsa.RSAPrivateKey) or certificate is None:
+        raise ValueError("PKCS#12 archive does not contain an RSA signing key and certificate")
     return key, certificate
 
 
@@ -516,11 +533,25 @@ def main() -> None:
         default=[],
         help="Exact archive path or directory prefix to omit from the rebuilt APK",
     )
+    parser.add_argument(
+        "--pkcs12",
+        type=Path,
+        help="Existing PKCS#12 signing archive for update-compatible APKs",
+    )
+    parser.add_argument(
+        "--pkcs12-password-env",
+        default="AETHERION_SIGNING_PASSWORD",
+        help="Environment variable containing the PKCS#12 password",
+    )
     args = parser.parse_args()
     args.output.parent.mkdir(parents=True, exist_ok=True)
     compact_apk_without_signatures(args.base, args.output, tuple(args.exclude))
     add_payload(args.output, args.payload)
-    key, certificate = make_signer()
+    key, certificate = (
+        load_signer(args.pkcs12, args.pkcs12_password_env)
+        if args.pkcs12
+        else make_signer()
+    )
     sign_v1(args.output, key, certificate)
     verify_manifest(args.output)
     sign_v2(args.output, key, certificate)

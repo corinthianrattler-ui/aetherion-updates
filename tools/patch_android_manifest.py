@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Apply the same-width v1.70/build 187 to v1.71/build 188 Android manifest update."""
+"""Apply a same-width Android version name/code update to a binary manifest."""
 
 from pathlib import Path
 import argparse
@@ -9,17 +9,23 @@ def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("source", type=Path)
     parser.add_argument("destination", type=Path)
+    parser.add_argument("--from-version", default="1.70.0")
+    parser.add_argument("--to-version", default="1.71.0")
+    parser.add_argument("--from-code", type=int, default=187)
+    parser.add_argument("--to-code", type=int, default=188)
     args = parser.parse_args()
     body = args.source.read_bytes()
-    old_name = "1.70.0".encode("utf-16le")
-    new_name = "1.71.0".encode("utf-16le")
+    old_name = args.from_version.encode("utf-16le")
+    new_name = args.to_version.encode("utf-16le")
+    if len(old_name) != len(new_name):
+        raise ValueError("binary manifest version names must have the same encoded width")
     if body.count(old_name) != 1:
-        raise ValueError("expected exactly one v1.70.0 string in AndroidManifest.xml")
+        raise ValueError(f"expected exactly one {args.from_version} string in AndroidManifest.xml")
     body = body.replace(old_name, new_name)
-    old_code = (187).to_bytes(4, "little")
-    new_code = (188).to_bytes(4, "little")
+    old_code = args.from_code.to_bytes(4, "little")
+    new_code = args.to_code.to_bytes(4, "little")
     if body.count(old_code) != 1:
-        raise ValueError("expected exactly one Android build 187 value in AndroidManifest.xml")
+        raise ValueError(f"expected exactly one Android build {args.from_code} value in AndroidManifest.xml")
     body = body.replace(old_code, new_code)
     args.destination.parent.mkdir(parents=True, exist_ok=True)
     args.destination.write_bytes(body)

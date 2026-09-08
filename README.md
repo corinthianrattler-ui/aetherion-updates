@@ -4,7 +4,28 @@ Public update channel for **Aetherion Reforged**.
 
 The Android staged updater reads `channel.js` from this repository through a MIME-safe GitHub Contents response. `manifest.json` records the exact sizes and SHA-256 hashes of managed payloads.
 
-## Current full build — 1.71.0 (Android build 188)
+## Current full build — 1.72.0 (Android build 189)
+
+Version 1.72.0 is the mobile repair build:
+
+- makes **Continue** reliably migrate and open the existing timeline
+- removes the floating gold **Game Updates** control; updates remain reachable
+  from the Opening Menu and the Systems dock
+- removes Android's blue tap flash while retaining a visible keyboard-focus ring
+- loads Valkorion's supplied base, Lord, and complete-armor models and his twin
+  sister Lady Alexus Dominus's supplied gothic-gown model from local APK assets
+- preserves every fitted node, material, texture, and authored transform while
+  reducing the three GLBs from 234.7 MB to 103.4 MB with bounded-error,
+  border-locked mobile geometry
+- removes three full-document mutation loops, continuous 24 FPS idle model
+  rendering, repeated geometry reframing, and duplicate render scheduling
+- signs Android build 189 with the established Aetherion repair identity using
+  APK Signature Scheme v1 and v2
+
+Exact model structure and checksums are in
+[`assets/v172/README.md`](assets/v172/README.md) and `AUDIT_v1.72.0.md`.
+
+## Previous full build — 1.71.0 (Android build 188)
 
 Version 1.71.0 bundles the new fitted character models directly in the full APK:
 
@@ -193,9 +214,13 @@ node tests/test_v170_updater.cjs
 node tests/test_v170_valkorion.cjs
 node tests/test_v170_tournaments.cjs
 node tests/test_v171_character_models.cjs
-node tests/test_v171_channel.cjs
 node tests/test_v171_update_center.cjs
 python3 tests/validate_v171_models.py
+node tests/test_v172_character_models.cjs
+node tests/test_v172_channel.cjs
+node tests/test_v172_update_center.cjs
+node tests/test_v172_runtime_repair.cjs
+python3 tests/validate_v172_models.py
 python3 tests/validate_v170_assets.py /path/to/extracted/assets/game
 python3 tests/validate_v168_portraits.py
 node --check patches/v1.63.0-valkorion-final.js
@@ -214,6 +239,10 @@ node --check patches/v1.70.0-tournaments.js
 node --check patches/v1.71.0-character-models.js
 node --check patches/v1.71.0-safe-updater.js
 node --check patches/v1.71.0-update-center.js
+node --check patches/v1.72.0-character-models.js
+node --check patches/v1.72.0-safe-updater.js
+node --check patches/v1.72.0-update-center.js
+node --check patches/v1.72.0-runtime-repair.js
 node --check channel.js
 python3 tests/validate_v163_glb.py /path/to/downloaded/valkorion_final.glb
 ```

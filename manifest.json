@@ -3,8 +3,8 @@
   "channel": "stable",
   "enabled": true,
   "latest": {
-    "game_version": "1.71.0",
-    "android_version_code": 188,
+    "game_version": "1.72.0",
+    "android_version_code": 189,
     "min_updater_schema": 1
   },
   "manifest_url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/manifest.json",
@@ -954,9 +954,58 @@
       "sha256": "5941aa40b5c08b2e71b04a39665a11129d5960312361d513fa3f76d34b0df2f9",
       "size": 97544908,
       "restart_required": true
+    },
+    {
+      "path": "patches/v1.72.0-safe-updater.js",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/patches/v1.72.0-safe-updater.js",
+      "sha256": "4ae61fb8f3a75c0b6139826d30d8006a38cd3b163c2295eefd0c081ec971577f",
+      "size": 24156,
+      "restart_required": true
+    },
+    {
+      "path": "patches/v1.72.0-update-center.js",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/patches/v1.72.0-update-center.js",
+      "sha256": "171f308062cf55f16a201e9701177216d998dd16267583091ab574d4cfef0f61",
+      "size": 12982,
+      "restart_required": true
+    },
+    {
+      "path": "patches/v1.72.0-character-models.js",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/patches/v1.72.0-character-models.js",
+      "sha256": "17a0040e9e1fd39995b775c84b0e7fd21a46b1228608ba86d0b35dd8bce6fe51",
+      "size": 19946,
+      "restart_required": true
+    },
+    {
+      "path": "patches/v1.72.0-runtime-repair.js",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/patches/v1.72.0-runtime-repair.js",
+      "sha256": "5542140a2a3618f76ff4b73535bcae438443076258a75b1e2940719e65524d60",
+      "size": 4392,
+      "restart_required": true
+    },
+    {
+      "path": "assets/v172/valkorion-base-lord.glb",
+      "url": "https://github.com/corinthianrattler-ui/aetherion-updates/releases/download/v1.72.0/valkorion-base-lord.glb",
+      "sha256": "c15bee80cec479f90b7a53d5fb08fb12099f7750c3847335ba14a5bd064acd72",
+      "size": 21148428,
+      "restart_required": true
+    },
+    {
+      "path": "assets/v172/valkorion-armored.glb",
+      "url": "https://github.com/corinthianrattler-ui/aetherion-updates/releases/download/v1.72.0/valkorion-armored.glb",
+      "sha256": "5e203593a2289b6f74d191630cad5cbe3c760065f2980c057a9dacabe87479fe",
+      "size": 42261516,
+      "restart_required": true
+    },
+    {
+      "path": "assets/v172/alexus-gothic-gown.glb",
+      "url": "https://github.com/corinthianrattler-ui/aetherion-updates/releases/download/v1.72.0/alexus-gothic-gown.glb",
+      "sha256": "12ba557524188ccb30b11bec2e5b84a6053b1796727999aef57ea211ee946399",
+      "size": 40013784,
+      "restart_required": true
     }
   ],
-  "notes": "Version 1.71.0 installs the supplied fitted Valkorion base body, Lord's royal armor, complete armored kit, and Libita Savitas gothic-ball-gown model in Android build 188. The permanent Game Updates button shows the exact channel address, received bytes, percentage, verification, install, and restart states. The release preserves all model part names and authored transforms; only the six weapon meshes received a 1% upload-size pass, leaving Valkorion's body, armor, helmet, and cape geometry untouched. Each GLB is below the 100 MB Tripo/GitHub upload ceiling. Base and Lord modes switch fitted-node visibility without rebuilding or separating the figure, complete armor changes the loaded source cleanly, and Libita's model loads only inside her person or equipment view. Android build 187 restores the finished 40-piece assembled Valkorion kit and playable Corvinus Keep jousting, armored-duel, and archery tournaments with the corrected heraldic scenes. The 106,006,128-byte finished GLB is bundled in the full APK because it exceeds GitHub's ordinary single-file repository limit. Rejected exploded, simplified, empty-arena, and rain-only variants are not active. Existing saves and all prior game systems are preserved. The bundled updater retrieves the stable channel through GitHub's JavaScript-safe Contents response, decodes the exact channel bytes locally, and retains a script-safe CDN fallback; it no longer asks Android to execute GitHub's raw text/plain response. The startup access repair is bundled into the APK: every app launch now stops at the opening menu, even when an autosave exists, so Continue and Game Updates remain reachable without deleting any timeline. Game Updates is also kept in the live Systems dock. The safe updater receives complete patch source before activation; enforces per-module SHA-256 checks, strict size limits, and trusted asset origins; stages updates locally; retains the previous release; automatically rolls back an update that cannot finish starting; and provides Safe Start once plus a permanent return to the built-in version without deleting game saves. It also retains the startup and gameplay hotfix for the curated portrait update. Removes whole-world identity and portrait scans from render, list-view, portrait-view, daily-tick, and already-migrated save paths; save migration now runs once per version and new NPC creation remains checked at its source. A 1,219-person stress save now performs zero portrait-record checks across repeated redraws. The library still installs 110 new lore-matched, labeled full-body NPC portraits plus the unchanged original Quartermaster role portrait. Every image is explicitly tagged for sex, visual age band, race, occupation, faction, mounted status, and individual-person use. Routing is deterministic and location-aware; one curated face cannot be assigned twice in the active world. Exact named-character art remains locked, including Quartermaster Halric Morn, Kael, Valkorion, Alexus, Libita, Nessa, surgeons, officers, and unique companions. Incompatible or unavailable art falls back without changing identity or save progress. The 19.91 MiB library covers human, dwarf, elf, dark-elf, ordinary-orc, Grimhorn beast-orc, civilian, child, infant, elder, knight, guard, rider, and lore-faction roles. All prior economy, shop, wine, wage, dialogue, Narrator, Sophia Help, item-purpose, and world-integrity repairs remain active. Existing saves are preserved. Restart after applying.",
+  "notes": "Version 1.72.0 repairs Continue, removes the floating gold update control and Android blue tap flash, and keeps Game Updates inside the opening menu and Systems. Android build 189 uses the supplied fitted Valkorion base body, Lord's royal armor, complete armored kit, and his twin sister Lady Alexus Dominus's gothic-ball-gown model. The release preserves every fitted model part and authored transform while using bounded-error mobile geometry; all three GLBs are below the 50 MB mobile and Tripo target. It also removes repeated full-page observers, continuous idle rendering, and repeated model reframing. The Game Updates screen shows the exact channel address, received bytes, percentage, verification, install, and restart states. Base and Lord modes switch fitted-node visibility without rebuilding or separating the figure, complete armor changes the loaded source cleanly, and Lady Alexus's model loads only inside her person or equipment view. Android build 187 restores the finished 40-piece assembled Valkorion kit and playable Corvinus Keep jousting, armored-duel, and archery tournaments with the corrected heraldic scenes. The 106,006,128-byte finished GLB is bundled in the full APK because it exceeds GitHub's ordinary single-file repository limit. Rejected exploded, simplified, empty-arena, and rain-only variants are not active. Existing saves and all prior game systems are preserved. The bundled updater retrieves the stable channel through GitHub's JavaScript-safe Contents response, decodes the exact channel bytes locally, and retains a script-safe CDN fallback; it no longer asks Android to execute GitHub's raw text/plain response. The startup access repair is bundled into the APK: every app launch now stops at the opening menu, even when an autosave exists, so Continue and Game Updates remain reachable without deleting any timeline. Game Updates is also kept in the live Systems dock. The safe updater receives complete patch source before activation; enforces per-module SHA-256 checks, strict size limits, and trusted asset origins; stages updates locally; retains the previous release; automatically rolls back an update that cannot finish starting; and provides Safe Start once plus a permanent return to the built-in version without deleting game saves. It also retains the startup and gameplay hotfix for the curated portrait update. Removes whole-world identity and portrait scans from render, list-view, portrait-view, daily-tick, and already-migrated save paths; save migration now runs once per version and new NPC creation remains checked at its source. A 1,219-person stress save now performs zero portrait-record checks across repeated redraws. The library still installs 110 new lore-matched, labeled full-body NPC portraits plus the unchanged original Quartermaster role portrait. Every image is explicitly tagged for sex, visual age band, race, occupation, faction, mounted status, and individual-person use. Routing is deterministic and location-aware; one curated face cannot be assigned twice in the active world. Exact named-character art remains locked, including Quartermaster Halric Morn, Kael, Valkorion, Alexus, Libita, Nessa, surgeons, officers, and unique companions. Incompatible or unavailable art falls back without changing identity or save progress. The 19.91 MiB library covers human, dwarf, elf, dark-elf, ordinary-orc, Grimhorn beast-orc, civilian, child, infant, elder, knight, guard, rider, and lore-faction roles. All prior economy, shop, wine, wage, dialogue, Narrator, Sophia Help, item-purpose, and world-integrity repairs remain active. Existing saves are preserved. Restart after applying.",
   "save_policy": {
     "managed": false,
     "preserve_always": true

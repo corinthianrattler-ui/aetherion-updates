@@ -19,6 +19,15 @@ V171_ASSETS = {
     "assets/v171/valkorion-armored.glb",
     "assets/v171/libita-gothic-gown.glb",
 }
+V172_RELEASE_BASE = (
+    "https://github.com/corinthianrattler-ui/"
+    "aetherion-updates/releases/download/v1.72.0/"
+)
+V172_ASSETS = {
+    "assets/v172/valkorion-base-lord.glb",
+    "assets/v172/valkorion-armored.glb",
+    "assets/v172/alexus-gothic-gown.glb",
+}
 PORTRAIT_ROOT = ROOT / "custom" / "npc-portraits" / "v168"
 
 
@@ -28,7 +37,12 @@ def portrait_number(path: Path) -> int:
 
 def payload(path: str) -> dict[str, object]:
     data = (ROOT / path).read_bytes()
-    url = V171_RELEASE_BASE + Path(path).name if path in V171_ASSETS else RAW_BASE + path
+    if path in V172_ASSETS:
+        url = V172_RELEASE_BASE + Path(path).name
+    elif path in V171_ASSETS:
+        url = V171_RELEASE_BASE + Path(path).name
+    else:
+        url = RAW_BASE + path
     return {
         "path": path,
         "url": url,
@@ -70,14 +84,21 @@ def main() -> None:
         "assets/v171/valkorion-base-lord.glb",
         "assets/v171/valkorion-armored.glb",
         "assets/v171/libita-gothic-gown.glb",
+        "patches/v1.72.0-safe-updater.js",
+        "patches/v1.72.0-update-center.js",
+        "patches/v1.72.0-character-models.js",
+        "patches/v1.72.0-runtime-repair.js",
+        "assets/v172/valkorion-base-lord.glb",
+        "assets/v172/valkorion-armored.glb",
+        "assets/v172/alexus-gothic-gown.glb",
     ]
     manifest = {
         "schema": 1,
         "channel": "stable",
         "enabled": True,
         "latest": {
-            "game_version": "1.71.0",
-            "android_version_code": 188,
+            "game_version": "1.72.0",
+            "android_version_code": 189,
             "min_updater_schema": 1,
         },
         "manifest_url": RAW_BASE + "manifest.json",
@@ -87,16 +108,17 @@ def main() -> None:
         ),
         "payloads": [payload(path) for path in paths],
         "notes": (
-            "Version 1.71.0 installs the supplied fitted Valkorion base body, Lord's royal "
-            "armor, complete armored kit, and Libita Savitas gothic-ball-gown model in "
-            "Android build 188. The permanent Game Updates button shows the exact channel "
-            "address, received bytes, percentage, verification, install, and restart states. "
-            "The release preserves all model "
-            "part names and authored transforms; only the six weapon meshes received a 1% "
-            "upload-size pass, leaving Valkorion's body, armor, helmet, and cape geometry "
-            "untouched. Each GLB is below the 100 MB Tripo/GitHub upload ceiling. Base and "
+            "Version 1.72.0 repairs Continue, removes the floating gold update control and "
+            "Android blue tap flash, and keeps Game Updates inside the opening menu and Systems. "
+            "Android build 189 uses the supplied fitted Valkorion base body, Lord's royal "
+            "armor, complete armored kit, and his twin sister Lady Alexus Dominus's gothic-ball-gown model. The release "
+            "preserves every fitted model part and authored transform while using bounded-error "
+            "mobile geometry; all three GLBs are below the 50 MB mobile and Tripo target. It also "
+            "removes repeated full-page observers, continuous idle rendering, and repeated model "
+            "reframing. The Game Updates screen shows the exact channel address, received bytes, "
+            "percentage, verification, install, and restart states. Base and "
             "Lord modes switch fitted-node visibility without rebuilding or separating the "
-            "figure, complete armor changes the loaded source cleanly, and Libita's model "
+            "figure, complete armor changes the loaded source cleanly, and Lady Alexus's model "
             "loads only inside her person or equipment view. Android build 187 restores the "
             "finished 40-piece assembled Valkorion kit and "
             "playable Corvinus Keep jousting, armored-duel, and archery tournaments with the "

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build the bounded stable channel from the exact v1.71 patch source."""
+"""Build the bounded stable channel from the exact v1.72 patch sources."""
 
 from __future__ import annotations
 
@@ -12,39 +12,47 @@ ROOT = Path(__file__).resolve().parents[1]
 RAW = "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/"
 RELEASE = (
     "https://github.com/corinthianrattler-ui/"
-    "aetherion-updates/releases/download/v1.71.0/"
+    "aetherion-updates/releases/download/v1.72.0/"
 )
-PATCH = "patches/v1.71.0-character-models.js"
+PATCHES = [
+    ("v172-character-models", "patches/v1.72.0-character-models.js"),
+    ("v172-update-center", "patches/v1.72.0-update-center.js"),
+    ("v172-runtime-repair", "patches/v1.72.0-runtime-repair.js"),
+]
 ASSETS = [
-    "assets/v171/valkorion-base-lord.glb",
-    "assets/v171/valkorion-armored.glb",
-    "assets/v171/libita-gothic-gown.glb",
+    "assets/v172/valkorion-base-lord.glb",
+    "assets/v172/valkorion-armored.glb",
+    "assets/v172/alexus-gothic-gown.glb",
 ]
 
 
 def main() -> None:
-    source = (ROOT / PATCH).read_text(encoding="utf-8")
+    modules = []
+    for module_id, path in PATCHES:
+        source = (ROOT / path).read_text(encoding="utf-8")
+        modules.append(
+            {
+                "id": module_id,
+                "sha256": hashlib.sha256(source.encode()).hexdigest(),
+                "source": source,
+            }
+        )
     feed = {
         "schema": 2,
         "channel": "stable",
         "release": {
-            "version": "1.71.0",
-            "build": 188,
+            "version": "1.72.0",
+            "build": 189,
             "minimumBundled": "1.70.0",
-            "releasedAt": "2026-09-08T08:03:36Z",
+            "releasedAt": "2026-09-08T10:18:01Z",
             "notes": [
-                "Valkorion now uses the supplied fitted base body, Lord's royal armor, and complete armored models instead of the v1.70 single-model override.",
-                "Libita Savitas now has the supplied fitted gothic-ball-gown model in her person and equipment views.",
-                "All fitted node names and transforms are preserved; only weapon geometry received a 1% upload-size pass, with body and armor geometry untouched.",
-                "Existing saves, rollback protection, tournaments, narration, portraits, and all other systems are preserved.",
+                "Continue now opens the existing timeline reliably from the opening menu.",
+                "The floating gold update control is removed; Game Updates remains in the opening menu and Systems.",
+                "Android's blue button tap flash is disabled while keyboard focus remains visible.",
+                "Valkorion's base, Lord, complete armor, and Lady Alexus models keep every fitted part while using mobile-ready geometry.",
+                "Repeated full-page observers, continuous idle rendering, and repeated model reframing are removed.",
             ],
-            "modules": [
-                {
-                    "id": "v171-character-models",
-                    "sha256": hashlib.sha256(source.encode()).hexdigest(),
-                    "source": source,
-                }
-            ],
+            "modules": modules,
             "assets": {path: RELEASE + Path(path).name for path in ASSETS},
         },
     }
@@ -60,8 +68,7 @@ def main() -> None:
     assert len(encoded) <= 100_000, "channel exceeds the bundled safe-updater limit"
     (ROOT / "channel.js").write_bytes(encoded)
     print(
-        f"channel.js: 1 module, {len(ASSETS)} assets, {len(encoded):,} bytes, "
-        f"patch SHA-256 {feed['release']['modules'][0]['sha256']}"
+        f"channel.js: {len(modules)} modules, {len(ASSETS)} assets, {len(encoded):,} bytes"
     )
 
 

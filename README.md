@@ -4,7 +4,28 @@ Public update channel for **Aetherion Reforged**.
 
 The Android staged updater reads `channel.js` from this repository through a MIME-safe GitHub Contents response. `manifest.json` records the exact sizes and SHA-256 hashes of managed payloads.
 
-## Current full build — 1.72.2 (Android build 191)
+## Current full build — 1.72.3 (Android build 192)
+
+Version 1.72.3 is the fully scanned native/model/update repair:
+
+- prevents a small staged web patch from claiming it installed an Android APK
+- proves the installed package with a bundled build-192 sentinel
+- displays `BUILD 192 · 3D READY` only after the actual GLB is parsed and mounted
+- mounts Valkorion's supplied base, Lord, and complete-armor model on both the
+  Character and Equipment screens
+- keeps Lady Alexus Dominus's supplied 28-part gothic-gown model
+- repairs the two zero-byte legacy WebP frames found by the complete asset scan
+- clears the hidden opening-film guard so Continue actually opens the live game,
+  removes the floating gold updater, and suppresses the Android blue tap flash
+- retains all fitted model meshes and shape-preserving quantization, with no new
+  simplification or geometry processing
+- is signed by the same certificate as build 191, so Android accepts it as an
+  update to the existing app
+
+The exhaustive package, runtime, model, and signature results are recorded in
+`AUDIT_v1.72.3.md`.
+
+## Previous full build — 1.72.2 (Android build 191)
 
 Version 1.72.2 is the native Android model-loader correction:
 
@@ -303,6 +324,10 @@ node --check patches/v1.72.2-character-models.js
 node --check patches/v1.72.2-safe-updater.js
 node --check patches/v1.72.2-update-center.js
 node --check patches/v1.72.2-runtime-repair.js
+node --check patches/v1.72.3-character-models.js
+node --check patches/v1.72.3-safe-updater.js
+node --check patches/v1.72.3-update-center.js
+node --check patches/v1.72.3-runtime-repair.js
 node --check channel.js
 python3 tests/validate_v163_glb.py /path/to/downloaded/valkorion_final.glb
 ```

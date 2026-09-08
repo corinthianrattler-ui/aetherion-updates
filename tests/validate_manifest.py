@@ -9,22 +9,30 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
+REMOTE_MODEL_METADATA = {
+    "assets/v171/valkorion-base-lord.glb": (37_293_792, "963d66d60d4e7b1dcfdeb43f44bc764683ddf2f8a4a4ffe4dbd63a530d186d47"),
+    "assets/v171/valkorion-armored.glb": (99_848_008, "de12485beeebd6be86e9354e25a2071a1203fb94a6b8b660fd8c7d01acaecba1"),
+    "assets/v171/libita-gothic-gown.glb": (97_544_908, "5941aa40b5c08b2e71b04a39665a11129d5960312361d513fa3f76d34b0df2f9"),
+    "assets/v172/valkorion-base-lord.glb": (21_148_428, "c15bee80cec479f90b7a53d5fb08fb12099f7750c3847335ba14a5bd064acd72"),
+    "assets/v172/valkorion-armored.glb": (42_261_516, "5e203593a2289b6f74d191630cad5cbe3c760065f2980c057a9dacabe87479fe"),
+    "assets/v172/alexus-gothic-gown.glb": (40_013_784, "12ba557524188ccb30b11bec2e5b84a6053b1796727999aef57ea211ee946399"),
+}
 
 
 def main() -> None:
     manifest = json.loads((ROOT / "manifest.json").read_text(encoding="utf-8"))
     assert manifest["schema"] == 1
     assert manifest["enabled"] is True
-    assert manifest["latest"]["game_version"] == "1.72.2"
-    assert manifest["latest"]["android_version_code"] == 191
+    assert manifest["latest"]["game_version"] == "1.72.3"
+    assert manifest["latest"]["android_version_code"] == 192
     assert manifest["latest"]["min_updater_schema"] <= 1
     apk = manifest["android_apk"]
-    assert apk["version"] == "1.72.2"
-    assert apk["version_code"] == 191
-    assert apk["filename"] == "Aetherion_Reforged_v1.72.2_ANDROID_ASSET_FIX.apk"
-    assert apk["url"].endswith("/v1.72.2/" + apk["filename"])
-    assert apk["size"] == 479054145
-    assert apk["sha256"] == "bf4e05c85180b08f4937a40d032b35fd021c91f658d3d6c34e8fd9ef38422bd3"
+    assert apk["version"] == "1.72.3"
+    assert apk["version_code"] == 192
+    assert apk["filename"] == "Aetherion_Reforged_v1.72.3_FULL_REPAIR.apk"
+    assert apk["url"].endswith("/v1.72.3/" + apk["filename"])
+    assert apk["size"] == 479161471
+    assert apk["sha256"] == "411878ce5ac4f4c73ef62a75de085bd3af1847b5e29479ab88ac7a48f841bb0a"
     assert apk["signing_certificate_sha256"] == "ca8042f4758d9a056eb0748edfaad0cfd8a436ea7d35907c28b32c3f3afd5eb8"
     payloads = manifest["payloads"]
     portrait_root = ROOT / "custom" / "npc-portraits" / "v168"
@@ -78,6 +86,11 @@ def main() -> None:
         "patches/v1.72.2-update-center.js",
         "patches/v1.72.2-character-models.js",
         "patches/v1.72.2-runtime-repair.js",
+        "patches/v1.72.3-safe-updater.js",
+        "patches/v1.72.3-update-center.js",
+        "patches/v1.72.3-character-models.js",
+        "patches/v1.72.3-runtime-repair.js",
+        "assets/v173/native-build-192.json",
     ]
     assert len({payload["path"] for payload in payloads}) == len(payloads)
 
@@ -94,6 +107,17 @@ def main() -> None:
             assert payload["restart_required"] is True
             continue
         path = ROOT / payload["path"]
+        if not path.is_file() and payload["path"] in REMOTE_MODEL_METADATA:
+            size, digest = REMOTE_MODEL_METADATA[payload["path"]]
+            assert payload["size"] == size
+            assert payload["sha256"] == digest
+            release = "v1.71.0" if payload["path"].startswith("assets/v171/") else "v1.72.0"
+            assert payload["url"] == (
+                "https://github.com/corinthianrattler-ui/aetherion-updates/"
+                f"releases/download/{release}/{path.name}"
+            )
+            assert payload["restart_required"] is True
+            continue
         data = path.read_bytes()
         actual_hash = hashlib.sha256(data).hexdigest()
         assert payload["size"] == len(data), f"{payload['path']}: size mismatch"
@@ -113,6 +137,7 @@ def main() -> None:
         assert payload["restart_required"] is True
 
     assert manifest["save_policy"]["preserve_always"] is True
+    assert "Version 1.72.3 is the fully scanned Android build 192 repair" in manifest["notes"]
     assert "Version 1.72.2 replaces the Android file:// game origin" in manifest["notes"]
     assert "shape-preserving KHR_mesh_quantization without mesh simplification" in manifest["notes"]
     assert "Version 1.72.1 repairs the live v80 wardrobe connection" in manifest["notes"]
@@ -126,7 +151,7 @@ def main() -> None:
     assert "zero portrait-record checks" in manifest["notes"]
     assert "110 new lore-matched" in manifest["notes"]
     assert "Quartermaster Halric Morn" in manifest["notes"]
-    print("manifest.json: 1.72.2 payload sizes, release URLs, and SHA-256 hashes passed")
+    print("manifest.json: 1.72.3 payload sizes, release URLs, and SHA-256 hashes passed")
 
 
 if __name__ == "__main__":

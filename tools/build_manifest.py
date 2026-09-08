@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import argparse
 from pathlib import Path
 
 
@@ -29,14 +30,28 @@ V172_ASSETS = {
     "assets/v172/alexus-gothic-gown.glb",
 }
 PORTRAIT_ROOT = ROOT / "custom" / "npc-portraits" / "v168"
+APK_NAME = "Aetherion_Reforged_v1.72.3_FULL_REPAIR.apk"
 
 
 def portrait_number(path: Path) -> int:
     return int(path.name.split("_", 1)[0])
 
 
-def payload(path: str) -> dict[str, object]:
-    data = (ROOT / path).read_bytes()
+def file_sha256(path: Path) -> str:
+    digest = hashlib.sha256()
+    with path.open("rb") as handle:
+        for block in iter(lambda: handle.read(1024 * 1024), b""):
+            digest.update(block)
+    return digest.hexdigest()
+
+
+def payload(path: str, previous: dict[str, dict[str, object]]) -> dict[str, object]:
+    local = ROOT / path
+    if not local.is_file():
+        if path not in previous:
+            raise FileNotFoundError(local)
+        return previous[path]
+    data = local.read_bytes()
     if path in V172_ASSETS:
         url = V172_RELEASE_BASE + Path(path).name
     elif path in V171_ASSETS:
@@ -53,6 +68,13 @@ def payload(path: str) -> dict[str, object]:
 
 
 def main() -> None:
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--apk", type=Path, required=True)
+    args = parser.parse_args()
+    if not args.apk.is_file():
+        raise FileNotFoundError(args.apk)
+    old = json.loads((ROOT / "manifest.json").read_text(encoding="utf-8"))
+    previous = {row["path"]: row for row in old.get("payloads", [])}
     portraits = [
         str(path.relative_to(ROOT))
         for path in sorted(PORTRAIT_ROOT.glob("*.webp"), key=portrait_number)
@@ -100,14 +122,19 @@ def main() -> None:
         "patches/v1.72.2-update-center.js",
         "patches/v1.72.2-character-models.js",
         "patches/v1.72.2-runtime-repair.js",
+        "patches/v1.72.3-safe-updater.js",
+        "patches/v1.72.3-update-center.js",
+        "patches/v1.72.3-character-models.js",
+        "patches/v1.72.3-runtime-repair.js",
+        "assets/v173/native-build-192.json",
     ]
     manifest = {
         "schema": 1,
         "channel": "stable",
         "enabled": True,
         "latest": {
-            "game_version": "1.72.2",
-            "android_version_code": 191,
+            "game_version": "1.72.3",
+            "android_version_code": 192,
             "min_updater_schema": 1,
         },
         "manifest_url": RAW_BASE + "manifest.json",
@@ -116,23 +143,27 @@ def main() -> None:
             "aetherion-updates/releases/download/"
         ),
         "android_apk": {
-            "version": "1.72.2",
-            "version_code": 191,
-            "filename": "Aetherion_Reforged_v1.72.2_ANDROID_ASSET_FIX.apk",
+            "version": "1.72.3",
+            "version_code": 192,
+            "filename": APK_NAME,
             "url": (
                 "https://github.com/corinthianrattler-ui/aetherion-updates/"
-                "releases/download/v1.72.2/"
-                "Aetherion_Reforged_v1.72.2_ANDROID_ASSET_FIX.apk"
+                "releases/download/v1.72.3/"
+                f"{APK_NAME}"
             ),
-            "size": 479054145,
-            "sha256": "bf4e05c85180b08f4937a40d032b35fd021c91f658d3d6c34e8fd9ef38422bd3",
+            "size": args.apk.stat().st_size,
+            "sha256": file_sha256(args.apk),
             "signing_certificate_sha256": (
                 "ca8042f4758d9a056eb0748edfaad0cfd8a436ea7d35907c28b32c3f3afd5eb8"
             ),
         },
-        "payloads": [payload(path) for path in paths],
+        "payloads": [payload(path, previous) for path in paths],
         "notes": (
-            "Version 1.72.2 replaces the Android file:// game origin with a secure internal "
+            "Version 1.72.3 is the fully scanned Android build 192 repair. It removes the false "
+            "web-patch-as-APK success path, proves the installed native package with a bundled "
+            "build marker, clears the hidden opening-film guard before Continue renders, mounts Valkorion on both Character and Equipment screens, displays a "
+            "small live 3D status badge, repairs two zero-byte legacy images, and retains the "
+            "original update-compatible signing identity. Version 1.72.2 replaces the Android file:// game origin with a secure internal "
             "HTTPS-style asset route, allowing the bundled Three.js loader to read the supplied "
             "Valkorion and Lady Alexus GLBs. The full APK is required because this correction is "
             "inside the native WebView shell; the staged channel adds a visible full-APK download "

@@ -1,0 +1,11 @@
+{
+  "product": "Aetherion Reforged",
+  "version": "1.72.3",
+  "build": 192,
+  "nativeAssetRoute": "https://appassets.androidplatform.net/assets/game/",
+  "models": [
+    "assets/v172/valkorion-base-lord.glb",
+    "assets/v172/valkorion-armored.glb",
+    "assets/v172/alexus-gothic-gown.glb"
+  ]
+}

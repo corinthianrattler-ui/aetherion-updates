@@ -4,7 +4,31 @@ Public update channel for **Aetherion Reforged**.
 
 The Android staged updater reads `channel.js` from this repository through a MIME-safe GitHub Contents response. `manifest.json` records the exact sizes and SHA-256 hashes of managed payloads.
 
-## Current full build — 1.72.4 (Android build 193)
+## Current full build — 1.72.5 (Android build 194)
+
+Version 1.72.5 is the modular-equipment correction:
+
+- restores the proven fitted Valkorion model and maps its real meshes to 17
+  independent equipment slots
+- lets helmets, neckwear, underlayers, body armor, shoulders, gloves, belts,
+  leg armor, boots, cloaks, weapons, ammunition, and jewelry appear or disappear
+  separately
+- allows court clothing and Dominus armor to be mixed without replacing the
+  entire character model
+- hides only the removed item's fitted mesh instead of changing the whole outfit
+- refuses to depict unsupported foreign equipment as false Dominus armor
+- keeps the existing picture-based equipment view for Lady Alexus because her
+  supplied gown is a baked partial model, not a complete independently equipped
+  17-slot character
+- requires every future sister/companion 3D model to declare complete slot
+  ownership and rejects baked, partial, or shared-node registrations
+- retains the v1.72.4 startup repair and is signed by that recovery build's
+  exact certificate, so Android accepts build 194 directly over build 193
+
+The final APK, slot mapping, known asset boundary, and verification results are
+recorded in `AUDIT_v1.72.5.md`.
+
+## Previous full build — 1.72.4 (Android build 193)
 
 Version 1.72.4 repairs the native failure found by the whole-game audit:
 

@@ -3,20 +3,20 @@
   "channel": "stable",
   "enabled": true,
   "latest": {
-    "game_version": "1.72.4",
-    "android_version_code": 193,
+    "game_version": "1.72.5",
+    "android_version_code": 194,
     "min_updater_schema": 1
   },
   "manifest_url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/manifest.json",
   "release_base": "https://github.com/corinthianrattler-ui/aetherion-updates/releases/download/",
   "android_apk": {
-    "version": "1.72.4",
-    "version_code": 193,
-    "filename": "Aetherion_Reforged_v1.72.4_FULL_REPAIR.apk",
-    "url": "https://github.com/corinthianrattler-ui/aetherion-updates/releases/download/v1.72.4/Aetherion_Reforged_v1.72.4_FULL_REPAIR.apk",
-    "size": 479189462,
-    "sha256": "da5a55da228dcabf15bb00935881b983ef948ba665abe0db6f2d65d5adcbeee1",
-    "signing_certificate_sha256": "ca8042f4758d9a056eb0748edfaad0cfd8a436ea7d35907c28b32c3f3afd5eb8"
+    "version": "1.72.5",
+    "version_code": 194,
+    "filename": "Aetherion_Reforged_v1.72.5_MODULAR_EQUIPMENT_UPDATE.apk",
+    "url": "https://github.com/corinthianrattler-ui/aetherion-updates/releases/download/v1.72.5/Aetherion_Reforged_v1.72.5_MODULAR_EQUIPMENT_UPDATE.apk",
+    "size": 499009725,
+    "sha256": "bf9fd12a105c50dc2325d26e3b58708f9487c17bf957bf878a8875a2cc1f9480",
+    "signing_certificate_sha256": "5e68318c3e12c9f5915976a25bbfd5039a2f7e651682b65744b2747b618c3e77"
   },
   "payloads": [
     {
@@ -146,10 +146,87 @@
       "restart_required": true
     },
     {
+      "path": "custom/npc-portraits/v168/100_dominus_rose_knight_elder_man.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v168/100_dominus_rose_knight_elder_man.webp",
+      "sha256": "1f3608a743717af440a132bdaa753f33ae29b42e55fc68d6cc1ae82daaf55366",
+      "size": 284520,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v168/101_dominus_imperial_cataphract_mature_woman.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v168/101_dominus_imperial_cataphract_mature_woman.webp",
+      "sha256": "4152be8a9ba7fa854a8b8addd24639588165848da9899107d6bdc7e46b608c11",
+      "size": 322278,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v168/102_dominus_marine_adult_woman.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v168/102_dominus_marine_adult_woman.webp",
+      "sha256": "e53820c3129dc01f83e1b595664776afd9188cc60101144ba4ad1253b222bcf2",
+      "size": 269200,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v168/103_hammer_guard_adult_dwarf_woman.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v168/103_hammer_guard_adult_dwarf_woman.webp",
+      "sha256": "3ae072dfee75f3f506968dcdc429671a59055c9df7e1b1e7f557a11c7879778a",
+      "size": 232704,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v168/104_forge_guard_elder_dwarf_man.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v168/104_forge_guard_elder_dwarf_man.webp",
+      "sha256": "82b6efa36d822d13050f92e75346e77856b6d9af4ca95bb33272a01da43f9f1d",
+      "size": 236648,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v168/105_greenhall_bladesinger_adult_woman.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v168/105_greenhall_bladesinger_adult_woman.webp",
+      "sha256": "6ddf360a74a070799ad8cd7da2f5fc7c9b0aa69ce4d249a24b2261d86cad507d",
+      "size": 195578,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v168/106_spellwarden_elder_elf_man.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v168/106_spellwarden_elder_elf_man.webp",
+      "sha256": "fe70629658d4b23c54528bdf07c334fe112a682abce2187b012e7619d819bf82",
+      "size": 181382,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v168/107_hexblade_adept_mature_woman.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v168/107_hexblade_adept_mature_woman.webp",
+      "sha256": "7efaa647242ef75c352d5f16b49dceb344b34ea8ce78a13ce141d1bffba53ff0",
+      "size": 176536,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v168/108_warchief_guard_elder_orc_man.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v168/108_warchief_guard_elder_orc_man.webp",
+      "sha256": "1dee2db16e79ba32328a2b3a72d2710767eb09fa03d090f46a22ea3ee04b8956",
+      "size": 259454,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v168/109_watchtower_sentinel_adult_woman.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v168/109_watchtower_sentinel_adult_woman.webp",
+      "sha256": "6fbb0e84bedfa4522d7bea4dd412b91b10e9f1171f364d5a93df725d71f19d89",
+      "size": 220554,
+      "restart_required": true
+    },
+    {
       "path": "custom/npc-portraits/v168/10_town_guard_adult_woman.webp",
       "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v168/10_town_guard_adult_woman.webp",
       "sha256": "1f7d8b73a04b05496fb84c8ff14f5efe4fb2ee8bd9988f23a109eeea762abcb4",
       "size": 192602,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v168/110_quay_guard_elder_woman.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v168/110_quay_guard_elder_woman.webp",
+      "sha256": "01e6a6e8a2bcd13ebbb538ed75a537bdd4cfeb4aadcf481797eb8373f97583f5",
+      "size": 181688,
       "restart_required": true
     },
     {
@@ -776,83 +853,6 @@
       "restart_required": true
     },
     {
-      "path": "custom/npc-portraits/v168/100_dominus_rose_knight_elder_man.webp",
-      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v168/100_dominus_rose_knight_elder_man.webp",
-      "sha256": "1f3608a743717af440a132bdaa753f33ae29b42e55fc68d6cc1ae82daaf55366",
-      "size": 284520,
-      "restart_required": true
-    },
-    {
-      "path": "custom/npc-portraits/v168/101_dominus_imperial_cataphract_mature_woman.webp",
-      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v168/101_dominus_imperial_cataphract_mature_woman.webp",
-      "sha256": "4152be8a9ba7fa854a8b8addd24639588165848da9899107d6bdc7e46b608c11",
-      "size": 322278,
-      "restart_required": true
-    },
-    {
-      "path": "custom/npc-portraits/v168/102_dominus_marine_adult_woman.webp",
-      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v168/102_dominus_marine_adult_woman.webp",
-      "sha256": "e53820c3129dc01f83e1b595664776afd9188cc60101144ba4ad1253b222bcf2",
-      "size": 269200,
-      "restart_required": true
-    },
-    {
-      "path": "custom/npc-portraits/v168/103_hammer_guard_adult_dwarf_woman.webp",
-      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v168/103_hammer_guard_adult_dwarf_woman.webp",
-      "sha256": "3ae072dfee75f3f506968dcdc429671a59055c9df7e1b1e7f557a11c7879778a",
-      "size": 232704,
-      "restart_required": true
-    },
-    {
-      "path": "custom/npc-portraits/v168/104_forge_guard_elder_dwarf_man.webp",
-      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v168/104_forge_guard_elder_dwarf_man.webp",
-      "sha256": "82b6efa36d822d13050f92e75346e77856b6d9af4ca95bb33272a01da43f9f1d",
-      "size": 236648,
-      "restart_required": true
-    },
-    {
-      "path": "custom/npc-portraits/v168/105_greenhall_bladesinger_adult_woman.webp",
-      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v168/105_greenhall_bladesinger_adult_woman.webp",
-      "sha256": "6ddf360a74a070799ad8cd7da2f5fc7c9b0aa69ce4d249a24b2261d86cad507d",
-      "size": 195578,
-      "restart_required": true
-    },
-    {
-      "path": "custom/npc-portraits/v168/106_spellwarden_elder_elf_man.webp",
-      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v168/106_spellwarden_elder_elf_man.webp",
-      "sha256": "fe70629658d4b23c54528bdf07c334fe112a682abce2187b012e7619d819bf82",
-      "size": 181382,
-      "restart_required": true
-    },
-    {
-      "path": "custom/npc-portraits/v168/107_hexblade_adept_mature_woman.webp",
-      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v168/107_hexblade_adept_mature_woman.webp",
-      "sha256": "7efaa647242ef75c352d5f16b49dceb344b34ea8ce78a13ce141d1bffba53ff0",
-      "size": 176536,
-      "restart_required": true
-    },
-    {
-      "path": "custom/npc-portraits/v168/108_warchief_guard_elder_orc_man.webp",
-      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v168/108_warchief_guard_elder_orc_man.webp",
-      "sha256": "1dee2db16e79ba32328a2b3a72d2710767eb09fa03d090f46a22ea3ee04b8956",
-      "size": 259454,
-      "restart_required": true
-    },
-    {
-      "path": "custom/npc-portraits/v168/109_watchtower_sentinel_adult_woman.webp",
-      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v168/109_watchtower_sentinel_adult_woman.webp",
-      "sha256": "6fbb0e84bedfa4522d7bea4dd412b91b10e9f1171f364d5a93df725d71f19d89",
-      "size": 220554,
-      "restart_required": true
-    },
-    {
-      "path": "custom/npc-portraits/v168/110_quay_guard_elder_woman.webp",
-      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v168/110_quay_guard_elder_woman.webp",
-      "sha256": "01e6a6e8a2bcd13ebbb538ed75a537bdd4cfeb4aadcf481797eb8373f97583f5",
-      "size": 181688,
-      "restart_required": true
-    },
-    {
       "path": "patches/v1.68.0-curated-npc-portraits.js",
       "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/patches/v1.68.0-curated-npc-portraits.js",
       "sha256": "21e81b2ee02714fdafa934cf78a2aaa6dc3a09580045428d0f4261dd99bebffa",
@@ -1124,9 +1124,37 @@
       "sha256": "b6830f7da834809acd47bc8d4d3189246a44e902ec6ab52f5f18ffab70e1213f",
       "size": 104,
       "restart_required": true
+    },
+    {
+      "path": "patches/v1.72.5-safe-updater.js",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/patches/v1.72.5-safe-updater.js",
+      "sha256": "86f087f98b8eb7165505cd3129461f2fa248163233225b60196f669c9a6b6e61",
+      "size": 25351,
+      "restart_required": true
+    },
+    {
+      "path": "patches/v1.72.5-update-center.js",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/patches/v1.72.5-update-center.js",
+      "sha256": "865def1c4a4dd7731253142faae6f69e65d49ab37654864ebf91c919ff145f58",
+      "size": 15897,
+      "restart_required": true
+    },
+    {
+      "path": "patches/v1.72.5-character-models.js",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/patches/v1.72.5-character-models.js",
+      "sha256": "27813222d1718b4108a2f41589f090bd9f4e29170c65995d3e0c22d1dc1e3a1a",
+      "size": 27694,
+      "restart_required": true
+    },
+    {
+      "path": "assets/v175/native-build-194.json",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/assets/v175/native-build-194.json",
+      "sha256": "71f8ddc718f69c912e3358f7c6b0b42880bcb988f56aaba4e2ed6b4f954a6d88",
+      "size": 137,
+      "restart_required": true
     }
   ],
-  "notes": "Version 1.72.4 is Android build 193. It corrects the reversed native query and fragment branches that prevented versioned game files from loading, retains WebView cache between launches, loads the optional Three.js and WebLLM runtimes only when their systems are opened, and prevents already-current state from traversing the entire migration chain on every render. Version 1.72.3 is the fully scanned Android build 192 repair. It removes the false web-patch-as-APK success path, proves the installed native package with a bundled build marker, clears the hidden opening-film guard before Continue renders, mounts Valkorion on both Character and Equipment screens, displays a small live 3D status badge, repairs two zero-byte legacy images, and retains the original update-compatible signing identity. Version 1.72.2 replaces the Android file:// game origin with a secure internal HTTPS-style asset route, allowing the bundled Three.js loader to read the supplied Valkorion and Lady Alexus GLBs. The full APK is required because this correction is inside the native WebView shell; the staged channel adds a visible full-APK download path and does not pretend JavaScript alone can replace it. File access remains disabled. The APK's three fitted models use shape-preserving KHR_mesh_quantization without mesh simplification, cutting their combined bytes and GPU attribute memory while retaining all 23 base/Lord parts, 40 armor parts, 28 Lady Alexus parts, materials, and transforms. Version 1.72.1 repairs the live v80 wardrobe connection that was skipped when historical v97/v98 viewer globals were absent. The supplied Valkorion base, Lord, complete 40-piece armor, and Lady Alexus models now replace the flat portrait fallback in their actual viewers. The verified v1.72 model files are unchanged; Android build 190 corrects the loader hook and retains every v1.72 mobile optimization. Version 1.72.0 repairs Continue, removes the floating gold update control and Android blue tap flash, and keeps Game Updates inside the opening menu and Systems. Android build 189 uses the supplied fitted Valkorion base body, Lord's royal armor, complete armored kit, and his twin sister Lady Alexus Dominus's gothic-ball-gown model. The release preserves every fitted model part and authored transform while using bounded-error mobile geometry; all three GLBs are below the 50 MB mobile and Tripo target. It also removes repeated full-page observers, continuous idle rendering, and repeated model reframing. The Game Updates screen shows the exact channel address, received bytes, percentage, verification, install, and restart states. Base and Lord modes switch fitted-node visibility without rebuilding or separating the figure, complete armor changes the loaded source cleanly, and Lady Alexus's model loads only inside her person or equipment view. Android build 187 restores the finished 40-piece assembled Valkorion kit and playable Corvinus Keep jousting, armored-duel, and archery tournaments with the corrected heraldic scenes. The 106,006,128-byte finished GLB is bundled in the full APK because it exceeds GitHub's ordinary single-file repository limit. Rejected exploded, simplified, empty-arena, and rain-only variants are not active. Existing saves and all prior game systems are preserved. The bundled updater retrieves the stable channel through GitHub's JavaScript-safe Contents response, decodes the exact channel bytes locally, and retains a script-safe CDN fallback; it no longer asks Android to execute GitHub's raw text/plain response. The startup access repair is bundled into the APK: every app launch now stops at the opening menu, even when an autosave exists, so Continue and Game Updates remain reachable without deleting any timeline. Game Updates is also kept in the live Systems dock. The safe updater receives complete patch source before activation; enforces per-module SHA-256 checks, strict size limits, and trusted asset origins; stages updates locally; retains the previous release; automatically rolls back an update that cannot finish starting; and provides Safe Start once plus a permanent return to the built-in version without deleting game saves. It also retains the startup and gameplay hotfix for the curated portrait update. Removes whole-world identity and portrait scans from render, list-view, portrait-view, daily-tick, and already-migrated save paths; save migration now runs once per version and new NPC creation remains checked at its source. A 1,219-person stress save now performs zero portrait-record checks across repeated redraws. The library still installs 110 new lore-matched, labeled full-body NPC portraits plus the unchanged original Quartermaster role portrait. Every image is explicitly tagged for sex, visual age band, race, occupation, faction, mounted status, and individual-person use. Routing is deterministic and location-aware; one curated face cannot be assigned twice in the active world. Exact named-character art remains locked, including Quartermaster Halric Morn, Kael, Valkorion, Alexus, Libita, Nessa, surgeons, officers, and unique companions. Incompatible or unavailable art falls back without changing identity or save progress. The 19.91 MiB library covers human, dwarf, elf, dark-elf, ordinary-orc, Grimhorn beast-orc, civilian, child, infant, elder, knight, guard, rider, and lore-faction roles. All prior economy, shop, wine, wage, dialogue, Narrator, Sophia Help, item-purpose, and world-integrity repairs remain active. Existing saves are preserved. Restart after applying.",
+  "notes": "Version 1.72.5 is Android build 194. It restores the fitted 17-slot Valkorion model, makes armor, court clothing, weapons, ammunition, cloak, and jewelry independently visible, and allows armor and court pieces to be mixed without swapping a whole-body model. Removing one item hides only that item. The incomplete baked Lady Alexus gown is no longer presented as a modular model; her working picture-based equipment view remains until every fitted slot has real independent geometry. A shared registration contract rejects future baked or partial character models. The APK retains the startup crash repair and uses the exact same recovery signing identity as the installed startup-fixed v1.72.4 copy. Version 1.72.4 is Android build 193. It corrects the reversed native query and fragment branches that prevented versioned game files from loading, retains WebView cache between launches, loads the optional Three.js and WebLLM runtimes only when their systems are opened, and prevents already-current state from traversing the entire migration chain on every render. Version 1.72.3 is the fully scanned Android build 192 repair. It removes the false web-patch-as-APK success path, proves the installed native package with a bundled build marker, clears the hidden opening-film guard before Continue renders, mounts Valkorion on both Character and Equipment screens, displays a small live 3D status badge, repairs two zero-byte legacy images, and retains the original update-compatible signing identity. Version 1.72.2 replaces the Android file:// game origin with a secure internal HTTPS-style asset route, allowing the bundled Three.js loader to read the supplied Valkorion and Lady Alexus GLBs. The full APK is required because this correction is inside the native WebView shell; the staged channel adds a visible full-APK download path and does not pretend JavaScript alone can replace it. File access remains disabled. The APK's three fitted models use shape-preserving KHR_mesh_quantization without mesh simplification, cutting their combined bytes and GPU attribute memory while retaining all 23 base/Lord parts, 40 armor parts, 28 Lady Alexus parts, materials, and transforms. Version 1.72.1 repairs the live v80 wardrobe connection that was skipped when historical v97/v98 viewer globals were absent. The supplied Valkorion base, Lord, complete 40-piece armor, and Lady Alexus models now replace the flat portrait fallback in their actual viewers. The verified v1.72 model files are unchanged; Android build 190 corrects the loader hook and retains every v1.72 mobile optimization. Version 1.72.0 repairs Continue, removes the floating gold update control and Android blue tap flash, and keeps Game Updates inside the opening menu and Systems. Android build 189 uses the supplied fitted Valkorion base body, Lord's royal armor, complete armored kit, and his twin sister Lady Alexus Dominus's gothic-ball-gown model. The release preserves every fitted model part and authored transform while using bounded-error mobile geometry; all three GLBs are below the 50 MB mobile and Tripo target. It also removes repeated full-page observers, continuous idle rendering, and repeated model reframing. The Game Updates screen shows the exact channel address, received bytes, percentage, verification, install, and restart states. Base and Lord modes switch fitted-node visibility without rebuilding or separating the figure, complete armor changes the loaded source cleanly, and Lady Alexus's model loads only inside her person or equipment view. Android build 187 restores the finished 40-piece assembled Valkorion kit and playable Corvinus Keep jousting, armored-duel, and archery tournaments with the corrected heraldic scenes. The 106,006,128-byte finished GLB is bundled in the full APK because it exceeds GitHub's ordinary single-file repository limit. Rejected exploded, simplified, empty-arena, and rain-only variants are not active. Existing saves and all prior game systems are preserved. The bundled updater retrieves the stable channel through GitHub's JavaScript-safe Contents response, decodes the exact channel bytes locally, and retains a script-safe CDN fallback; it no longer asks Android to execute GitHub's raw text/plain response. The startup access repair is bundled into the APK: every app launch now stops at the opening menu, even when an autosave exists, so Continue and Game Updates remain reachable without deleting any timeline. Game Updates is also kept in the live Systems dock. The safe updater receives complete patch source before activation; enforces per-module SHA-256 checks, strict size limits, and trusted asset origins; stages updates locally; retains the previous release; automatically rolls back an update that cannot finish starting; and provides Safe Start once plus a permanent return to the built-in version without deleting game saves. It also retains the startup and gameplay hotfix for the curated portrait update. Removes whole-world identity and portrait scans from render, list-view, portrait-view, daily-tick, and already-migrated save paths; save migration now runs once per version and new NPC creation remains checked at its source. A 1,219-person stress save now performs zero portrait-record checks across repeated redraws. The library still installs 110 new lore-matched, labeled full-body NPC portraits plus the unchanged original Quartermaster role portrait. Every image is explicitly tagged for sex, visual age band, race, occupation, faction, mounted status, and individual-person use. Routing is deterministic and location-aware; one curated face cannot be assigned twice in the active world. Exact named-character art remains locked, including Quartermaster Halric Morn, Kael, Valkorion, Alexus, Libita, Nessa, surgeons, officers, and unique companions. Incompatible or unavailable art falls back without changing identity or save progress. The 19.91 MiB library covers human, dwarf, elf, dark-elf, ordinary-orc, Grimhorn beast-orc, civilian, child, infant, elder, knight, guard, rider, and lore-faction roles. All prior economy, shop, wine, wage, dialogue, Narrator, Sophia Help, item-purpose, and world-integrity repairs remain active. Existing saves are preserved. Restart after applying.",
   "save_policy": {
     "managed": false,
     "preserve_always": true

@@ -33,22 +33,22 @@ let delivered=null;
 const receive=oldUpdater.receiveChannel;
 oldUpdater.receiveChannel=feed=>{delivered=feed;receive(feed)};
 vm.runInContext(fs.readFileSync('channel.js','utf8'),context,{filename:'channel.js'});
-assert(delivered,'build 191 did not receive the build 192 channel');
+assert(delivered,'build 191 did not receive the build 193 channel');
 
 (async()=>{
  const verified=await oldUpdater._test.verifyRelease(delivered.release);
- assert.equal(verified.version,'1.72.3');
- assert.equal(verified.build,192);
+ assert.equal(verified.version,'1.72.4');
+ assert.equal(verified.build,193);
  assert.equal(verified.modules.length,1);
- assert.equal(verified.modules[0].id,'v1723-native-install-path');
+ assert.equal(verified.modules[0].id,'v174-native-install-path');
  const staged=oldUpdater.stage(verified);
- assert.equal(staged.version,'1.72.3');
- assert.equal(oldUpdater._test.readState().staged.version,'1.72.3');
+ assert.equal(staged.version,'1.72.4');
+ assert.equal(oldUpdater._test.readState().staged.version,'1.72.4');
 
- vm.runInContext(staged.modules[0].source,context,{filename:'v1.72.3-update-center-staged.js'});
- assert.equal(window.AetherionUpdateCenterV172.version,'1.72.3');
- assert.equal(window.AetherionUpdateCenterV172.androidBuild,192);
- assert.match(window.AetherionUpdateCenterV172.apk,/releases\/download\/v1\.72\.3\/Aetherion_Reforged_v1\.72\.3_FULL_REPAIR\.apk$/);
+ vm.runInContext(staged.modules[0].source,context,{filename:'v1.72.4-update-center-staged.js'});
+ assert.equal(window.AetherionUpdateCenterV172.version,'1.72.4');
+ assert.equal(window.AetherionUpdateCenterV172.androidBuild,193);
+ assert.match(window.AetherionUpdateCenterV172.apk,/releases\/download\/v1\.72\.4\/Aetherion_Reforged_v1\.72\.4_FULL_REPAIR\.apk$/);
  assert.equal(typeof window.AetherionUpdateCenterV172.nativePackage,'function');
- console.log('v1.72.3 legacy handoff: build 191 verifies, stages, and activates the real build-192 APK path');
+ console.log('v1.72.4 legacy handoff: build 191 verifies, stages, and activates the real build-193 APK path');
 })().catch(error=>{console.error(error);process.exitCode=1});

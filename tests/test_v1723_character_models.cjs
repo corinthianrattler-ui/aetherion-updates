@@ -3,7 +3,10 @@ const assert=require('node:assert/strict');
 const fs=require('node:fs');
 const vm=require('node:vm');
 
-const source=fs.readFileSync('patches/v1.72.3-character-models.js','utf8');
+const sourcePath=process.env.CHARACTER_SOURCE||'patches/v1.72.3-character-models.js';
+const expectedVersion=process.env.EXPECTED_VERSION||'1.72.3';
+const expectedBuild=Number(process.env.EXPECTED_BUILD||192);
+const source=fs.readFileSync(sourcePath,'utf8');
 function classes(){
  const values=new Set();
  return{values,add:(...names)=>names.forEach(name=>values.add(name)),remove:(...names)=>names.forEach(name=>values.delete(name))};
@@ -95,13 +98,13 @@ const context={
 };
 context.window=context;
 vm.createContext(context);
-vm.runInContext(source,context,{filename:'v1.72.3-character-models.js'});
+vm.runInContext(source,context,{filename:sourcePath});
 
 (async()=>{
  const api=context.AetherionCharacterModelsV172;
- assert.equal(api.version,'1.72.3');
- assert.equal(api.androidBuild,192);
- assert.equal(api.state().androidBuild,192);
+ assert.equal(api.version,expectedVersion);
+ assert.equal(api.androidBuild,expectedBuild);
+ assert.equal(api.state().androidBuild,expectedBuild);
  assert.equal(api.mode(),'base');
  assert.equal(api.playerKind(),'foundation');
  assert.equal(context.v80Sync,api.sync,'the bundled v80 sync hook must be replaced when legacy v97/v98 globals are absent');
@@ -171,5 +174,5 @@ vm.runInContext(source,context,{filename:'v1.72.3-character-models.js'});
  failUrls.delete(baseUrl);
  assert(await api.sync(),'reopening Equipment must retry the packaged model after an error');
  assert(source.includes('.v80-stage.v173-model-error .v80-valkorion-host'),'model failures must be visible instead of hiding behind the portrait');
- console.log('v1.72.3 character models: Android binary reads, local-only paths, render hook, fitted model switching, and visible errors passed');
+ console.log(`${expectedVersion} character models: Android binary reads, local-only paths, render hook, fitted model switching, and visible errors passed`);
 })().catch(error=>{console.error(error);process.exitCode=1});

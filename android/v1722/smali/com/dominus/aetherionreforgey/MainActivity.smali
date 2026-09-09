@@ -137,7 +137,7 @@
     invoke-virtual {p1, v1}, Landroid/webkit/WebSettings;->setAllowContentAccess(Z)V
 
     .line 34
-    const/4 v2, 0x2
+    const/4 v2, -0x1
 
     invoke-virtual {p1, v2}, Landroid/webkit/WebSettings;->setCacheMode(I)V
 
@@ -155,9 +155,11 @@
     invoke-virtual {p1, v2, v1}, Landroid/webkit/WebView;->setLayerType(ILandroid/graphics/Paint;)V
 
     .line 38
-    iget-object p1, p0, Lcom/dominus/aetherionreforgey/MainActivity;->gameView:Landroid/webkit/WebView;
+    nop
 
-    invoke-virtual {p1, v0}, Landroid/webkit/WebView;->clearCache(Z)V
+    nop
+
+    nop
 
     .line 39
     iget-object p1, p0, Lcom/dominus/aetherionreforgey/MainActivity;->gameView:Landroid/webkit/WebView;

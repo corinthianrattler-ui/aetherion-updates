@@ -4,7 +4,31 @@ Public update channel for **Aetherion Reforged**.
 
 The Android staged updater reads `channel.js` from this repository through a MIME-safe GitHub Contents response. `manifest.json` records the exact sizes and SHA-256 hashes of managed payloads.
 
-## Current full build — 1.72.3 (Android build 192)
+## Current full build — 1.72.4 (Android build 193)
+
+Version 1.72.4 repairs the native failure found by the whole-game audit:
+
+- fixes the reversed query/fragment branches in the Android asset client, so
+  all 135 startup scripts and styles resolve under the packaged HTTPS origin
+- retains WebView cache between launches instead of clearing it and forcing
+  every script, stylesheet, image, and model route through cold startup
+- reduces eager startup JavaScript from 9.71 MB to 2.47 MB by loading Three.js
+  only on a 3D character screen and WebLLM only when offline AI is requested
+- marks fully migrated state and stops the 59-layer migration chain from
+  running again on every redraw; the Continue harness falls from 4.16 seconds
+  to 0.22 seconds
+- stops Trade from rebuilding every merchant worker across the world for each
+  local shop card; its full-screen harness falls from 3.8 seconds to 0.17 seconds
+- keeps Game Updates in the opening menu and Systems dock, without restoring
+  the rejected floating gold button or Android's blue touch flash
+- preserves the exact supplied Valkorion base/Lord, 40-part complete armor,
+  and Lady Alexus 28-part gothic-gown GLBs without geometry changes
+- is signed by the existing Aetherion repair certificate and uses Android
+  version code 193, so it can install over builds 191 and 192
+
+The final APK and whole-game results are recorded in `AUDIT_v1.72.4.md`.
+
+## Previous full build — 1.72.3 (Android build 192)
 
 Version 1.72.3 is the fully scanned native/model/update repair:
 

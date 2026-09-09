@@ -3,8 +3,12 @@ const assert=require('node:assert/strict');
 const fs=require('node:fs');
 const vm=require('node:vm');
 
-const updaterSource=fs.readFileSync('patches/v1.72.3-safe-updater.js','utf8');
-const centerSource=fs.readFileSync('patches/v1.72.3-update-center.js','utf8');
+const updaterPath=process.env.UPDATER_SOURCE||'patches/v1.72.3-safe-updater.js';
+const centerPath=process.env.UPDATE_CENTER_SOURCE||'patches/v1.72.3-update-center.js';
+const expectedVersion=process.env.EXPECTED_VERSION||'1.72.3';
+const expectedBuild=Number(process.env.EXPECTED_BUILD||192);
+const updaterSource=fs.readFileSync(updaterPath,'utf8');
+const centerSource=fs.readFileSync(centerPath,'utf8');
 
 function updaterContext(){
  const storage=new Map();
@@ -19,13 +23,13 @@ function updaterContext(){
   sessionStorage:{getItem(){return null},setItem(){},removeItem(){}},
   setTimeout(){return 1},clearTimeout(){},requestAnimationFrame(){return 1},confirm(){return true},location:{reload(){}},addEventListener(){},atob:value=>Buffer.from(value,'base64').toString('binary')
  };
- context.window=context;vm.createContext(context);vm.runInContext(updaterSource,context,{filename:'v1.72.3-safe-updater.js'});return context;
+ context.window=context;vm.createContext(context);vm.runInContext(updaterSource,context,{filename:updaterPath});return context;
 }
 
 {
  const context=updaterContext(),api=context.AetherionUpdater;
- assert.equal(api.safeUpdaterVersion,'1.72.3');
- assert.equal(api.androidBuild,192);
+ assert.equal(api.safeUpdaterVersion,expectedVersion);
+ assert.equal(api.androidBuild,expectedBuild);
  const release=api._test.sanitizeRelease({
   version:'1.72.4',build:193,minimumBundled:'1.72.0',requiresApk:true,
   apkUrl:'https://github.com/corinthianrattler-ui/aetherion-updates/releases/download/v1.72.4/Aetherion.apk',
@@ -45,18 +49,18 @@ async function probeNative(response){
  const listeners={};
  const document={readyState:'loading',addEventListener(type,handler){listeners[type]=handler},getElementById(){return null},querySelectorAll(){return[]}};
  const context={window:null,document,console,XMLHttpRequest,setTimeout(){return 1},Date,JSON,Promise,URL,location:{href:''}};
- context.window=context;vm.createContext(context);vm.runInContext(centerSource,context,{filename:'v1.72.3-update-center.js'});
+ context.window=context;vm.createContext(context);vm.runInContext(centerSource,context,{filename:centerPath});
  return context.AetherionUpdateCenterV172.nativePackage();
 }
 
 (async()=>{
- const valid=await probeNative({status:200,responseText:JSON.stringify({version:'1.72.3',build:192})});
- assert.deepEqual({...valid},{verified:true,version:'1.72.3',build:192});
+ const valid=await probeNative({status:200,responseText:JSON.stringify({version:expectedVersion,build:expectedBuild})});
+ assert.deepEqual({...valid},{verified:true,version:expectedVersion,build:expectedBuild});
  const missing=await probeNative({status:404,responseText:''});
  assert.equal(missing.verified,false);
  assert.doesNotMatch(centerSource,/INSTALL DOWNLOADED UPDATE|installed and ready/i);
  assert.match(centerSource,/FULL ANDROID INSTALL REQUIRED/);
  assert.match(centerSource,/DOWNLOAD FULL APK/);
- assert.match(centerSource,/native-build-192\.json/);
- console.log('v1.72.3 native update path: sentinel detection and no false APK-install claim passed');
+ assert.match(centerSource,new RegExp(`native-build-${expectedBuild}\\.json`));
+ console.log(`${expectedVersion} native update path: sentinel detection and no false APK-install claim passed`);
 })().catch(error=>{console.error(error);process.exitCode=1});

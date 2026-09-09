@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build the bounded stable channel for the v1.72.3 full-APK repair."""
+"""Build the bounded stable channel for the v1.72.4 full-APK repair."""
 
 from __future__ import annotations
 
@@ -8,17 +8,21 @@ import json
 import argparse
 import datetime as dt
 from pathlib import Path
+import sys
 
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT))
+from tools.build_v174_payload import transform_patch
+
 RAW = "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/"
 PATCHES = [
-    ("v1723-native-install-path", "patches/v1.72.3-update-center.js"),
+    ("v174-native-install-path", "update-center"),
 ]
-APK_NAME = "Aetherion_Reforged_v1.72.3_FULL_REPAIR.apk"
+APK_NAME = "Aetherion_Reforged_v1.72.4_FULL_REPAIR.apk"
 APK_URL = (
     "https://github.com/corinthianrattler-ui/aetherion-updates/"
-    f"releases/download/v1.72.3/{APK_NAME}"
+    f"releases/download/v1.72.4/{APK_NAME}"
 )
 
 
@@ -37,8 +41,8 @@ def main() -> None:
     if not args.apk.is_file():
         raise FileNotFoundError(args.apk)
     modules = []
-    for module_id, path in PATCHES:
-        source = (ROOT / path).read_text(encoding="utf-8")
+    for module_id, stem in PATCHES:
+        source = transform_patch(stem)
         modules.append(
             {
                 "id": module_id,
@@ -50,8 +54,8 @@ def main() -> None:
         "schema": 2,
         "channel": "stable",
         "release": {
-            "version": "1.72.3",
-            "build": 192,
+            "version": "1.72.4",
+            "build": 193,
             "minimumBundled": "1.72.0",
             "releasedAt": dt.datetime.now(dt.timezone.utc).replace(microsecond=0).isoformat().replace("+00:00", "Z"),
             "requiresApk": True,
@@ -59,10 +63,10 @@ def main() -> None:
             "apkSha256": file_sha256(args.apk),
             "apkSize": args.apk.stat().st_size,
             "notes": [
-                "Android build 192 is a required full APK. A JavaScript patch cannot install the native shell or bundled GLB models.",
+                "Android build 193 is a required full APK. It repairs the native loader that prevented versioned scripts, styles, and model checks from opening.",
                 "Valkorion's base body, Lord's royal set, complete 40-part armor, and Lady Alexus's 28-part gown model are included and checked at runtime.",
-                "The wardrobe now shows a small BUILD 192 / 3D READY badge after the actual model loads; a flat portrait is never reported as success.",
-                "Continue now clears the hidden opening-film guard and opens the live game; touch highlighting, two corrupt legacy images, and the false update-installed message are also repaired.",
+                "The wardrobe shows BUILD 193 / 3D READY only after the actual model parses and mounts; the legacy flat portrait is not reported as success.",
+                "Continue no longer repeats the entire migration chain, WebView cache is retained, and the optional 3D and offline-AI libraries load only when requested.",
             ],
             "modules": modules,
             # The native marker and models are part of the signed APK. This
@@ -82,7 +86,7 @@ def main() -> None:
     assert len(encoded) <= 100_000, "channel exceeds the bundled safe-updater limit"
     (ROOT / "channel.js").write_bytes(encoded)
     print(
-        f"channel.js: {len(modules)} native-install handoff module, 0 remote assets, {len(encoded):,} bytes"
+        f"channel.js: {len(modules)} build-193 install handoff module, 0 remote assets, {len(encoded):,} bytes"
     )
 
 

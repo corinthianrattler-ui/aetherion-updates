@@ -30,7 +30,7 @@ V172_ASSETS = {
     "assets/v172/alexus-gothic-gown.glb",
 }
 PORTRAIT_ROOT = ROOT / "custom" / "npc-portraits" / "v168"
-APK_NAME = "Aetherion_Reforged_v1.72.3_FULL_REPAIR.apk"
+APK_NAME = "Aetherion_Reforged_v1.72.4_FULL_REPAIR.apk"
 
 
 def portrait_number(path: Path) -> int:
@@ -127,14 +127,16 @@ def main() -> None:
         "patches/v1.72.3-character-models.js",
         "patches/v1.72.3-runtime-repair.js",
         "assets/v173/native-build-192.json",
+        "patches/v1.72.4-performance.js",
+        "assets/v174/native-build-193.json",
     ]
     manifest = {
         "schema": 1,
         "channel": "stable",
         "enabled": True,
         "latest": {
-            "game_version": "1.72.3",
-            "android_version_code": 192,
+            "game_version": "1.72.4",
+            "android_version_code": 193,
             "min_updater_schema": 1,
         },
         "manifest_url": RAW_BASE + "manifest.json",
@@ -143,12 +145,12 @@ def main() -> None:
             "aetherion-updates/releases/download/"
         ),
         "android_apk": {
-            "version": "1.72.3",
-            "version_code": 192,
+            "version": "1.72.4",
+            "version_code": 193,
             "filename": APK_NAME,
             "url": (
                 "https://github.com/corinthianrattler-ui/aetherion-updates/"
-                "releases/download/v1.72.3/"
+                "releases/download/v1.72.4/"
                 f"{APK_NAME}"
             ),
             "size": args.apk.stat().st_size,
@@ -159,7 +161,7 @@ def main() -> None:
         },
         "payloads": [payload(path, previous) for path in paths],
         "notes": (
-            "Version 1.72.3 is the fully scanned Android build 192 repair. It removes the false "
+            "Version 1.72.4 is Android build 193. It corrects the reversed native query and fragment branches that prevented versioned game files from loading, retains WebView cache between launches, loads the optional Three.js and WebLLM runtimes only when their systems are opened, and prevents already-current state from traversing the entire migration chain on every render. Version 1.72.3 is the fully scanned Android build 192 repair. It removes the false "
             "web-patch-as-APK success path, proves the installed native package with a bundled "
             "build marker, clears the hidden opening-film guard before Continue renders, mounts Valkorion on both Character and Equipment screens, displays a "
             "small live 3D status badge, repairs two zero-byte legacy images, and retains the "

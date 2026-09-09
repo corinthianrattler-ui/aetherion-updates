@@ -51,7 +51,7 @@
 
     move-result v2
 
-    if-ltz v2, :after_query
+    if-gez v2, :after_query
 
     const/4 v2, -0x1
 
@@ -69,7 +69,7 @@
 
     move-result v3
 
-    if-ltz v3, :after_fragment
+    if-gez v3, :after_fragment
 
     const/4 v3, -0x1
 

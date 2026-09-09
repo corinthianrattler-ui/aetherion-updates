@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build the bounded stable channel for the v1.72.8 Alexus equipment repair."""
+"""Build the bounded stable channel for the v1.72.9 Alexus torso repair."""
 
 from __future__ import annotations
 
@@ -12,6 +12,7 @@ ROOT = Path(__file__).resolve().parents[1]
 PATCHES = [
     ("v177-scroll-repair", ROOT / "patches" / "v1.72.7-scroll-repair.js"),
     ("v178-alexus-equipment-repair", ROOT / "patches" / "v1.72.8-alexus-equipment-repair.js"),
+    ("v179-alexus-torso-foundation", ROOT / "patches" / "v1.72.9-alexus-torso-foundation.js"),
 ]
 APK_NAME = "Aetherion_Reforged_v1.72.6_GAMEPLAY_REPAIR_FULL.apk"
 APK_URL = (
@@ -48,7 +49,7 @@ def main() -> None:
         "schema": 2,
         "channel": "stable",
         "release": {
-            "version": "1.72.8",
+            "version": "1.72.9",
             # This repair targets the verified v1.72.6 full APK. It contains
             # no native files and can therefore stage on Android build 195.
             "build": 195,
@@ -59,14 +60,14 @@ def main() -> None:
             "apkSha256": file_sha256(args.apk),
             "apkSize": args.apk.stat().st_size,
             "notes": [
-                "Stops the legacy v1.10 migration from re-equipping all 17 Lady Alexus items on every redraw after the player leaves a slot empty.",
-                "Recovers the exact unequipped slots from duplicate unique items already returned to inventory by the broken redraw and removes only impossible duplicate copies.",
-                "Reapplies the 3D visibility map from the exact Alexus equipment record after every equipment change, with a live fitted-piece count.",
-                "Includes the confirmed v1.72.7 vertical scrolling repair so Story and main screens remain scrollable without restoring the right-side void.",
-                "This is a script-only repair for the verified v1.72.6 APK; no model, art, native file, or save reset is required.",
+                "Adds the complete torso foundation missing from Lady Alexus's supplied GLB: an untextured dark-linen base uses her exact fitted torso geometry and remains when the gown is removed.",
+                "The Tailored Dominus Lady's Gown remains an independent equipped mesh; it replaces the base torso only while that exact item occupies her body slot.",
+                "Retains the v1.72.8 equipment-state repair, so empty slots survive redraw migration and already-created duplicate unique items are recovered safely.",
+                "Retains the v1.72.7 vertical scrolling repair without restoring the right-side void.",
+                "This is a script-only repair for the verified v1.72.6 APK; it reuses packaged geometry and requires no model, art, native-file, or save reset download.",
             ],
             "modules": modules,
-            # Both repairs are source-only; all model and art bytes remain in
+            # All staged repairs are source-only; model and art bytes remain in
             # the already-verified v1.72.6 APK.
             "assets": {},
         },

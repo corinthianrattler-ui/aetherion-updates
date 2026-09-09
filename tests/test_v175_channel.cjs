@@ -23,4 +23,14 @@ assert.match(feed.release.apkUrl,/v1\.72\.5\/Aetherion_Reforged_v1\.72\.5_MODULA
 assert(fs.statSync('channel.js').size<=100000);
 assert(feed.release.notes.some(note=>note.includes('17 equipment slots')));
 assert(feed.release.notes.some(note=>note.includes('startup-crash repair')));
-console.log('v1.72.5 channel: exact build-194 handoff, APK metadata, modular notes, and size limit passed');
+
+let capture=null,prevented=0,stopped=0;
+const location={href:'https://appassets.androidplatform.net/assets/game/index.html'};
+const legacyWindow={AetherionUpdater:{receiveChannel(){}},__aetherionFullApkUrl:null};
+const document={addEventListener(type,handler,useCapture){if(type==='click'&&useCapture)capture=handler}};
+vm.runInNewContext(fs.readFileSync('channel.js','utf8'),{window:legacyWindow,document,location},{filename:'channel.js'});
+assert.equal(typeof capture,'function','legacy full-APK handoff was not installed');
+capture({target:{closest(){return{textContent:'DOWNLOAD FULL APK'}}},preventDefault(){prevented++},stopPropagation(){stopped++},stopImmediatePropagation(){stopped++}});
+assert.equal(location.href,feed.release.apkUrl,'legacy update center was not redirected to build 194');
+assert.equal(prevented,1);assert.equal(stopped,2);
+console.log('v1.72.5 channel: exact build-194 handoff, APK metadata, legacy-button redirect, modular notes, and size limit passed');

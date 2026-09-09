@@ -4,7 +4,34 @@ Public update channel for **Aetherion Reforged**.
 
 The Android staged updater reads `channel.js` from this repository through a MIME-safe GitHub Contents response. `manifest.json` records the exact sizes and SHA-256 hashes of managed payloads.
 
-## Current full build — 1.72.5 (Android build 194)
+## Current web repair — 1.72.10 (Android build 195)
+
+Version 1.72.10 corrects Lady Alexus's model without altering or replacing her
+supplied GLB:
+
+- keeps all 12 original anatomy surfaces permanently visible, including the
+  authored upper chest, torso, arms, hands, and legs
+- maps `GOWN_tripo_part_10`, the actual complete dress, to the gown slot instead
+  of the legs slot
+- removes the fabricated v1.72.9 torso clone and its recoloured material
+- classifies all 28 packaged model nodes exactly once as permanent anatomy or a
+  genuine removable wardrobe mesh
+- retains the v1.72.8 empty-slot migration fix and v1.72.7 vertical-scrolling
+  fix in the same staged release
+- has no remote model or art payload; the updater uses the unchanged GLB already
+  inside the verified v1.72.6 APK
+
+The source comparison and all 4,096 non-weapon wardrobe-state results are
+recorded in `AUDIT_v1.72.10.md`.
+
+## Current full build — 1.72.6 (Android build 195)
+
+Version 1.72.6 is the full gameplay-repair APK. It adds Lady Alexus's packaged
+3D viewer, portrait-phone containment, personal purchase routing, fitted wagon
+crate fallback, and all content from 1.72.5. Later 1.72.7–1.72.10 corrections
+stage over it through Game Updates without replacing the APK or clearing saves.
+
+## Previous full build — 1.72.5 (Android build 194)
 
 Version 1.72.5 is the modular-equipment correction:
 

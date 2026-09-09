@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build the bounded stable channel for the v1.72.9 Alexus torso repair."""
+"""Build the bounded stable channel for the v1.72.10 Alexus source-map repair."""
 
 from __future__ import annotations
 
@@ -12,7 +12,7 @@ ROOT = Path(__file__).resolve().parents[1]
 PATCHES = [
     ("v177-scroll-repair", ROOT / "patches" / "v1.72.7-scroll-repair.js"),
     ("v178-alexus-equipment-repair", ROOT / "patches" / "v1.72.8-alexus-equipment-repair.js"),
-    ("v179-alexus-torso-foundation", ROOT / "patches" / "v1.72.9-alexus-torso-foundation.js"),
+    ("v1710-alexus-original-body-map", ROOT / "patches" / "v1.72.10-alexus-original-body-map.js"),
 ]
 APK_NAME = "Aetherion_Reforged_v1.72.6_GAMEPLAY_REPAIR_FULL.apk"
 APK_URL = (
@@ -49,7 +49,7 @@ def main() -> None:
         "schema": 2,
         "channel": "stable",
         "release": {
-            "version": "1.72.9",
+            "version": "1.72.10",
             # This repair targets the verified v1.72.6 full APK. It contains
             # no native files and can therefore stage on Android build 195.
             "build": 195,
@@ -60,15 +60,17 @@ def main() -> None:
             "apkSha256": file_sha256(args.apk),
             "apkSize": args.apk.stat().st_size,
             "notes": [
-                "Adds the complete torso foundation missing from Lady Alexus's supplied GLB: an untextured dark-linen base uses her exact fitted torso geometry and remains when the gown is removed.",
-                "The Tailored Dominus Lady's Gown remains an independent equipped mesh; it replaces the base torso only while that exact item occupies her body slot.",
+                "Restores Lady Alexus's original authored body map: her head, hair, upper chest, torso, arms, hands, and legs remain visible regardless of empty wardrobe slots.",
+                "Maps GOWN_tripo_part_10, the actual full dress, to the Tailored Dominus Lady's Gown so removing that item removes the dress instead of her body.",
+                "Removes the fabricated v1.72.9 torso clone; no replacement geometry, recolouring, or guessed body layer remains.",
+                "Classifies all 28 packaged mesh nodes exactly once. Nine items have genuine independent model geometry; cards with no separate source mesh never hide anatomy or another garment.",
                 "Retains the v1.72.8 equipment-state repair, so empty slots survive redraw migration and already-created duplicate unique items are recovered safely.",
                 "Retains the v1.72.7 vertical scrolling repair without restoring the right-side void.",
-                "This is a script-only repair for the verified v1.72.6 APK; it reuses packaged geometry and requires no model, art, native-file, or save reset download.",
+                "This is a script-only repair for the verified v1.72.6 APK; it uses the original packaged GLB unchanged and requires no model, art, APK, or save reset download.",
             ],
             "modules": modules,
-            # All staged repairs are source-only; model and art bytes remain in
-            # the already-verified v1.72.6 APK.
+            # All staged repairs are source-only; the original complete model
+            # and art bytes remain in the already-verified v1.72.6 APK.
             "assets": {},
         },
     }

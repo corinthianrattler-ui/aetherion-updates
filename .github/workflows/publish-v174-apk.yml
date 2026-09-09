@@ -1,0 +1,62 @@
+name: Publish Aetherion v1.72.4 APK
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/publish-v174-apk.yml'
+      - '.release-patches/v1.72.3-to-v1.72.4.zstpatch'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install binary-patch support
+        shell: bash
+        run: |
+          set -euo pipefail
+          sudo apt-get update
+          sudo apt-get install --yes zstd
+
+      - name: Download verified build 192
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          gh release download v1.72.3 --pattern 'Aetherion_Reforged_v1.72.3_FULL_REPAIR.apk'
+          test "$(stat -c%s Aetherion_Reforged_v1.72.3_FULL_REPAIR.apk)" = '479161471'
+          echo '411878ce5ac4f4c73ef62a75de085bd3af1847b5e29479ab88ac7a48f841bb0a  Aetherion_Reforged_v1.72.3_FULL_REPAIR.apk' | sha256sum --check --strict
+
+      - name: Reconstruct and verify signed build 193
+        shell: bash
+        run: |
+          set -euo pipefail
+          patch='.release-patches/v1.72.3-to-v1.72.4.zstpatch'
+          output='Aetherion_Reforged_v1.72.4_FULL_REPAIR.apk'
+          echo 'de20363797ca1337e08a04cd6ed3ab52d3e8caa50ad5307f29c58970bf70a97d  .release-patches/v1.72.3-to-v1.72.4.zstpatch' | sha256sum --check --strict
+          zstd --decompress --long=29 --patch-from=Aetherion_Reforged_v1.72.3_FULL_REPAIR.apk "$patch" -o "$output"
+          test "$(stat -c%s "$output")" = '479189462'
+          echo 'da5a55da228dcabf15bb00935881b983ef948ba665abe0db6f2d65d5adcbeee1  Aetherion_Reforged_v1.72.4_FULL_REPAIR.apk' | sha256sum --check --strict
+
+      - name: Publish build 193 release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          apk='Aetherion_Reforged_v1.72.4_FULL_REPAIR.apk'
+          notes='Android build 193 repairs the native versioned-asset loader, restores the supplied Valkorion and Lady Alexus 3D models, repairs Continue, removes the floating updater and blue touch flash, and eliminates repeated migration and merchant-worker rebuilds. APK SHA-256: da5a55da228dcabf15bb00935881b983ef948ba665abe0db6f2d65d5adcbeee1'
+          if gh release view v1.72.4 >/dev/null 2>&1; then
+            gh release upload v1.72.4 "$apk" --clobber
+            gh release edit v1.72.4 --title 'Aetherion Reforged v1.72.4 (Android build 193)' --notes "$notes"
+          else
+            gh release create v1.72.4 "$apk" --target "$GITHUB_SHA" --title 'Aetherion Reforged v1.72.4 (Android build 193)' --notes "$notes"
+          fi

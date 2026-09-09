@@ -1,0 +1,11 @@
+'use strict';
+const assert=require('node:assert/strict');
+const crypto=require('node:crypto');
+const fs=require('node:fs');
+const vm=require('node:vm');
+const storage=()=>{const rows=new Map();return{getItem:key=>rows.has(key)?rows.get(key):null,setItem:(key,value)=>rows.set(key,String(value)),removeItem:key=>rows.delete(key)}};
+function element(){return{children:[],dataset:{},style:{},append(...items){this.children.push(...items)},appendChild(item){this.children.push(item)},remove(){},replaceChildren(...items){this.children=[...items]},addEventListener(){},setAttribute(){},querySelector(){return null},querySelectorAll(){return[]}}}
+const localStorage=storage(),sessionStorage=storage(),document={readyState:'loading',baseURI:'file:///android_asset/game/index.html',head:element(),body:element(),documentElement:element(),createElement:element,createTextNode:value=>({textContent:String(value)}),getElementById(){return null},querySelectorAll(){return[]},addEventListener(){}};
+const window={document,localStorage,sessionStorage,location:{reload(){}},addEventListener(){},requestAnimationFrame:callback=>setTimeout(callback,0),setTimeout,clearTimeout,confirm:()=>true};Object.assign(window,{window,globalThis:window,TextEncoder,TextDecoder,Uint8Array,Uint32Array,DataView,URL,crypto:crypto.webcrypto,atob:value=>Buffer.from(String(value),'base64').toString('binary')});
+const context=vm.createContext({...window,window,globalThis:window,document,localStorage,sessionStorage,location:window.location,MutationObserver:class{observe(){}},console});vm.runInContext(fs.readFileSync('patches/v1.72.6-safe-updater.js','utf8'),context,{filename:'v1.72.6-safe-updater.js'});
+const api=window.AetherionUpdater;assert.equal(api.safeUpdaterVersion,'1.72.6');assert.equal(api.bundledVersion,'1.72.6');assert.equal(api.androidBuild,195);assert.equal(api.asset('assets/v176/native-build-195.json'),'file:///android_asset/game/assets/v176/native-build-195.json');assert.equal(api._test.compareVersions('1.72.7','1.72.6'),1);assert.throws(()=>api.stage({version:'1.72.7',build:196,modules:[],assets:{}}),/full APK/);console.log('v1.72.6 updater: bundled version, native build, local routing, and native-upgrade guard passed');

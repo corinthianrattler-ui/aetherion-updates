@@ -1,0 +1,12 @@
+{
+  "version": "1.72.6",
+  "build": 195,
+  "feature": "gameplay-repair",
+  "alexus_model": "assets/v172/alexus-gothic-gown.glb",
+  "alexus_mesh_nodes": 28,
+  "alexus_fitted_slots": 12,
+  "alexus_card_only_slots": 5,
+  "portrait_phone_layout": true,
+  "personal_purchase_destination": "Carried Inventory",
+  "quartermaster_fitted_crates": true
+}

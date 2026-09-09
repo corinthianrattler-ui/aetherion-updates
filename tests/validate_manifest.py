@@ -32,16 +32,16 @@ def main() -> None:
     }
     assert manifest["schema"] == 1
     assert manifest["enabled"] is True
-    assert manifest["latest"]["game_version"] == "1.72.5"
-    assert manifest["latest"]["android_version_code"] == 194
+    assert manifest["latest"]["game_version"] == "1.72.6"
+    assert manifest["latest"]["android_version_code"] == 195
     assert manifest["latest"]["min_updater_schema"] <= 1
     apk = manifest["android_apk"]
-    assert apk["version"] == "1.72.5"
-    assert apk["version_code"] == 194
-    assert apk["filename"] == "Aetherion_Reforged_v1.72.5_MODULAR_EQUIPMENT_UPDATE.apk"
-    assert apk["url"].endswith("/v1.72.5/" + apk["filename"])
-    assert apk["size"] == 499009725
-    assert apk["sha256"] == "bf9fd12a105c50dc2325d26e3b58708f9487c17bf957bf878a8875a2cc1f9480"
+    assert apk["version"] == "1.72.6"
+    assert apk["version_code"] == 195
+    assert apk["filename"] == "Aetherion_Reforged_v1.72.6_GAMEPLAY_REPAIR_FULL.apk"
+    assert apk["url"].endswith("/v1.72.6/" + apk["filename"])
+    assert apk["size"] == 499039030
+    assert apk["sha256"] == "2fd692cb05cb163e5bde55abfae8789c3131e15e956831921abe07f905f2c645"
     assert apk["signing_certificate_sha256"] == "5e68318c3e12c9f5915976a25bbfd5039a2f7e651682b65744b2747b618c3e77"
     payloads = manifest["payloads"]
     portrait_paths = [
@@ -102,6 +102,10 @@ def main() -> None:
         "patches/v1.72.5-update-center.js",
         "patches/v1.72.5-character-models.js",
         "assets/v175/native-build-194.json",
+        "patches/v1.72.6-safe-updater.js",
+        "patches/v1.72.6-update-center.js",
+        "patches/v1.72.6-gameplay-repair.js",
+        "assets/v176/native-build-195.json",
     ]
     assert len({payload["path"] for payload in payloads}) == len(payloads)
 
@@ -156,6 +160,11 @@ def main() -> None:
         assert payload["restart_required"] is True
 
     assert manifest["save_policy"]["preserve_always"] is True
+    assert "Version 1.72.6 is Android build 195" in manifest["notes"]
+    assert "all 28 mesh sections" in manifest["notes"]
+    assert "12 independently controlled fitted wardrobe slots" in manifest["notes"]
+    assert "Carried Inventory" in manifest["notes"]
+    assert "correct fitted wagon crate first" in manifest["notes"]
     assert "Version 1.72.5 is Android build 194" in manifest["notes"]
     assert "17-slot Valkorion model" in manifest["notes"]
     assert "shared registration contract rejects future baked or partial character models" in manifest["notes"]
@@ -174,7 +183,7 @@ def main() -> None:
     assert "zero portrait-record checks" in manifest["notes"]
     assert "110 new lore-matched" in manifest["notes"]
     assert "Quartermaster Halric Morn" in manifest["notes"]
-    print("manifest.json: 1.72.5 payload sizes, release URLs, and SHA-256 hashes passed")
+    print("manifest.json: 1.72.6 payload sizes, release URLs, and SHA-256 hashes passed")
 
 
 if __name__ == "__main__":

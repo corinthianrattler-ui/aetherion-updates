@@ -30,7 +30,7 @@ V172_ASSETS = {
     "assets/v172/alexus-gothic-gown.glb",
 }
 PORTRAIT_ROOT = ROOT / "custom" / "npc-portraits" / "v168"
-APK_NAME = "Aetherion_Reforged_v1.72.5_MODULAR_EQUIPMENT_UPDATE.apk"
+APK_NAME = "Aetherion_Reforged_v1.72.6_GAMEPLAY_REPAIR_FULL.apk"
 
 
 def portrait_number(path: Path) -> int:
@@ -137,14 +137,18 @@ def main() -> None:
         "patches/v1.72.5-update-center.js",
         "patches/v1.72.5-character-models.js",
         "assets/v175/native-build-194.json",
+        "patches/v1.72.6-safe-updater.js",
+        "patches/v1.72.6-update-center.js",
+        "patches/v1.72.6-gameplay-repair.js",
+        "assets/v176/native-build-195.json",
     ]
     manifest = {
         "schema": 1,
         "channel": "stable",
         "enabled": True,
         "latest": {
-            "game_version": "1.72.5",
-            "android_version_code": 194,
+            "game_version": "1.72.6",
+            "android_version_code": 195,
             "min_updater_schema": 1,
         },
         "manifest_url": RAW_BASE + "manifest.json",
@@ -153,12 +157,12 @@ def main() -> None:
             "aetherion-updates/releases/download/"
         ),
         "android_apk": {
-            "version": "1.72.5",
-            "version_code": 194,
+            "version": "1.72.6",
+            "version_code": 195,
             "filename": APK_NAME,
             "url": (
                 "https://github.com/corinthianrattler-ui/aetherion-updates/"
-                "releases/download/v1.72.5/"
+                "releases/download/v1.72.6/"
                 f"{APK_NAME}"
             ),
             "size": args.apk.stat().st_size,
@@ -169,7 +173,7 @@ def main() -> None:
         },
         "payloads": [payload(path, previous) for path in paths],
         "notes": (
-            "Version 1.72.5 is Android build 194. It restores the fitted 17-slot Valkorion model, makes armor, court clothing, weapons, ammunition, cloak, and jewelry independently visible, and allows armor and court pieces to be mixed without swapping a whole-body model. Removing one item hides only that item. The incomplete baked Lady Alexus gown is no longer presented as a modular model; her working picture-based equipment view remains until every fitted slot has real independent geometry. A shared registration contract rejects future baked or partial character models. The APK retains the startup crash repair and uses the exact same recovery signing identity as the installed startup-fixed v1.72.4 copy. Version 1.72.4 is Android build 193. It corrects the reversed native query and fragment branches that prevented versioned game files from loading, retains WebView cache between launches, loads the optional Three.js and WebLLM runtimes only when their systems are opened, and prevents already-current state from traversing the entire migration chain on every render. Version 1.72.3 is the fully scanned Android build 192 repair. It removes the false "
+            "Version 1.72.6 is Android build 195. It restores Lady Alexus's supplied 3D model in her Equipment view and uniquely classifies all 28 mesh sections into foundation plus 12 independently controlled fitted wardrobe slots. Her main-hand, off-hand, ranged, reserve, and ammunition pieces remain independent equipment cards because the supplied GLB has no geometry for those five pieces; nothing is fabricated or falsely described as visible geometry. Portrait-phone layout now constrains the game, modals, equipment, shops, selectors, Systems dock, and notices to one vertical viewport, removing sideways page scrolling and the right-side void. Ordinary shop and market purchases route directly to Valkorion's Carried Inventory. Quartermaster requisitions resolve the correct fitted wagon crate first, then the next compatible crate with capacity, and never treat an empty bare wagon floor as ordinary item storage. The small gameplay repair is available through the in-game updater on v1.72.5, while the full APK retains every prior asset and uses the exact same signing identity. Version 1.72.5 is Android build 194. It restores the fitted 17-slot Valkorion model, makes armor, court clothing, weapons, ammunition, cloak, and jewelry independently visible, and allows armor and court pieces to be mixed without swapping a whole-body model. Removing one item hides only that item. A shared registration contract rejects future baked or partial character models. Version 1.72.4 is Android build 193. It corrects the reversed native query and fragment branches that prevented versioned game files from loading, retains WebView cache between launches, loads the optional Three.js and WebLLM runtimes only when their systems are opened, and prevents already-current state from traversing the entire migration chain on every render. Version 1.72.3 is the fully scanned Android build 192 repair. It removes the false "
             "web-patch-as-APK success path, proves the installed native package with a bundled "
             "build marker, clears the hidden opening-film guard before Continue renders, mounts Valkorion on both Character and Equipment screens, displays a "
             "small live 3D status badge, repairs two zero-byte legacy images, and retains the "

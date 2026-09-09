@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build the bounded stable channel for the v1.72.6 gameplay repair."""
+"""Build the bounded stable channel for the v1.72.7 scroll-only repair."""
 
 from __future__ import annotations
 
@@ -10,7 +10,7 @@ import datetime as dt
 from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 PATCHES = [
-    ("v176-gameplay-repair", "gameplay-repair"),
+    ("v177-scroll-repair", "scroll-repair"),
 ]
 APK_NAME = "Aetherion_Reforged_v1.72.6_GAMEPLAY_REPAIR_FULL.apk"
 APK_URL = (
@@ -35,7 +35,7 @@ def main() -> None:
         raise FileNotFoundError(args.apk)
     modules = []
     for module_id, stem in PATCHES:
-        source = (ROOT / "patches" / f"v1.72.6-{stem}.js").read_text(encoding="utf-8")
+        source = (ROOT / "patches" / f"v1.72.7-{stem}.js").read_text(encoding="utf-8")
         modules.append(
             {
                 "id": module_id,
@@ -47,10 +47,11 @@ def main() -> None:
         "schema": 2,
         "channel": "stable",
         "release": {
-            "version": "1.72.6",
-            # Keep the staged patch on build 194 so the installed v1.72.5
-            # updater may apply these web/gameplay fixes in place. Build 195
-            # is available below as the complete signed APK.
+            "version": "1.72.7",
+            # Keep this CSS-only staged repair on build 194 so both the
+            # installed v1.72.5 and v1.72.6 updaters may apply it in place.
+            # The full APK link remains the already-verified build 195 while
+            # this focused repair is confirmed on the physical phone.
             "build": 194,
             "minimumBundled": "1.72.5",
             "releasedAt": dt.datetime.now(dt.timezone.utc).replace(microsecond=0).isoformat().replace("+00:00", "Z"),
@@ -59,11 +60,11 @@ def main() -> None:
             "apkSha256": file_sha256(args.apk),
             "apkSize": args.apk.stat().st_size,
             "notes": [
-                "Lady Alexus's supplied model is restored in her Equipment view: all 28 mesh sections are uniquely classified into foundation plus 12 independently controlled fitted wardrobe slots.",
-                "Her five weapon and ammunition slots remain separate equipment cards because the supplied GLB has no geometry for them; no fake pieces or baked outfit claim is used.",
-                "Portrait-phone screens are constrained to one vertical viewport, including modals, equipment, shop cards, selectors, the Systems dock, and notices; sideways page scrolling and the right-side void are removed.",
-                "Ordinary shop and market purchases go directly to Valkorion's Carried Inventory. Quartermaster requisitions use the correct fitted wagon crate, then the next compatible crate with capacity.",
-                "This small gameplay patch installs inside v1.72.5. The complete Android build 195 APK remains available for a clean install or recovery and keeps the same signing identity.",
+                "Restores vertical touch scrolling to Story and every main-content screen after the v1.72.6 portrait containment rule trapped the page-level scroller.",
+                "Keeps horizontal overflow blocked, so the empty right-side canvas does not return.",
+                "Leaves the already-working Systems dock and modal scroll containers independent and preserves the intentional full-screen map lock.",
+                "This is a scroll-only recovery patch for v1.72.5 and v1.72.6. No art, models, equipment, trade data, saves, or gameplay rules are changed.",
+                "The full APK link remains the verified v1.72.6 build while this repair is confirmed on the physical phone.",
             ],
             "modules": modules,
             # The Alexus model already exists in v1.72.5. Only the verified
@@ -94,7 +95,7 @@ def main() -> None:
     assert len(encoded) <= 100_000, "channel exceeds the bundled safe-updater limit"
     (ROOT / "channel.js").write_bytes(encoded)
     print(
-        f"channel.js: {len(modules)} v1.72.5-compatible gameplay module, 0 remote assets, {len(encoded):,} bytes"
+        f"channel.js: {len(modules)} v1.72.5/v1.72.6-compatible scroll module, 0 remote assets, {len(encoded):,} bytes"
     )
 
 

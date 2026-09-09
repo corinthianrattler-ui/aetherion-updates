@@ -1,0 +1,66 @@
+name: Publish Aetherion v1.72.6 APK
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/publish-v176-apk.yml'
+      - '.release-patches/v1.72.5-to-v1.72.6-github/v1.72.5-to-v1.72.6-exact.zstpatch'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install binary-patch support
+        shell: bash
+        run: |
+          set -euo pipefail
+          sudo apt-get update
+          sudo apt-get install --yes zstd unzip
+
+      - name: Download verified build 194
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          base='Aetherion_Reforged_v1.72.5_MODULAR_EQUIPMENT_UPDATE.apk'
+          gh release download v1.72.5 --pattern "$base"
+          test "$(stat -c%s "$base")" = '499009725'
+          echo 'bf9fd12a105c50dc2325d26e3b58708f9487c17bf957bf878a8875a2cc1f9480  Aetherion_Reforged_v1.72.5_MODULAR_EQUIPMENT_UPDATE.apk' | sha256sum --check --strict
+
+      - name: Reconstruct and verify signed build 195
+        shell: bash
+        run: |
+          set -euo pipefail
+          base='Aetherion_Reforged_v1.72.5_MODULAR_EQUIPMENT_UPDATE.apk'
+          patch='.release-patches/v1.72.5-to-v1.72.6-github/v1.72.5-to-v1.72.6-exact.zstpatch'
+          output='Aetherion_Reforged_v1.72.6_GAMEPLAY_REPAIR_FULL.apk'
+          test "$(stat -c%s "$patch")" = '193820'
+          echo '2838036f23c93d76f3b3abaab0be6bc952a080176d91288f7772120f4b7c3cf5  .release-patches/v1.72.5-to-v1.72.6-github/v1.72.5-to-v1.72.6-exact.zstpatch' | sha256sum --check --strict
+          zstd --decompress --long=29 --patch-from="$base" "$patch" -o "$output"
+          test "$(stat -c%s "$output")" = '499039030'
+          echo '2fd692cb05cb163e5bde55abfae8789c3131e15e956831921abe07f905f2c645  Aetherion_Reforged_v1.72.6_GAMEPLAY_REPAIR_FULL.apk' | sha256sum --check --strict
+          unzip -tq "$output"
+
+      - name: Publish build 195 release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          apk='Aetherion_Reforged_v1.72.6_GAMEPLAY_REPAIR_FULL.apk'
+          notes="Android build 195 is the focused gameplay repair for v1.72.5. It restores Lady Alexus's supplied 3D model in Equipment and independently controls every model-backed fitted wardrobe group; keeps the five weapon/ammunition slots separate without pretending the supplied model contains missing geometry; fixes portrait-phone overflow and the right-side void; sends ordinary purchases to Valkorion's Carried Inventory; and reserves organized fitted-crate routing for Quartermaster requisitions. The APK is full size, retains all base assets, and uses the same package and signing identity. APK SHA-256: 2fd692cb05cb163e5bde55abfae8789c3131e15e956831921abe07f905f2c645"
+          if gh release view v1.72.6 >/dev/null 2>&1; then
+            gh release upload v1.72.6 "$apk" --clobber
+            gh release edit v1.72.6 --title 'Aetherion Reforged v1.72.6 (Android build 195)' --notes "$notes"
+          else
+            gh release create v1.72.6 "$apk" --target "$GITHUB_SHA" --title 'Aetherion Reforged v1.72.6 (Android build 195)' --notes "$notes"
+          fi

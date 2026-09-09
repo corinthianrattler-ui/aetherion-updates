@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build the bounded stable channel for the v1.72.7 scroll-only repair."""
+"""Build the bounded stable channel for the v1.72.8 Alexus equipment repair."""
 
 from __future__ import annotations
 
@@ -10,7 +10,8 @@ import datetime as dt
 from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 PATCHES = [
-    ("v177-scroll-repair", "scroll-repair"),
+    ("v177-scroll-repair", ROOT / "patches" / "v1.72.7-scroll-repair.js"),
+    ("v178-alexus-equipment-repair", ROOT / "patches" / "v1.72.8-alexus-equipment-repair.js"),
 ]
 APK_NAME = "Aetherion_Reforged_v1.72.6_GAMEPLAY_REPAIR_FULL.apk"
 APK_URL = (
@@ -34,8 +35,8 @@ def main() -> None:
     if not args.apk.is_file():
         raise FileNotFoundError(args.apk)
     modules = []
-    for module_id, stem in PATCHES:
-        source = (ROOT / "patches" / f"v1.72.7-{stem}.js").read_text(encoding="utf-8")
+    for module_id, path in PATCHES:
+        source = path.read_text(encoding="utf-8")
         modules.append(
             {
                 "id": module_id,
@@ -47,28 +48,26 @@ def main() -> None:
         "schema": 2,
         "channel": "stable",
         "release": {
-            "version": "1.72.7",
-            # Keep this CSS-only staged repair on build 194 so both the
-            # installed v1.72.5 and v1.72.6 updaters may apply it in place.
-            # The full APK link remains the already-verified build 195 while
-            # this focused repair is confirmed on the physical phone.
-            "build": 194,
-            "minimumBundled": "1.72.5",
+            "version": "1.72.8",
+            # This repair targets the verified v1.72.6 full APK. It contains
+            # no native files and can therefore stage on Android build 195.
+            "build": 195,
+            "minimumBundled": "1.72.6",
             "releasedAt": dt.datetime.now(dt.timezone.utc).replace(microsecond=0).isoformat().replace("+00:00", "Z"),
             "requiresApk": False,
             "apkUrl": APK_URL,
             "apkSha256": file_sha256(args.apk),
             "apkSize": args.apk.stat().st_size,
             "notes": [
-                "Restores vertical touch scrolling to Story and every main-content screen after the v1.72.6 portrait containment rule trapped the page-level scroller.",
-                "Keeps horizontal overflow blocked, so the empty right-side canvas does not return.",
-                "Leaves the already-working Systems dock and modal scroll containers independent and preserves the intentional full-screen map lock.",
-                "This is a scroll-only recovery patch for v1.72.5 and v1.72.6. No art, models, equipment, trade data, saves, or gameplay rules are changed.",
-                "The full APK link remains the verified v1.72.6 build while this repair is confirmed on the physical phone.",
+                "Stops the legacy v1.10 migration from re-equipping all 17 Lady Alexus items on every redraw after the player leaves a slot empty.",
+                "Recovers the exact unequipped slots from duplicate unique items already returned to inventory by the broken redraw and removes only impossible duplicate copies.",
+                "Reapplies the 3D visibility map from the exact Alexus equipment record after every equipment change, with a live fitted-piece count.",
+                "Includes the confirmed v1.72.7 vertical scrolling repair so Story and main screens remain scrollable without restoring the right-side void.",
+                "This is a script-only repair for the verified v1.72.6 APK; no model, art, native file, or save reset is required.",
             ],
             "modules": modules,
-            # The Alexus model already exists in v1.72.5. Only the verified
-            # controller is staged; build 195 bundles it for clean installs.
+            # Both repairs are source-only; all model and art bytes remain in
+            # the already-verified v1.72.6 APK.
             "assets": {},
         },
     }
@@ -95,7 +94,7 @@ def main() -> None:
     assert len(encoded) <= 100_000, "channel exceeds the bundled safe-updater limit"
     (ROOT / "channel.js").write_bytes(encoded)
     print(
-        f"channel.js: {len(modules)} v1.72.5/v1.72.6-compatible scroll module, 0 remote assets, {len(encoded):,} bytes"
+        f"channel.js: {len(modules)} v1.72.6-compatible repair modules, 0 remote assets, {len(encoded):,} bytes"
     )
 
 

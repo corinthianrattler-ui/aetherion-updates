@@ -1,0 +1,71 @@
+name: Publish Aetherion v1.66.1 Immersive APK
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/publish-v1661-immersive-apk.yml'
+      - '.release-patches/v1.72.3-to-v1.66.1-immersive/**'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install binary-patch support
+        shell: bash
+        run: |
+          set -euo pipefail
+          sudo apt-get update
+          sudo apt-get install --yes zstd unzip
+
+      - name: Download verified v1.72.3 transport base
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          gh release download v1.72.3 --pattern 'Aetherion_Reforged_v1.72.3_FULL_REPAIR.apk'
+          test "$(stat -c%s Aetherion_Reforged_v1.72.3_FULL_REPAIR.apk)" = '479161471'
+          echo '411878ce5ac4f4c73ef62a75de085bd3af1847b5e29479ab88ac7a48f841bb0a  Aetherion_Reforged_v1.72.3_FULL_REPAIR.apk' | sha256sum --check --strict
+
+      - name: Join and verify transport patch
+        shell: bash
+        run: |
+          set -euo pipefail
+          parts=(.release-patches/v1.72.3-to-v1.66.1-immersive/part-*)
+          test "${#parts[@]}" = '26'
+          cat "${parts[@]}" > v1.72.3-to-v1.66.1-immersive.zstpatch
+          test "$(stat -c%s v1.72.3-to-v1.66.1-immersive.zstpatch)" = '108911975'
+          echo '25441d90aa023b54896852a28c40a85255892bf2cd4fb4b4a0d5a389632d2d1c  v1.72.3-to-v1.66.1-immersive.zstpatch' | sha256sum --check --strict
+
+      - name: Reconstruct and verify exact v1.66.1 APK
+        shell: bash
+        run: |
+          set -euo pipefail
+          output='Aetherion_Reforged_v1.66.1_Immersive_Narrator_Sophia.apk'
+          zstd --decompress --long=29 --patch-from=Aetherion_Reforged_v1.72.3_FULL_REPAIR.apk v1.72.3-to-v1.66.1-immersive.zstpatch -o "$output"
+          test "$(stat -c%s "$output")" = '534398594'
+          echo '6dcbff5ddabfeab9b3e22010672cf39322f93782ba452fdf5b0ea027a709037f  Aetherion_Reforged_v1.66.1_Immersive_Narrator_Sophia.apk' | sha256sum --check --strict
+          unzip -tq "$output"
+
+      - name: Publish exact v1.66.1 release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          apk='Aetherion_Reforged_v1.66.1_Immersive_Narrator_Sophia.apk'
+          notes='Exact archived Aetherion Reforged v1.66.1 Immersive Narrator and Sophia APK. APK SHA-256: 6dcbff5ddabfeab9b3e22010672cf39322f93782ba452fdf5b0ea027a709037f'
+          if gh release view v1.66.1 >/dev/null 2>&1; then
+            gh release upload v1.66.1 "$apk" --clobber
+            gh release edit v1.66.1 --title 'Aetherion Reforged v1.66.1 — Immersive Narrator + Sophia' --notes "$notes"
+          else
+            gh release create v1.66.1 "$apk" --target "$GITHUB_SHA" --title 'Aetherion Reforged v1.66.1 — Immersive Narrator + Sophia' --notes "$notes"
+          fi

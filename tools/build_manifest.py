@@ -30,7 +30,7 @@ V172_ASSETS = {
     "assets/v172/alexus-gothic-gown.glb",
 }
 PORTRAIT_ROOT = ROOT / "custom" / "npc-portraits" / "v168"
-APK_NAME = "Aetherion_Reforged_v1.72.4_FULL_REPAIR.apk"
+APK_NAME = "Aetherion_Reforged_v1.72.5_MODULAR_EQUIPMENT_UPDATE.apk"
 
 
 def portrait_number(path: Path) -> int:
@@ -79,6 +79,10 @@ def main() -> None:
         str(path.relative_to(ROOT))
         for path in sorted(PORTRAIT_ROOT.glob("*.webp"), key=portrait_number)
     ]
+    if not portraits:
+        portraits = sorted(
+            path for path in previous if path.startswith("custom/npc-portraits/v168/")
+        )
     assert len(portraits) == 111
     paths = [
         "patches/v1.59.2-dominus-art-fix.js",
@@ -129,14 +133,18 @@ def main() -> None:
         "assets/v173/native-build-192.json",
         "patches/v1.72.4-performance.js",
         "assets/v174/native-build-193.json",
+        "patches/v1.72.5-safe-updater.js",
+        "patches/v1.72.5-update-center.js",
+        "patches/v1.72.5-character-models.js",
+        "assets/v175/native-build-194.json",
     ]
     manifest = {
         "schema": 1,
         "channel": "stable",
         "enabled": True,
         "latest": {
-            "game_version": "1.72.4",
-            "android_version_code": 193,
+            "game_version": "1.72.5",
+            "android_version_code": 194,
             "min_updater_schema": 1,
         },
         "manifest_url": RAW_BASE + "manifest.json",
@@ -145,23 +153,23 @@ def main() -> None:
             "aetherion-updates/releases/download/"
         ),
         "android_apk": {
-            "version": "1.72.4",
-            "version_code": 193,
+            "version": "1.72.5",
+            "version_code": 194,
             "filename": APK_NAME,
             "url": (
                 "https://github.com/corinthianrattler-ui/aetherion-updates/"
-                "releases/download/v1.72.4/"
+                "releases/download/v1.72.5/"
                 f"{APK_NAME}"
             ),
             "size": args.apk.stat().st_size,
             "sha256": file_sha256(args.apk),
             "signing_certificate_sha256": (
-                "ca8042f4758d9a056eb0748edfaad0cfd8a436ea7d35907c28b32c3f3afd5eb8"
+                "5e68318c3e12c9f5915976a25bbfd5039a2f7e651682b65744b2747b618c3e77"
             ),
         },
         "payloads": [payload(path, previous) for path in paths],
         "notes": (
-            "Version 1.72.4 is Android build 193. It corrects the reversed native query and fragment branches that prevented versioned game files from loading, retains WebView cache between launches, loads the optional Three.js and WebLLM runtimes only when their systems are opened, and prevents already-current state from traversing the entire migration chain on every render. Version 1.72.3 is the fully scanned Android build 192 repair. It removes the false "
+            "Version 1.72.5 is Android build 194. It restores the fitted 17-slot Valkorion model, makes armor, court clothing, weapons, ammunition, cloak, and jewelry independently visible, and allows armor and court pieces to be mixed without swapping a whole-body model. Removing one item hides only that item. The incomplete baked Lady Alexus gown is no longer presented as a modular model; her working picture-based equipment view remains until every fitted slot has real independent geometry. A shared registration contract rejects future baked or partial character models. The APK retains the startup crash repair and uses the exact same recovery signing identity as the installed startup-fixed v1.72.4 copy. Version 1.72.4 is Android build 193. It corrects the reversed native query and fragment branches that prevented versioned game files from loading, retains WebView cache between launches, loads the optional Three.js and WebLLM runtimes only when their systems are opened, and prevents already-current state from traversing the entire migration chain on every render. Version 1.72.3 is the fully scanned Android build 192 repair. It removes the false "
             "web-patch-as-APK success path, proves the installed native package with a bundled "
             "build marker, clears the hidden opening-film guard before Continue renders, mounts Valkorion on both Character and Equipment screens, displays a "
             "small live 3D status badge, repairs two zero-byte legacy images, and retains the "

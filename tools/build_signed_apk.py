@@ -279,6 +279,19 @@ def load_signer(
     return key, certificate
 
 
+def load_pem_der_signer(
+    private_key_path: Path,
+    certificate_path: Path,
+) -> tuple[rsa.RSAPrivateKey, x509.Certificate]:
+    key = serialization.load_pem_private_key(private_key_path.read_bytes(), password=None)
+    certificate = x509.load_der_x509_certificate(certificate_path.read_bytes())
+    if not isinstance(key, rsa.RSAPrivateKey):
+        raise ValueError("PEM file does not contain an RSA private key")
+    if key.public_key().public_numbers() != certificate.public_key().public_numbers():
+        raise ValueError("private key and signing certificate do not match")
+    return key, certificate
+
+
 def sign_v1(apk: Path, key: rsa.RSAPrivateKey, certificate: x509.Certificate) -> None:
     manifest, signature = build_signature_documents(apk)
     block = (
@@ -543,15 +556,22 @@ def main() -> None:
         default="AETHERION_SIGNING_PASSWORD",
         help="Environment variable containing the PKCS#12 password",
     )
+    parser.add_argument("--private-key", type=Path, help="Unencrypted PEM RSA private key")
+    parser.add_argument("--certificate", type=Path, help="DER X.509 signing certificate")
     args = parser.parse_args()
+    if bool(args.private_key) != bool(args.certificate):
+        parser.error("--private-key and --certificate must be supplied together")
+    if args.pkcs12 and args.private_key:
+        parser.error("choose either --pkcs12 or the PEM/DER signer, not both")
     args.output.parent.mkdir(parents=True, exist_ok=True)
     compact_apk_without_signatures(args.base, args.output, tuple(args.exclude))
     add_payload(args.output, args.payload)
-    key, certificate = (
-        load_signer(args.pkcs12, args.pkcs12_password_env)
-        if args.pkcs12
-        else make_signer()
-    )
+    if args.pkcs12:
+        key, certificate = load_signer(args.pkcs12, args.pkcs12_password_env)
+    elif args.private_key:
+        key, certificate = load_pem_der_signer(args.private_key, args.certificate)
+    else:
+        key, certificate = make_signer()
     sign_v1(args.output, key, certificate)
     verify_manifest(args.output)
     sign_v2(args.output, key, certificate)

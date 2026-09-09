@@ -1,0 +1,67 @@
+name: Publish Aetherion v1.72.5 APK
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/publish-v175-apk.yml'
+      - '.release-patches/v1.72.4-to-v1.72.5-github/part-*'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install binary-patch support
+        shell: bash
+        run: |
+          set -euo pipefail
+          sudo apt-get update
+          sudo apt-get install --yes zstd unzip
+
+      - name: Download verified build 193
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          base='Aetherion_Reforged_v1.72.4_FULL_REPAIR.apk'
+          gh release download v1.72.4 --pattern "$base"
+          test "$(stat -c%s "$base")" = '479189462'
+          echo 'da5a55da228dcabf15bb00935881b983ef948ba665abe0db6f2d65d5adcbeee1  Aetherion_Reforged_v1.72.4_FULL_REPAIR.apk' | sha256sum --check --strict
+
+      - name: Reconstruct and verify signed build 194
+        shell: bash
+        run: |
+          set -euo pipefail
+          parts='.release-patches/v1.72.4-to-v1.72.5-github/part-*'
+          patch='v1.72.4-to-v1.72.5-exact.zstpatch'
+          output='Aetherion_Reforged_v1.72.5_MODULAR_EQUIPMENT_UPDATE.apk'
+          cat $parts > "$patch"
+          test "$(stat -c%s "$patch")" = '19694272'
+          echo '2beba620b2701c090181e962eb4ce7194665e0a958fc84298d64550e31558d06  v1.72.4-to-v1.72.5-exact.zstpatch' | sha256sum --check --strict
+          zstd --decompress --long=29 --patch-from=Aetherion_Reforged_v1.72.4_FULL_REPAIR.apk "$patch" -o "$output"
+          test "$(stat -c%s "$output")" = '499009725'
+          echo 'bf9fd12a105c50dc2325d26e3b58708f9487c17bf957bf878a8875a2cc1f9480  Aetherion_Reforged_v1.72.5_MODULAR_EQUIPMENT_UPDATE.apk' | sha256sum --check --strict
+          unzip -tq "$output"
+
+      - name: Publish build 194 release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          apk='Aetherion_Reforged_v1.72.5_MODULAR_EQUIPMENT_UPDATE.apk'
+          notes="Android build 194 fixes whole-outfit model swapping. Valkorion's 17 inventory slots now control fitted armor, court clothing, cloak, weapons, ammunition, and jewelry independently. Mixed outfits work and removing one item hides only that piece. Lady Alexus retains her working 2D equipment view until a complete independently fitted model exists. This full APK retains the build-193 startup repair and uses the same recovery signing identity. APK SHA-256: bf9fd12a105c50dc2325d26e3b58708f9487c17bf957bf878a8875a2cc1f9480"
+          if gh release view v1.72.5 >/dev/null 2>&1; then
+            gh release upload v1.72.5 "$apk" --clobber
+            gh release edit v1.72.5 --title 'Aetherion Reforged v1.72.5 (Android build 194)' --notes "$notes"
+          else
+            gh release create v1.72.5 "$apk" --target "$GITHUB_SHA" --title 'Aetherion Reforged v1.72.5 (Android build 194)' --notes "$notes"
+          fi

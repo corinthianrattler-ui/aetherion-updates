@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import subprocess
 from pathlib import Path
 
 
@@ -21,27 +22,31 @@ REMOTE_MODEL_METADATA = {
 
 def main() -> None:
     manifest = json.loads((ROOT / "manifest.json").read_text(encoding="utf-8"))
+    previous_manifest = json.loads(
+        subprocess.check_output(
+            ["git", "show", "HEAD:manifest.json"], cwd=ROOT, text=True
+        )
+    )
+    previous_payloads = {
+        payload["path"]: payload for payload in previous_manifest["payloads"]
+    }
     assert manifest["schema"] == 1
     assert manifest["enabled"] is True
-    assert manifest["latest"]["game_version"] == "1.72.4"
-    assert manifest["latest"]["android_version_code"] == 193
+    assert manifest["latest"]["game_version"] == "1.72.5"
+    assert manifest["latest"]["android_version_code"] == 194
     assert manifest["latest"]["min_updater_schema"] <= 1
     apk = manifest["android_apk"]
-    assert apk["version"] == "1.72.4"
-    assert apk["version_code"] == 193
-    assert apk["filename"] == "Aetherion_Reforged_v1.72.4_FULL_REPAIR.apk"
-    assert apk["url"].endswith("/v1.72.4/" + apk["filename"])
-    assert apk["size"] == 479189462
-    assert apk["sha256"] == "da5a55da228dcabf15bb00935881b983ef948ba665abe0db6f2d65d5adcbeee1"
-    assert apk["signing_certificate_sha256"] == "ca8042f4758d9a056eb0748edfaad0cfd8a436ea7d35907c28b32c3f3afd5eb8"
+    assert apk["version"] == "1.72.5"
+    assert apk["version_code"] == 194
+    assert apk["filename"] == "Aetherion_Reforged_v1.72.5_MODULAR_EQUIPMENT_UPDATE.apk"
+    assert apk["url"].endswith("/v1.72.5/" + apk["filename"])
+    assert apk["size"] == 499009725
+    assert apk["sha256"] == "bf9fd12a105c50dc2325d26e3b58708f9487c17bf957bf878a8875a2cc1f9480"
+    assert apk["signing_certificate_sha256"] == "5e68318c3e12c9f5915976a25bbfd5039a2f7e651682b65744b2747b618c3e77"
     payloads = manifest["payloads"]
-    portrait_root = ROOT / "custom" / "npc-portraits" / "v168"
     portrait_paths = [
-        str(path.relative_to(ROOT))
-        for path in sorted(
-            portrait_root.glob("*.webp"),
-            key=lambda path: int(path.name.split("_", 1)[0]),
-        )
+        payload["path"] for payload in payloads
+        if payload["path"].startswith("custom/npc-portraits/v168/")
     ]
     assert len(portrait_paths) == 111
     assert [payload["path"] for payload in payloads] == [
@@ -93,6 +98,10 @@ def main() -> None:
         "assets/v173/native-build-192.json",
         "patches/v1.72.4-performance.js",
         "assets/v174/native-build-193.json",
+        "patches/v1.72.5-safe-updater.js",
+        "patches/v1.72.5-update-center.js",
+        "patches/v1.72.5-character-models.js",
+        "assets/v175/native-build-194.json",
     ]
     assert len({payload["path"] for payload in payloads}) == len(payloads)
 
@@ -109,6 +118,14 @@ def main() -> None:
             assert payload["restart_required"] is True
             continue
         path = ROOT / payload["path"]
+        if not path.is_file():
+            previous = previous_payloads.get(payload["path"])
+            assert previous is not None, f"{payload['path']}: new payload is missing locally"
+            for field in ("size", "sha256", "url", "restart_required"):
+                assert payload[field] == previous[field], (
+                    f"{payload['path']}: omitted stable payload changed {field}"
+                )
+            continue
         if not path.is_file() and payload["path"] in REMOTE_MODEL_METADATA:
             size, digest = REMOTE_MODEL_METADATA[payload["path"]]
             assert payload["size"] == size
@@ -139,6 +156,9 @@ def main() -> None:
         assert payload["restart_required"] is True
 
     assert manifest["save_policy"]["preserve_always"] is True
+    assert "Version 1.72.5 is Android build 194" in manifest["notes"]
+    assert "17-slot Valkorion model" in manifest["notes"]
+    assert "shared registration contract rejects future baked or partial character models" in manifest["notes"]
     assert "Version 1.72.4 is Android build 193" in manifest["notes"]
     assert "Version 1.72.3 is the fully scanned Android build 192 repair" in manifest["notes"]
     assert "Version 1.72.2 replaces the Android file:// game origin" in manifest["notes"]
@@ -154,7 +174,7 @@ def main() -> None:
     assert "zero portrait-record checks" in manifest["notes"]
     assert "110 new lore-matched" in manifest["notes"]
     assert "Quartermaster Halric Morn" in manifest["notes"]
-    print("manifest.json: 1.72.4 payload sizes, release URLs, and SHA-256 hashes passed")
+    print("manifest.json: 1.72.5 payload sizes, release URLs, and SHA-256 hashes passed")
 
 
 if __name__ == "__main__":

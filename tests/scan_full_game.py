@@ -79,6 +79,7 @@ def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("game_root", type=Path)
     parser.add_argument("--apk", type=Path)
+    parser.add_argument("--expected-glbs", type=int, default=3)
     args = parser.parse_args()
     root = args.game_root.resolve()
     files = sorted(path for path in root.rglob("*") if path.is_file())
@@ -139,8 +140,8 @@ def main() -> None:
         )
 
     models = [glb_summary(path) for path in files if path.suffix.lower() == ".glb"]
-    if len(models) != 3:
-        raise ValueError(f"expected exactly three active GLBs, found {len(models)}")
+    if len(models) != args.expected_glbs:
+        raise ValueError(f"expected exactly {args.expected_glbs} active GLBs, found {len(models)}")
 
     archive_entries = None
     if args.apk:

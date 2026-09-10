@@ -29,7 +29,8 @@ V172_ASSETS = {
     "assets/v172/valkorion-armored.glb",
     "assets/v172/alexus-gothic-gown.glb",
 }
-PORTRAIT_ROOT = ROOT / "custom" / "npc-portraits" / "v168"
+PORTRAIT_V168_ROOT = ROOT / "custom" / "npc-portraits" / "v168"
+PORTRAIT_V173_ROOT = ROOT / "custom" / "npc-portraits" / "v173"
 APK_NAME = "Aetherion_Reforged_v1.72.6_GAMEPLAY_REPAIR_FULL.apk"
 
 
@@ -75,15 +76,20 @@ def main() -> None:
         raise FileNotFoundError(args.apk)
     old = json.loads((ROOT / "manifest.json").read_text(encoding="utf-8"))
     previous = {row["path"]: row for row in old.get("payloads", [])}
-    portraits = [
+    portraits_v168 = [
         str(path.relative_to(ROOT))
-        for path in sorted(PORTRAIT_ROOT.glob("*.webp"), key=portrait_number)
+        for path in sorted(PORTRAIT_V168_ROOT.glob("*.webp"), key=portrait_number)
     ]
-    if not portraits:
-        portraits = sorted(
+    if not portraits_v168:
+        portraits_v168 = sorted(
             path for path in previous if path.startswith("custom/npc-portraits/v168/")
         )
-    assert len(portraits) == 111
+    portraits_v173 = [
+        str(path.relative_to(ROOT))
+        for path in sorted(PORTRAIT_V173_ROOT.glob("*.webp"), key=portrait_number)
+    ]
+    assert len(portraits_v168) == 111
+    assert len(portraits_v173) == 268
     paths = [
         "patches/v1.59.2-dominus-art-fix.js",
         "assets/v109/valkorion_final.glb",
@@ -93,7 +99,7 @@ def main() -> None:
         "patches/v1.66.0-living-world-balance.js",
         "patches/v1.66.1-immersive-narrator-sophia.js",
         "patches/v1.67.0-identity-world-integrity.js",
-        *portraits,
+        *portraits_v168,
         "patches/v1.68.0-curated-npc-portraits.js",
         "patches/v1.69.0-safe-updater.js",
         "patches/v1.69.1-start-menu-access.js",
@@ -141,13 +147,20 @@ def main() -> None:
         "patches/v1.72.6-update-center.js",
         "patches/v1.72.6-gameplay-repair.js",
         "assets/v176/native-build-195.json",
+        "patches/v1.72.7-scroll-repair.js",
+        "patches/v1.72.8-alexus-equipment-repair.js",
+        "patches/v1.72.10-alexus-original-body-map.js",
+        *portraits_v173,
+        "custom/npc-portraits/v173/registry.json",
+        "patches/v1.73.0-portrait-data.js",
+        "patches/v1.73.0-living-portraits.js",
     ]
     manifest = {
         "schema": 1,
         "channel": "stable",
         "enabled": True,
         "latest": {
-            "game_version": "1.72.6",
+            "game_version": "1.73.0",
             "android_version_code": 195,
             "min_updater_schema": 1,
         },
@@ -173,6 +186,7 @@ def main() -> None:
         },
         "payloads": [payload(path, previous) for path in paths],
         "notes": (
+            "Version 1.73.0 adds 268 unique, labeled full-body portraits to the existing curated library for 379 reviewed portrait choices. It deduplicates the recruitable catalog against the complete worker catalog; routes art by persistent identity, occupation, gender, visual age, race and bannerless status; and preserves named, canonical, user-created and unique-character art. Twelve teen, toddler and baby portraits appear only as ambient household members and are never workers or recruitable applicants. Missing catalog occupations now have real systems: named bankers keep counter hours inside the existing reserve and currency mechanics; beekeepers, goatherds and poultry keepers maintain persistent hives, herds and flocks that respond to time, season and weather; and skilled artisans plus distinct bannerless archer, crossbowman, sergeant, swordsman, footman and militia-recruit contracts enter labor and recruit halls. Honeycomb, beeswax, goat milk and eggs enter local stock and affect settlement health and prosperity. Existing saves migrate once, newly created people are checked individually, and redraws, schedules and daily ticks never trigger whole-world portrait scans. GitHub portrait delivery has a packaged-art fallback so an offline image cannot break a person view. Version 1.72.10 restores Lady Alexus's original authored anatomy map, maps the actual complete dress mesh to her gown slot, and removes the rejected fabricated torso clone while retaining the v1.72.8 equipment-state and v1.72.7 vertical-scrolling repairs. "
             "Version 1.72.6 is Android build 195. It restores Lady Alexus's supplied 3D model in her Equipment view and uniquely classifies all 28 mesh sections into foundation plus 12 independently controlled fitted wardrobe slots. Her main-hand, off-hand, ranged, reserve, and ammunition pieces remain independent equipment cards because the supplied GLB has no geometry for those five pieces; nothing is fabricated or falsely described as visible geometry. Portrait-phone layout now constrains the game, modals, equipment, shops, selectors, Systems dock, and notices to one vertical viewport, removing sideways page scrolling and the right-side void. Ordinary shop and market purchases route directly to Valkorion's Carried Inventory. Quartermaster requisitions resolve the correct fitted wagon crate first, then the next compatible crate with capacity, and never treat an empty bare wagon floor as ordinary item storage. The small gameplay repair is available through the in-game updater on v1.72.5, while the full APK retains every prior asset and uses the exact same signing identity. Version 1.72.5 is Android build 194. It restores the fitted 17-slot Valkorion model, makes armor, court clothing, weapons, ammunition, cloak, and jewelry independently visible, and allows armor and court pieces to be mixed without swapping a whole-body model. Removing one item hides only that item. A shared registration contract rejects future baked or partial character models. Version 1.72.4 is Android build 193. It corrects the reversed native query and fragment branches that prevented versioned game files from loading, retains WebView cache between launches, loads the optional Three.js and WebLLM runtimes only when their systems are opened, and prevents already-current state from traversing the entire migration chain on every render. Version 1.72.3 is the fully scanned Android build 192 repair. It removes the false "
             "web-patch-as-APK success path, proves the installed native package with a bundled "
             "build marker, clears the hidden opening-film guard before Continue renders, mounts Valkorion on both Character and Equipment screens, displays a "

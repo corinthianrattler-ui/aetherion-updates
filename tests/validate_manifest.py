@@ -32,7 +32,7 @@ def main() -> None:
     }
     assert manifest["schema"] == 1
     assert manifest["enabled"] is True
-    assert manifest["latest"]["game_version"] == "1.72.6"
+    assert manifest["latest"]["game_version"] == "1.73.0"
     assert manifest["latest"]["android_version_code"] == 195
     assert manifest["latest"]["min_updater_schema"] <= 1
     apk = manifest["android_apk"]
@@ -48,7 +48,13 @@ def main() -> None:
         payload["path"] for payload in payloads
         if payload["path"].startswith("custom/npc-portraits/v168/")
     ]
+    portrait_paths_v173 = [
+        payload["path"] for payload in payloads
+        if payload["path"].startswith("custom/npc-portraits/v173/")
+        and payload["path"].endswith(".webp")
+    ]
     assert len(portrait_paths) == 111
+    assert len(portrait_paths_v173) == 268
     assert [payload["path"] for payload in payloads] == [
         "patches/v1.59.2-dominus-art-fix.js",
         "assets/v109/valkorion_final.glb",
@@ -106,6 +112,13 @@ def main() -> None:
         "patches/v1.72.6-update-center.js",
         "patches/v1.72.6-gameplay-repair.js",
         "assets/v176/native-build-195.json",
+        "patches/v1.72.7-scroll-repair.js",
+        "patches/v1.72.8-alexus-equipment-repair.js",
+        "patches/v1.72.10-alexus-original-body-map.js",
+        *portrait_paths_v173,
+        "custom/npc-portraits/v173/registry.json",
+        "patches/v1.73.0-portrait-data.js",
+        "patches/v1.73.0-living-portraits.js",
     ]
     assert len({payload["path"] for payload in payloads}) == len(payloads)
 
@@ -160,6 +173,12 @@ def main() -> None:
         assert payload["restart_required"] is True
 
     assert manifest["save_policy"]["preserve_always"] is True
+    assert "Version 1.73.0 adds 268 unique" in manifest["notes"]
+    assert "379 reviewed portrait choices" in manifest["notes"]
+    assert "never workers or recruitable applicants" in manifest["notes"]
+    assert "beekeepers, goatherds and poultry keepers" in manifest["notes"]
+    assert "whole-world portrait scans" in manifest["notes"]
+    assert "Version 1.72.10 restores Lady Alexus's original authored anatomy map" in manifest["notes"]
     assert "Version 1.72.6 is Android build 195" in manifest["notes"]
     assert "all 28 mesh sections" in manifest["notes"]
     assert "12 independently controlled fitted wardrobe slots" in manifest["notes"]
@@ -183,7 +202,7 @@ def main() -> None:
     assert "zero portrait-record checks" in manifest["notes"]
     assert "110 new lore-matched" in manifest["notes"]
     assert "Quartermaster Halric Morn" in manifest["notes"]
-    print("manifest.json: 1.72.6 payload sizes, release URLs, and SHA-256 hashes passed")
+    print("manifest.json: 1.73.0 payload sizes, release URLs, and SHA-256 hashes passed")
 
 
 if __name__ == "__main__":

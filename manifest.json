@@ -3,7 +3,7 @@
   "channel": "stable",
   "enabled": true,
   "latest": {
-    "game_version": "1.72.6",
+    "game_version": "1.73.0",
     "android_version_code": 195,
     "min_updater_schema": 1
   },
@@ -1180,9 +1180,1927 @@
       "sha256": "24ef378c559257466234d92e3ecec5219c2c8d5de9b1419262ee26b3240d03f5",
       "size": 345,
       "restart_required": true
+    },
+    {
+      "path": "patches/v1.72.7-scroll-repair.js",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/patches/v1.72.7-scroll-repair.js",
+      "sha256": "9d15b1fbaa0120eb4a0610e0d5fc00e42df9db9385f66039129d55d9ca18e24c",
+      "size": 3023,
+      "restart_required": true
+    },
+    {
+      "path": "patches/v1.72.8-alexus-equipment-repair.js",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/patches/v1.72.8-alexus-equipment-repair.js",
+      "sha256": "06fbc86dc7fadcb99bd280d9466e01da77b6e561d483b899c232b6dbe1f801d0",
+      "size": 7143,
+      "restart_required": true
+    },
+    {
+      "path": "patches/v1.72.10-alexus-original-body-map.js",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/patches/v1.72.10-alexus-original-body-map.js",
+      "sha256": "3818c29576af7615b4677e0755996c10da509c4317f8f0f1376590521c6b398b",
+      "size": 9288,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/001_male_farmer_ym.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/001_male_farmer_ym.webp",
+      "sha256": "73c85267bdfd1500c487dcbaeaee2415ac07fa4f57dc97ed9507c05e84342580",
+      "size": 74978,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/002_female_farmer_of.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/002_female_farmer_of.webp",
+      "sha256": "a09db4a6662adaea551a7906c143328c9b2b7ba306f930e2d2fcf593c9e9dc65",
+      "size": 85644,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/003_shepherd_om.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/003_shepherd_om.webp",
+      "sha256": "8f0b2dae8c6b1e085835240b2f67f487555f775c88b9a5f0aff0cfacbb8b6bf0",
+      "size": 86064,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/004_cattle_herder_yf.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/004_cattle_herder_yf.webp",
+      "sha256": "1f25fe3c75fe758d648dfd600a2708404850c934ae49bec4cb0e3f9eb95ce08e",
+      "size": 76982,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/005_swineherd_ym.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/005_swineherd_ym.webp",
+      "sha256": "eb9ae867f180cf10cf6dbb9fc551bf21954980f17f5540c2cddb1f57fb7e96a8",
+      "size": 75072,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/006_field_hand_yf.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/006_field_hand_yf.webp",
+      "sha256": "3397a85cea4b667fa0e8e96ad39dfafdf91b9be96adf1bfc0382dfc2eb22bef6",
+      "size": 84412,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/007_orchard_worker_om.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/007_orchard_worker_om.webp",
+      "sha256": "30e7e2290d9122fa6065efa31e9a2118d7c5936492d2610085b3d459e08c9edc",
+      "size": 88370,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/008_miller_of.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/008_miller_of.webp",
+      "sha256": "df5d4c9647e925ed71d53d7bbd1e551ca7abc7270fcd8077ac1467f599fc64b8",
+      "size": 86734,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/009_peasant_laborer_ym.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/009_peasant_laborer_ym.webp",
+      "sha256": "2a09e727bdc1f94ca1a4638e7319e312595921605ca655046bbda34f2332f91d",
+      "size": 69588,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/010_peasant_laborer_yf.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/010_peasant_laborer_yf.webp",
+      "sha256": "6fd9c607c74b42ec9a00325d06081c4049a186f4844b078d914d00a4f4aab9d7",
+      "size": 73906,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/011_peasant_laborer_om.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/011_peasant_laborer_om.webp",
+      "sha256": "b7aa321d753f2459d129c977738248650e601f9647018a46df6ab015e498da55",
+      "size": 77274,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/012_peasant_laborer_of.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/012_peasant_laborer_of.webp",
+      "sha256": "81eb34ba46f5855e74f9eb08ea527210358ddd45e693f80ce36dedace4708563",
+      "size": 77146,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/013_hunter_ym.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/013_hunter_ym.webp",
+      "sha256": "bdafa691162628d43e57d27193d4da972f1260baee17909fd4fac1ca6d5d2de2",
+      "size": 79508,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/014_hunter_yf.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/014_hunter_yf.webp",
+      "sha256": "8aee2d4b1256f67e37ac2095226a9e4b055bafd06dc22c2ff7fc6a821d2897fb",
+      "size": 72270,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/015_hunter_om.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/015_hunter_om.webp",
+      "sha256": "5c67da1adae5a38e546d6587d3a5aeb7867bf6714da53e2e7b8b7644f41fa680",
+      "size": 86070,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/016_hunter_of.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/016_hunter_of.webp",
+      "sha256": "418e044036beee78d0f913e040430c5d302e6c8eda24c1afd5b985155aa25fc7",
+      "size": 86236,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/017_maid_yf.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/017_maid_yf.webp",
+      "sha256": "33b5024a106459afee7c5bb58e91ffc39f00fd87390277a69f0b2a6861848740",
+      "size": 64804,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/018_maid_of.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/018_maid_of.webp",
+      "sha256": "579bce8e1110e91391c29eeb2b376f27c16398b45912abe67d064d0ca55be502",
+      "size": 75110,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/019_male_servant_om.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/019_male_servant_om.webp",
+      "sha256": "82a5f1b2eba018a56e9dd0a790522986d65a02664a990e122fd0ff66f7112b08",
+      "size": 58294,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/020_male_servant_ym.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/020_male_servant_ym.webp",
+      "sha256": "b5f5ffca102f99663eca1267bb36758d93d600bf55a8e6d34d326bac1a733f2e",
+      "size": 62476,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/021_farm_overseer_om.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/021_farm_overseer_om.webp",
+      "sha256": "3e9fce4511d2d41ab71f0920add1f697eaf7f17054bbf7743994056e34cb9675",
+      "size": 74658,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/022_chamberlain_yf.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/022_chamberlain_yf.webp",
+      "sha256": "74f18ff05eaa21ec4f23b323773e2400b779d3d59b0342c20ea163c3c7c7332b",
+      "size": 68554,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/023_kitchen_hand_ym.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/023_kitchen_hand_ym.webp",
+      "sha256": "59f83f5a835455a1c96bd6267051c0dc26d52a35e7e045b0106a574e7c3b6728",
+      "size": 78714,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/024_laundress_of.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/024_laundress_of.webp",
+      "sha256": "e17b9e6949ceeb9b83a36d2374018eb115f75b6cbc8129d141533130c6de4287",
+      "size": 83530,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/025_groundskeeper_om.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/025_groundskeeper_om.webp",
+      "sha256": "d36d268e4a0e370ca650cba7737c6a0637e677ba7ef67f9b5c75c8f5ccdd6a3b",
+      "size": 84442,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/026_enslaved_laborer_yf.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/026_enslaved_laborer_yf.webp",
+      "sha256": "64f2631ff4f0c6c7e5bfa6bffa5ac17a2ad3fb10118e3d48e3efa90d0b512c55",
+      "size": 76754,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/027_innkeeper_ym.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/027_innkeeper_ym.webp",
+      "sha256": "ec6d15d683e02dfd3561911f24e0ffa80fd5bfb15e36c7c792a4e9b8fe20187f",
+      "size": 73556,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/028_tavern_keeper_of.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/028_tavern_keeper_of.webp",
+      "sha256": "b1bac4c168316aaab92a42a8011963aaed4ce0cf41fa7b31f2e2bf50db7eb412",
+      "size": 84180,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/029_steward_ym.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/029_steward_ym.webp",
+      "sha256": "847973adbeed0eb871a8d651fed60313f2a33f537c97ab066fd804852e24bc2b",
+      "size": 69956,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/030_steward_yf.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/030_steward_yf.webp",
+      "sha256": "585b06b45781675606ffe6545c63cfb83c1ec77a91afbadd4ed809022a3b7d90",
+      "size": 76676,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/031_steward_om.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/031_steward_om.webp",
+      "sha256": "dfde07f3180542e0ddae36496d5cfd828fe9c1b2709e8d9799023a8e089afde0",
+      "size": 72036,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/032_steward_of.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/032_steward_of.webp",
+      "sha256": "b488fe1ca1bdee93adc4efa3180288aba29510db5cb826735d4c963881bf32b1",
+      "size": 80462,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/033_cook_ym.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/033_cook_ym.webp",
+      "sha256": "037b8c2941051f21a738d041c6ddea3491c650dc1f4c456f493f4a2738ddb2fc",
+      "size": 60070,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/034_cook_yf.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/034_cook_yf.webp",
+      "sha256": "c567785c9635c41671aeb7894b377cf9f91383f21beb77ad38dfb212ef0b5ad5",
+      "size": 66048,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/035_cook_om.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/035_cook_om.webp",
+      "sha256": "07aebbae1fb7865c600d4b1f6590ba7dbc35405226223dfe164b994a36b1ade2",
+      "size": 68786,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/036_cook_of.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/036_cook_of.webp",
+      "sha256": "6a975412c85718e3336bc2a84f1952afe0d4b31f9165f8f00b72aeb93f317d63",
+      "size": 71478,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/037_serving_man_om.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/037_serving_man_om.webp",
+      "sha256": "41d82752ad9af822298c3a6dafc89d9997d5b1f6ad5dc98272f381ef007f0dbd",
+      "size": 66662,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/038_serving_woman_yf.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/038_serving_woman_yf.webp",
+      "sha256": "96bf5e167ad7f7f6caa0dbcfba9dfa73e757ab7ce7d1ecb97782eb2cca1c55ce",
+      "size": 70210,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/039_brewer_ym.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/039_brewer_ym.webp",
+      "sha256": "fd37d7097cc20f43476d8d7c9fd8e70722fab828e455010edc7c19a5e2f5ef6c",
+      "size": 71934,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/040_baker_of.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/040_baker_of.webp",
+      "sha256": "68a3eea69934393a8426bed6490be7428ebbde598d95d4ad7ab459bf87a8b0e4",
+      "size": 89124,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/041_butcher_ym.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/041_butcher_ym.webp",
+      "sha256": "0c3b017503dbea9ab30737d7d2609e22f402f03b1040617d2fee9cf8de93ab11",
+      "size": 77124,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/042_fishmonger_of.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/042_fishmonger_of.webp",
+      "sha256": "786c636e6787de45bd728ea490fd36b6aa115439b8bcb0a6596f7062c73cad96",
+      "size": 79876,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/043_cellar_keeper_om.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/043_cellar_keeper_om.webp",
+      "sha256": "29ea888b9895845e0e639d22500fecd6d1413a3e16fce3a48d80717b5a7a1620",
+      "size": 67246,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/044_traveling_food_vendor_yf.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/044_traveling_food_vendor_yf.webp",
+      "sha256": "1985cd1c42cad13efc6a41769dc7b7331b7518bf584cc69caf2f05d5b0467edd",
+      "size": 94652,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/045_stableman_ym.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/045_stableman_ym.webp",
+      "sha256": "9aca61e418b6fd33e27bc4ef4c16ab1150d7938dd28ecbf6860db11683591109",
+      "size": 79438,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/046_stablewoman_of.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/046_stablewoman_of.webp",
+      "sha256": "6c72ac6833d4f6128594587cf0a0e9cb06d6497c42bf99c4668f6fb9b968d696",
+      "size": 80090,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/047_horse_breeder_om.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/047_horse_breeder_om.webp",
+      "sha256": "3b2b0d3b7319ed2a948f2776bdef47d60a9f4d2da8bed442c9dc846506e6ba7d",
+      "size": 84680,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/048_horse_trader_yf.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/048_horse_trader_yf.webp",
+      "sha256": "e277dad3ca1937560b8de542aa73d737f1ab2fd3a0ed1e2c643faecb5aa5aca6",
+      "size": 80372,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/049_farrier_ym.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/049_farrier_ym.webp",
+      "sha256": "078975a0fafdc7614b01cef2af9d697c8d2f121cbb76fff9ba02113ee783b8fe",
+      "size": 76054,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/050_farrier_yf.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/050_farrier_yf.webp",
+      "sha256": "bce85d4b077b4e35470058a75e54931ebad060532f537492970c079a526d2e99",
+      "size": 75532,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/051_farrier_om.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/051_farrier_om.webp",
+      "sha256": "2e3df3c9bbbfe3d604998f4883cb07ebaa730f2d5b3a71611aaf9d1af2a90240",
+      "size": 81150,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/052_farrier_of.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/052_farrier_of.webp",
+      "sha256": "156bc091107c0858c0abc1d2b99404a4825b0969043bae3d1469136688e4875e",
+      "size": 79574,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/053_carriage_master_om.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/053_carriage_master_om.webp",
+      "sha256": "0fb8571e6485cb9088b3b98e0c7bdb39fef1311ef85c214ba8f91df1a0d5ad12",
+      "size": 72498,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/054_courier_yf.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/054_courier_yf.webp",
+      "sha256": "d5a4420e858862d03f2c80cd6d2a257d4400f4a8d9dae141e3c542b30bd06f1e",
+      "size": 68550,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/055_ferryman_ym.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/055_ferryman_ym.webp",
+      "sha256": "8a6d2d7253e4d23769cbc51fc2e7e0367946f4cb1df9fd3c71180d1c2b8fb2d0",
+      "size": 73118,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/056_boatman_of.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/056_boatman_of.webp",
+      "sha256": "477b81b3801c86dbfe4be4178eaa45a8da62df3da58202261c2efbc635969dfb",
+      "size": 71134,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/057_carriage_driver_ym.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/057_carriage_driver_ym.webp",
+      "sha256": "57265d1730e64b7719b60cb8e1521c93b65a86111cd377347f0e7f1215f21321",
+      "size": 72876,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/058_carriage_driver_yf.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/058_carriage_driver_yf.webp",
+      "sha256": "36a551f43ccb56143698951ed79994a3d24f37472e085f90fe7442fc2ab8c079",
+      "size": 66784,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/059_carriage_driver_om.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/059_carriage_driver_om.webp",
+      "sha256": "354748ce0d76e224f87821f125a5b783f811920d4d898effd2a08bea7361add2",
+      "size": 80162,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/060_carriage_driver_of.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/060_carriage_driver_of.webp",
+      "sha256": "0811a9cffd230dcc6ca8de5ffa68424fe7be1b4599268ed02fb5fff4c613378c",
+      "size": 71314,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/061_teamster_ym.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/061_teamster_ym.webp",
+      "sha256": "d33a0298f201f5fa75d07c47bd8af51452ce0dfe7aeeb783c010a5cbe36cf9eb",
+      "size": 76368,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/062_teamster_yf.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/062_teamster_yf.webp",
+      "sha256": "f7dff06416968230e96d09edb44fddb8a678156a5774aba9840478c1eee0ff4f",
+      "size": 74338,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/063_teamster_om.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/063_teamster_om.webp",
+      "sha256": "6e731fb9b5fc2e0882c60dec2bbdd9b48f430cd700e89d2185a9c1baedf5e9b0",
+      "size": 82156,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/064_teamster_of.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/064_teamster_of.webp",
+      "sha256": "e86a56b5dc3482196b98ca6618653d8000aaf735d6cda8995128646eaa1a4a83",
+      "size": 78222,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/065_wheelwright_ym.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/065_wheelwright_ym.webp",
+      "sha256": "ba96137a7ac387883ad5cfc4f5bcc314203ddcd4c1e82217bd747837c55a5ce0",
+      "size": 82194,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/066_wheelwright_yf.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/066_wheelwright_yf.webp",
+      "sha256": "66fee9cfaa6099f4e2793ae8d3914937b588177a842b2c454d319063996120e4",
+      "size": 79584,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/067_wheelwright_om.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/067_wheelwright_om.webp",
+      "sha256": "c5ef71d4a7ff629f6a486f61fdb1d5bb4a434ca519942decef0aeb1242de42c4",
+      "size": 86566,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/068_wheelwright_of.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/068_wheelwright_of.webp",
+      "sha256": "3782bc2e33886f6c0686e68dfb13d112948c0f32bbb71c4eb643079cc5a7d89e",
+      "size": 85164,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/069_caravan_scout_ym.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/069_caravan_scout_ym.webp",
+      "sha256": "c564d02ce25ea773e67f1e02b589ce67826efc2f565af16c935731a43ffd5f17",
+      "size": 81220,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/070_caravan_scout_yf.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/070_caravan_scout_yf.webp",
+      "sha256": "d3bb46151f1035fdb9ea16cb8c9071c9d5e44e883041d2558412e4f12fc7a2a5",
+      "size": 81126,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/071_caravan_scout_om.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/071_caravan_scout_om.webp",
+      "sha256": "e50d80e4e44e08ac54fea7e39cc9f4c9792d9d5c40d98ba0886eaaa38411940d",
+      "size": 83420,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/072_caravan_scout_of.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/072_caravan_scout_of.webp",
+      "sha256": "6d8c5e46ccb5aa3e6ca287cff0dcfe6833daa2df4b6676181de9ba25c8f4e10f",
+      "size": 85766,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/073_blacksmith_ym.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/073_blacksmith_ym.webp",
+      "sha256": "9202d981d8103723778519156e4d938a7196abfa2db20bbdf0170d13fd21d257",
+      "size": 66744,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/074_blacksmith_yf.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/074_blacksmith_yf.webp",
+      "sha256": "9b9f58bf5652d29f5ca5a8d763cf33d7307b7c31891bd6dd234147df34b293dd",
+      "size": 62032,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/075_blacksmith_om.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/075_blacksmith_om.webp",
+      "sha256": "ce91e1f3c2d22c8bca7f37d76165b831c37cc1d89188b60b7247fc36ad663dce",
+      "size": 75700,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/076_blacksmith_of.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/076_blacksmith_of.webp",
+      "sha256": "52fb30ae715026de7be216c0ab95b075fe863412f628fbaa56996cbbb69a665f",
+      "size": 67434,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/077_carpenter_ym.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/077_carpenter_ym.webp",
+      "sha256": "ae54841b0979af0c5eee605beae06242e6946e68a37eb965c949b2f87858853e",
+      "size": 78860,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/078_carpenter_yf.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/078_carpenter_yf.webp",
+      "sha256": "703fa782ab890c8492032fd7c3a10dfc72433961257838a80e377fbf102d22fd",
+      "size": 76788,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/079_carpenter_om.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/079_carpenter_om.webp",
+      "sha256": "5b8b60ad45a6996b8132fde728b351bdb97f1d6e6e7c93fd5020b01789fc2678",
+      "size": 83080,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/080_carpenter_of.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/080_carpenter_of.webp",
+      "sha256": "a2416188fac9d32a5d3e7bfdf0292423a01f3ab3f35563d5918a0956099e0805",
+      "size": 86288,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/081_leatherworker_ym.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/081_leatherworker_ym.webp",
+      "sha256": "484f8ebfdd22376186f8dafd34a45b37f80f0e0077e06d671584f04a18bc3a58",
+      "size": 73306,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/082_leatherworker_yf.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/082_leatherworker_yf.webp",
+      "sha256": "bc3ea775a359e5be6c4d155abc64b691392d742271e7a19dabe7a95f05ce754f",
+      "size": 71290,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/083_leatherworker_om.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/083_leatherworker_om.webp",
+      "sha256": "fd881396fce2c731f95c2eb16538578f16863f7cd3e913638e488f3f46e8ea0f",
+      "size": 76126,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/084_leatherworker_of.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/084_leatherworker_of.webp",
+      "sha256": "17ed371b0e06c1b45876f956c49418a9b7667dfe57fd39ffd750abbf18301685",
+      "size": 70572,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/085_skilled_artisan_ym.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/085_skilled_artisan_ym.webp",
+      "sha256": "e530e111112d3187a106d82824c4c02435f96971879970a2d49e3aa4e36ab77c",
+      "size": 67504,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/086_skilled_artisan_yf.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/086_skilled_artisan_yf.webp",
+      "sha256": "7c85826eb98e2ca3320c3c72c491fdae63fa10eecf820a04071c6276b92464c5",
+      "size": 72300,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/087_skilled_artisan_om.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/087_skilled_artisan_om.webp",
+      "sha256": "7e06066276841b91ebc754eb6ebe6c7360e815576673706d22e077785f5373d2",
+      "size": 73150,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/088_skilled_artisan_of.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/088_skilled_artisan_of.webp",
+      "sha256": "7c022e80ef592f53698a90945033f7572c8bb034d1d913f4b33777fe629eae4c",
+      "size": 73376,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/089_armorer_om.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/089_armorer_om.webp",
+      "sha256": "16823bfcffb858de58ac7fcc971e87feb527b63a82ee8fd477601a822f0032ed",
+      "size": 72134,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/090_weaponsmith_yf.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/090_weaponsmith_yf.webp",
+      "sha256": "f1cf6e577d7145a589f39deff391d54a6ec80b277f45fb12de801946ab3fdc24",
+      "size": 67810,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/091_mason_ym.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/091_mason_ym.webp",
+      "sha256": "1fa609f6dffac4b11f093b6b2f4a5e7f64b2cf45134a6073213ddae11a427170",
+      "size": 83220,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/092_stonecutter_of.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/092_stonecutter_of.webp",
+      "sha256": "61fdd59f500abe43f9aabb46e1b3783eeda1bce4e7cdce65f1b1f20f6c52d692",
+      "size": 85398,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/093_potter_ym.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/093_potter_ym.webp",
+      "sha256": "d034f5b250edc722bb0365b70b28f49ea4a2b018e3a172fb3c5e28b4c2a49191",
+      "size": 73166,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/094_tailor_of.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/094_tailor_of.webp",
+      "sha256": "d889900d71875eead18e8c559b2095f6f5dc5482c46f80a0c0e2b7364e0210e9",
+      "size": 72006,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/095_weaver_om.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/095_weaver_om.webp",
+      "sha256": "5a751c811368a47434dfd44aa730c3ef293034b850015e94e7775ae240ea952b",
+      "size": 81030,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/096_rope_maker_yf.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/096_rope_maker_yf.webp",
+      "sha256": "7b14f7d029a7e5082a3eae89067097b09687fa1c43e9bb3e5d5d149ee84af533",
+      "size": 85618,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/097_market_trader_ym.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/097_market_trader_ym.webp",
+      "sha256": "c7a8b14f12566005a439610886c40de8ee4cf60ae429bba7efb8c9a5d77422b4",
+      "size": 83652,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/098_traveling_merchant_of.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/098_traveling_merchant_of.webp",
+      "sha256": "490056f6bdbffbc9e232fc0058ffa189be96338f6fc4cf20e675bc2bbcfc249d",
+      "size": 80914,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/099_peddler_om.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/099_peddler_om.webp",
+      "sha256": "20e41efc8f45ba62c9ff0a26f1fbcde5bf60d119d867be0326fc556e3b3323fa",
+      "size": 91364,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/100_shopkeeper_yf.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/100_shopkeeper_yf.webp",
+      "sha256": "8c84ea273dd9a901377a6041aa74557a0342aad78e34f33582ac01a736dc5c6f",
+      "size": 79708,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/101_clerk_om.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/101_clerk_om.webp",
+      "sha256": "2755d51142431ab947a7bf89544f661644e233b7c6740d515e6bbd348e854589",
+      "size": 67320,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/102_moneychanger_yf.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/102_moneychanger_yf.webp",
+      "sha256": "c356480c2f45532ab3034dbe3553be15b8dbbb21d09e2dd8b21a35f2171f35c6",
+      "size": 72800,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/103_tax_collector_ym.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/103_tax_collector_ym.webp",
+      "sha256": "bff350d5f63d86821455b0910f01bd927f5188f447672834584eab983681a363",
+      "size": 72226,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/104_banker_of.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/104_banker_of.webp",
+      "sha256": "750002b8b4a414600dce262f4c3a6f304a452a867676a1f8cf2498621a517005",
+      "size": 79514,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/105_scribe_ym.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/105_scribe_ym.webp",
+      "sha256": "36e2293c23d8574516572c5b5013bada06becf855812adbe08b1157253e06723",
+      "size": 65646,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/106_scribe_yf.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/106_scribe_yf.webp",
+      "sha256": "36376e5b74d3e6022cec7ed483b9ee43b1c7dd154a3e63d087eddccf37ce4e24",
+      "size": 63054,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/107_scribe_om.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/107_scribe_om.webp",
+      "sha256": "da3de7655fa0e407876ef9df74cef0a9f98f13e5e7eca3a6e39f8e9890131643",
+      "size": 73566,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/108_scribe_of.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/108_scribe_of.webp",
+      "sha256": "f79cb12dc07172c0346526beaeec921a38cb6c2ac2cc49b804603a12c9ace49b",
+      "size": 71576,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/109_quartermaster_ym.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/109_quartermaster_ym.webp",
+      "sha256": "ecff76b6b9394ffd3bb9506a59695715ca693c94f4dc9031d1667d08da4e41a3",
+      "size": 72344,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/110_quartermaster_yf.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/110_quartermaster_yf.webp",
+      "sha256": "73a42054f7d52ab0c64380f9e5a6cb1e27af6c51724985f1fea177d96c5916ba",
+      "size": 67724,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/111_quartermaster_om.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/111_quartermaster_om.webp",
+      "sha256": "ecbb5911555e2476982ab8b60ed1272b21202ab7cf49cbcdd2f1f0e8ca7470f9",
+      "size": 73178,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/112_quartermaster_of.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/112_quartermaster_of.webp",
+      "sha256": "b2d4392c1a456b660f55ad802f0d0fe946baa4c44861e4c974fad348a7912911",
+      "size": 72060,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/113_loader_ym.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/113_loader_ym.webp",
+      "sha256": "53f7dd1c97f69f780814afb1aacd53f27df86a427dec3eb3ff43b9f3d986d993",
+      "size": 60678,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/114_loader_yf.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/114_loader_yf.webp",
+      "sha256": "4cfcc4d78cb51ceaa7f6c4b6eda133b1a61a6eb0e14310413aa7a68514526a49",
+      "size": 59592,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/115_loader_om.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/115_loader_om.webp",
+      "sha256": "77bf7f5f36f80a22585aeaca0df03e9ec902cba5117721ac893cd64ef41e6f8c",
+      "size": 65292,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/116_loader_of.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/116_loader_of.webp",
+      "sha256": "9ffcec5c239c042ae1cd3cf87e56bf61d423266a9215900bdecdf35f2b48c926",
+      "size": 63412,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/117_courtesan_ym.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/117_courtesan_ym.webp",
+      "sha256": "c3326d81b26fde256b195530fe02a24277f13a2a8dfa5b7d69b11b84e0befe8b",
+      "size": 62366,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/118_courtesan_yf.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/118_courtesan_yf.webp",
+      "sha256": "0f86c0083cd3fa68a011012152c48f764dc13347b3d9edb4f0f5b50ce0a06529",
+      "size": 70560,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/119_courtesan_om.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/119_courtesan_om.webp",
+      "sha256": "349f43fa12c7b0109c168815e0a58955f99786e64f07510f55250bde68295389",
+      "size": 75116,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/120_courtesan_of.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/120_courtesan_of.webp",
+      "sha256": "1ab57dc7e46146f0f76ec155aad5e8e20a569bc9759217f9d0a357542b546c6a",
+      "size": 72006,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/121_fisherman_ym.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/121_fisherman_ym.webp",
+      "sha256": "ce4bebf0b7a44e2936f31d59f197d64bad7c6ed93bc2fe21fe273ef6e2494bb9",
+      "size": 66496,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/122_fisherman_yf.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/122_fisherman_yf.webp",
+      "sha256": "5f9b29dc064fb0521cbc08ee839ae653e4b1a35ad91cb7f09251eaff592b0a9f",
+      "size": 78226,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/123_fisherman_om.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/123_fisherman_om.webp",
+      "sha256": "4f344f23bf95566a362d4387097ccbe4bf023de3f8edd9c59a74d79e1c100c11",
+      "size": 73750,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/124_fisherman_of.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/124_fisherman_of.webp",
+      "sha256": "d10ff662d73cbcdc522ea27c32dd5f102650529e054a6dee6d0936a8bf31202d",
+      "size": 78392,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/125_warehouse_keeper_ym.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/125_warehouse_keeper_ym.webp",
+      "sha256": "90aff88d55273a6b20346587c977b23297f5bd40f9d15e1a9cbf576dc2f4050e",
+      "size": 68410,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/126_fisherwoman_of.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/126_fisherwoman_of.webp",
+      "sha256": "47d7732c23365c336056eeb9cfa1c8b02d31ae2d143d5be26abb4f95d9316bed",
+      "size": 87142,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/127_sailor_om.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/127_sailor_om.webp",
+      "sha256": "a8d95b69927c9d78430abc7eb801d69b47205c87092bd62f62ec9812bde12102",
+      "size": 77698,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/128_sail_maker_yf.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/128_sail_maker_yf.webp",
+      "sha256": "6c5a276a282601a40d2e5258c2245db716cb50621823392f83c66a8402a5bf10",
+      "size": 83206,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/129_cargo_master_om.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/129_cargo_master_om.webp",
+      "sha256": "83d03b4579f4568f3692250ef995b44b6fa18b227939cd3eb03e25f6643a1f68",
+      "size": 73718,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/130_quarry_worker_yf.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/130_quarry_worker_yf.webp",
+      "sha256": "dcf4b5cd24e36af0e6ad7b734d8b9baf2d0e5f576da802bed3ceda293803aa20",
+      "size": 79854,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/131_woodcutter_ym.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/131_woodcutter_ym.webp",
+      "sha256": "b6456952c2d8cd27a614d4b215f218782bb693b1c85a24eca815125ffd78ab7e",
+      "size": 83678,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/132_forester_of.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/132_forester_of.webp",
+      "sha256": "6f9c1f43e1ff30f2aabddbf59ffc77e23e6fe6c7d39d08fb4ea3216e165a2caa",
+      "size": 84384,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/133_shipwright_ym.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/133_shipwright_ym.webp",
+      "sha256": "17701ab2f58959ae19e16eefcd9328ae0a81c81dab0ab5e6858dbe8e8cc57eda",
+      "size": 72532,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/134_shipwright_yf.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/134_shipwright_yf.webp",
+      "sha256": "52e7fb184443662c054e001d99b7c48999b8ac5c64eb8afb4f55efdc3b4e96a3",
+      "size": 71320,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/135_shipwright_om.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/135_shipwright_om.webp",
+      "sha256": "a07f70f4961e2152893fd1f255563395af9642bf23df60609ea27779dc0452bf",
+      "size": 81162,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/136_shipwright_of.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/136_shipwright_of.webp",
+      "sha256": "aed795a288b54a103ce968be2df6e84385fe6b83b4a707eccbc61afca19abed9",
+      "size": 74824,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/137_navigator_ym.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/137_navigator_ym.webp",
+      "sha256": "9808f7fdfdb3f1063cca071722edc758e085f7cc53a77d0f6fa3e6abc39b7c87",
+      "size": 72526,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/138_navigator_yf.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/138_navigator_yf.webp",
+      "sha256": "4ece42facfd8540198137c45e3b49befa7ec0b2f2e241ed3eab5444a1908509c",
+      "size": 71564,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/139_navigator_om.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/139_navigator_om.webp",
+      "sha256": "32ada53b3d31d6ae047ed8c9de6a65771e1c4184f86a2033182c02e4b2536cc0",
+      "size": 77880,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/140_navigator_of.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/140_navigator_of.webp",
+      "sha256": "49bf5bb4481bc82962b1c3c5582f7e254cc800052a4bc8f0cc82e9cb06323a58",
+      "size": 77616,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/141_dock_foreman_ym.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/141_dock_foreman_ym.webp",
+      "sha256": "1691d9742fcdc37b79608571a2725677b1f21ca94a2a9fbdc128a48624db0465",
+      "size": 70530,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/142_dock_foreman_yf.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/142_dock_foreman_yf.webp",
+      "sha256": "1e2b9161cb2278a19d3c699c95fcdc40a3e3429dc76f6c3b664df503db730994",
+      "size": 71582,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/143_dock_foreman_om.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/143_dock_foreman_om.webp",
+      "sha256": "97c5e20888acb6f3ca06149f0a167261005e0bd132158036ff01bac5acd62ebe",
+      "size": 79074,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/144_dock_foreman_of.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/144_dock_foreman_of.webp",
+      "sha256": "9cd16dc7233021f90287c17c8501bd3aa4eda3f6c21ebca1c43fbb4de770cc7d",
+      "size": 77208,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/145_dock_laborer_ym.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/145_dock_laborer_ym.webp",
+      "sha256": "c063dda608313ddfde3bbf70aec65a20a187ea51d84cccdb74b0a176d722e3b0",
+      "size": 75474,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/146_dock_laborer_yf.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/146_dock_laborer_yf.webp",
+      "sha256": "49b58f6f651659b6dc7ed89bbae843b904d7026516e95258730a9731ceb197c1",
+      "size": 70658,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/147_dock_laborer_om.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/147_dock_laborer_om.webp",
+      "sha256": "0ce5b88cb999791e576b9449604ced5f8e35ecf396a53458f7aa95ae11831569",
+      "size": 80132,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/148_dock_laborer_of.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/148_dock_laborer_of.webp",
+      "sha256": "aa89b645d4dc1acf379fcfd464e503fca923aa0b8b30b9864be3c20a45070437",
+      "size": 75112,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/149_stevedore_ym.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/149_stevedore_ym.webp",
+      "sha256": "f41565ba935f24373b023c0f16a4c600cc0dd00f0280c66084b27ee020a014e4",
+      "size": 71930,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/150_stevedore_yf.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/150_stevedore_yf.webp",
+      "sha256": "d10d24b5fd56fcf9e9a779bbbb3bca53aaf3231029831a58651968037c34ae1e",
+      "size": 65218,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/151_stevedore_om.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/151_stevedore_om.webp",
+      "sha256": "e0bd857f8cebeb95ebee9590a44d232e12d4bc64416629964adde9b43e6c14bc",
+      "size": 73570,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/152_stevedore_of.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/152_stevedore_of.webp",
+      "sha256": "1298d5b6a4f068e039b4bfbe7baea9cb24db69cf4986626e1055453f24728eee",
+      "size": 71416,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/153_privateer_captain_ym.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/153_privateer_captain_ym.webp",
+      "sha256": "3f0b49af0e3e2fdbc18263b5de853a1ddc59c4d90f10285d0d3a950194c2d07e",
+      "size": 63748,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/154_privateer_captain_yf.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/154_privateer_captain_yf.webp",
+      "sha256": "5edecb66730e156ff6c4bde955443970dc05417f1169c1b0918a41a161235082",
+      "size": 63834,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/155_privateer_captain_om.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/155_privateer_captain_om.webp",
+      "sha256": "33430d35f7fce40a61950fe497f3078db125f13dc08d13dee627c68dbf16ff65",
+      "size": 68158,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/156_privateer_captain_of.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/156_privateer_captain_of.webp",
+      "sha256": "6cb7fa29d9bce716e798b64dbaf31ecfbf024bfe3d16b2a045f6c77b3dfb8d1f",
+      "size": 65982,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/157_marine_captain_ym.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/157_marine_captain_ym.webp",
+      "sha256": "323f503a117038d491d3ea2ab28d0f7c308b1c0784e75f1479d1d299b04bcc76",
+      "size": 77444,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/158_marine_captain_yf.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/158_marine_captain_yf.webp",
+      "sha256": "c266a7e7e6fd5508b4f095a6861685a0860281eb20d47c4fb8f467cd29b2bb9a",
+      "size": 77194,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/159_marine_captain_om.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/159_marine_captain_om.webp",
+      "sha256": "d009877cc179a08608d259a67ffabae4631c8a42cb0d03e05c793f03ea0297dd",
+      "size": 77234,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/160_marine_captain_of.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/160_marine_captain_of.webp",
+      "sha256": "273438b89b7a4b0272398455476357c07a9c8b7730c82525707d5e4264df4ff3",
+      "size": 72828,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/161_marine_captain_ym.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/161_marine_captain_ym.webp",
+      "sha256": "a1c8f0dd51a0a59fdb9476f49e3d7d8f2188ca3aff519baa9ea26232a90a401d",
+      "size": 75586,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/162_marine_captain_yf.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/162_marine_captain_yf.webp",
+      "sha256": "b6c2fd476b490829eb26af91cf4530ecd1196e9981f1d36b6e4644fdf7e397fc",
+      "size": 71282,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/163_marine_captain_om.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/163_marine_captain_om.webp",
+      "sha256": "f61f564ae0f11b132ce46de8e53e511f2b6f30f31860658f09b74bbb06070317",
+      "size": 81752,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/164_marine_captain_of.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/164_marine_captain_of.webp",
+      "sha256": "a9025603fdb4ba86d6f9ab6e20fbcc14e40f2302eb757c69b22c1e50c0ba8b33",
+      "size": 75442,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/165_charcoal_burner_ym.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/165_charcoal_burner_ym.webp",
+      "sha256": "658f243503e118a64fe3e6b8f4c43cf1d5212852428631852356cdcd7140bb68",
+      "size": 76300,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/166_salt_worker_of.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/166_salt_worker_of.webp",
+      "sha256": "97e81e17647a7a44ca0addc58fcd51ef560e531f8ea17455e2fe91316c8c6c3f",
+      "size": 80248,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/167_ore_sorter_om.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/167_ore_sorter_om.webp",
+      "sha256": "2d65c53d00ac0f1aabefe55e5d8a3ac61d65dab8166fd95619e00bbfc8f86d08",
+      "size": 91392,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/168_forge_laborer_yf.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/168_forge_laborer_yf.webp",
+      "sha256": "a19d709af786872c6e94702d382349e0040e0a94558309dc0606a2193ff5d397",
+      "size": 77796,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/169_lumber_handler_ym.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/169_lumber_handler_ym.webp",
+      "sha256": "e5c8fcab76e448ea9ecaa5b87d1dc54106f9090c00934ad9c85f1111d8642f99",
+      "size": 74224,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/170_storehouse_laborer_of.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/170_storehouse_laborer_of.webp",
+      "sha256": "821e1664d55b6413ca8cd64f4d75f4bd384a44e05aa4f83207467d3c1247cbec",
+      "size": 76736,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/171_apothecary_om.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/171_apothecary_om.webp",
+      "sha256": "dcd02db32a109082cda485f4a954c923439af3418afbe70b9247ae112c052de3",
+      "size": 85440,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/172_midwife_yf.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/172_midwife_yf.webp",
+      "sha256": "e69a93f0b055d906824bae80ea8d93c116f20ab92b483ee4a36c1ae75229f7ef",
+      "size": 75420,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/173_mine_laborer_ym.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/173_mine_laborer_ym.webp",
+      "sha256": "c05cb491c41a30e900ec0c1276eb941de5dcf01a3571deadc0ae294c3632a8d4",
+      "size": 75592,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/174_mine_laborer_yf.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/174_mine_laborer_yf.webp",
+      "sha256": "aaf16777a75257d601b57d4735faf8246519a72bef9677b238a2668ce5a257dc",
+      "size": 70286,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/175_mine_laborer_om.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/175_mine_laborer_om.webp",
+      "sha256": "5b3bcb7e571d4fed89c6337d9b5e9186cb2d2d7dd6071a6d4923d19e8a40a60c",
+      "size": 82420,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/176_mine_laborer_of.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/176_mine_laborer_of.webp",
+      "sha256": "e24a5bc2adb64916983afdbcdd18f1c86351d7f0f3af367014807fd944e41681",
+      "size": 77892,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/177_healer_ym.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/177_healer_ym.webp",
+      "sha256": "cc31ee1aa9ede948d5f32a51ebbe3da3759b9df0f85e0e5a20a9353f37c7ebba",
+      "size": 72676,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/178_healer_yf.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/178_healer_yf.webp",
+      "sha256": "1bce72213fc0b09cf5229bb672ab6e45e64d728691e331cca9dab857819287c1",
+      "size": 68580,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/179_healer_om.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/179_healer_om.webp",
+      "sha256": "ba4eadf70b6a88b95e8caa9717cda868865cbfed82086db74b1f8c0c7ec7b251",
+      "size": 77938,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/180_healer_of.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/180_healer_of.webp",
+      "sha256": "ec2bf23e8a7db277eceba62c307a36245e0bbceb063b3333e528f61f05e486d7",
+      "size": 76282,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/181_surgeon_ym.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/181_surgeon_ym.webp",
+      "sha256": "70522a4d10347208d9ede69aa1ac22eca469e414c74a0e9af8b4a37910e61839",
+      "size": 63406,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/182_surgeon_yf.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/182_surgeon_yf.webp",
+      "sha256": "ec63c628afb5caba910f3554244b200f741074220f8f4e110a833ab0cd56e388",
+      "size": 58196,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/183_surgeon_om.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/183_surgeon_om.webp",
+      "sha256": "1bbbbac6815aedb32c75be765b568528e2c88b17e8ad3c6cc914655663c2defc",
+      "size": 71340,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/184_surgeon_of.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/184_surgeon_of.webp",
+      "sha256": "1cc17c6f16fb29f49e9eaf03e55bc816b6993426626a12f26e072958e087030f",
+      "size": 65132,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/185_nurse_of.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/185_nurse_of.webp",
+      "sha256": "63df51e4d43a52e0c769765ec76eb86a6ee9eff504ad3968541eb523385dce71",
+      "size": 74012,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/186_priest_ym.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/186_priest_ym.webp",
+      "sha256": "f2310ccfc9a54759dc9e4f55f6876870b2bc6170829c359adb329948b1704b75",
+      "size": 65330,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/187_shrine_keeper_om.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/187_shrine_keeper_om.webp",
+      "sha256": "53c0f9a24e1411aa788088800acba7ec54e3a55ef7c62d2d763d7222ca62ba94",
+      "size": 76570,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/188_gravedigger_yf.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/188_gravedigger_yf.webp",
+      "sha256": "9487010feecc1c46bc016dfdb22bf92310b2dd5a4642e06d9345da914bb7486d",
+      "size": 76074,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/189_undertaker_om.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/189_undertaker_om.webp",
+      "sha256": "14f1b01e43468d19f22644f64f5f353a8ca7cf25ea82f458c7053bd10edf79bf",
+      "size": 67986,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/190_town_crier_yf.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/190_town_crier_yf.webp",
+      "sha256": "3919039e2789512b53dd21f75173d7a9245880a11e34ed2167e9b97efb293fb6",
+      "size": 78960,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/191_bard_ym.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/191_bard_ym.webp",
+      "sha256": "62267c2521dd2c4757e9a9ece1ef11cd44ccf357ee8e7e08e11e0a8300fa630d",
+      "size": 77378,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/192_minstrel_of.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/192_minstrel_of.webp",
+      "sha256": "974b463e120fb030a25aefcb1e8f20c5dbdaf39793374df7f1ffaad498677bea",
+      "size": 69316,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/193_dancer_yf.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/193_dancer_yf.webp",
+      "sha256": "e65ad94d36c466c79d4df9ad11e28c929789614f8db123eb54c32fb75853a82f",
+      "size": 73898,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/194_actor_om.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/194_actor_om.webp",
+      "sha256": "2bb293136381d90f523ff395941d6862ec0e0e70861197f09ddcc82cb55f8646",
+      "size": 73016,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/195_jester_ym.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/195_jester_ym.webp",
+      "sha256": "e858339fa8c5bd4e77892d8a19b7f4702e93007407df806d438f232434a64127",
+      "size": 79336,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/196_arena_keeper_of.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/196_arena_keeper_of.webp",
+      "sha256": "ecc84749d0b6c53f073eb2346967e61ba6ba3c6142fd14f02e9214a478d67251",
+      "size": 79154,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/197_male_gladiator_om.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/197_male_gladiator_om.webp",
+      "sha256": "c46b6b122bc8655982166ddaca2e669f2516a0df1ebd6c2a7f0d10efd94fed77",
+      "size": 73836,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/198_female_gladiator_yf.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/198_female_gladiator_yf.webp",
+      "sha256": "f1f5b99e322e062ca198bc72b27addedeebe06083d37c32e4894fcd79fa2b3c7",
+      "size": 68852,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/199_arena_trainer_ym.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/199_arena_trainer_ym.webp",
+      "sha256": "7c9b35e250c0a54e8bc4a3f26ced01df7c735a822f4616f972f62b93479347d3",
+      "size": 71146,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/200_pit_announcer_of.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/200_pit_announcer_of.webp",
+      "sha256": "a5534372c09922beeca19e1ee378cb785b747f3ce187c61756db8b1d0dc2e1c4",
+      "size": 70758,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/201_captured_orc_gladiator_ym.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/201_captured_orc_gladiator_ym.webp",
+      "sha256": "afc9baa8d3723a63412b43144912a7da61d73e053c9fce845981765ce3a12f71",
+      "size": 73712,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/202_captured_elf_gladiator_yf.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/202_captured_elf_gladiator_yf.webp",
+      "sha256": "83668340d67363948dd8c8101737c2c22bb3e0a4b8c6fc6c00bf79ed0d2d2fa5",
+      "size": 67876,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/203_captured_dwarven_gladiator_om.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/203_captured_dwarven_gladiator_om.webp",
+      "sha256": "2a484bd999412f77e8907bda3923fb1a465600377f0f58f42c40aee9fac4bd36",
+      "size": 84250,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/204_captured_dark_elf_gladiator_of.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/204_captured_dark_elf_gladiator_of.webp",
+      "sha256": "ade045e49b924c3fa6f65ca260b9f5331f10e18536f01f857a8b12d765500c9c",
+      "size": 76058,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/205_torturer_om.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/205_torturer_om.webp",
+      "sha256": "ce165855ec1685e4e6c2991edeb19efb0fd244599209729daec5b733667c74d6",
+      "size": 70444,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/206_bounty_hunter_yf.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/206_bounty_hunter_yf.webp",
+      "sha256": "b46145e02f5e6f93d7018609074069d7da436e2cc939851be6759151036e4605",
+      "size": 72554,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/207_bailiff_ym.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/207_bailiff_ym.webp",
+      "sha256": "ef2ea6640291ff491b2b378fd0e6610a8a32d105229986368e40adf1e9a0d9bb",
+      "size": 67930,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/208_executioner_of.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/208_executioner_of.webp",
+      "sha256": "4e99d8dcb4e73556a9d2d0d99968dabae0cba565726a2df1ce4ce6a56d62a4dc",
+      "size": 69386,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/209_peasant_laborer_ym.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/209_peasant_laborer_ym.webp",
+      "sha256": "59301bf7be8ac3d070d99196af19455f7d9e2e74964f76b3669d4f1169131d57",
+      "size": 78650,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/210_female_servant_yf.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/210_female_servant_yf.webp",
+      "sha256": "d45b56a84ee0aff0e061988c64335d4a044b86820dfce91f17d3bd554eb9231d",
+      "size": 69774,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/211_male_servant_om.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/211_male_servant_om.webp",
+      "sha256": "0f5c04b6b0e4a917431976e97c4a68e8d7261823ff4bcdd52c28ff48691cfc40",
+      "size": 69346,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/212_coachman_of.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/212_coachman_of.webp",
+      "sha256": "1b29ce4f630f1c8558e272bb10ef2a792da9dddefb05b6a0e66c9a242ff59f02",
+      "size": 76312,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/213_wagon_driver_ym.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/213_wagon_driver_ym.webp",
+      "sha256": "0ac46bf45f264c2bbada8a6a949b6b3db7d3cb10ec2c6c8287fd2e735c1c2ac7",
+      "size": 76996,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/214_porter_yf.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/214_porter_yf.webp",
+      "sha256": "bece8dbbe382966b4e499a6200a03d1d90004c09218dc006f99fbcded396617b",
+      "size": 75048,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/215_dockworker_om.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/215_dockworker_om.webp",
+      "sha256": "0d360d026683b09596f6d5a1978a7919e203c3753d357cce11e0f4daf56300b0",
+      "size": 84706,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/216_dockmaster_of.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/216_dockmaster_of.webp",
+      "sha256": "e8ff5e2e9e85ddd2a2c7773ae915cd72737c3f9b49e7d7349d84834939edeb88",
+      "size": 81654,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/217_harbor_pilot_ym.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/217_harbor_pilot_ym.webp",
+      "sha256": "34cb83361cfbe7f3813a825fa847c537ef56eeb56f23735af4b0c068117672f2",
+      "size": 76510,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/218_miner_yf.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/218_miner_yf.webp",
+      "sha256": "92f9a9662ee89aa7c3ed0f015884d40a69613a66d88fa8304616d0ae36ba7332",
+      "size": 83230,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/219_barber_surgeon_om.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/219_barber_surgeon_om.webp",
+      "sha256": "53382d75bb0d4591a0e30caab4f9faafac6ad381109bab7fa168eac5c445fa36",
+      "size": 66986,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/220_town_guard_of.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/220_town_guard_of.webp",
+      "sha256": "06d22f1682d51ef19fb6b0324a21ea2da06352c7dd34fbce32660f4ddfa6a2ab",
+      "size": 77084,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/221_militia_man_ym.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/221_militia_man_ym.webp",
+      "sha256": "29df9c9e4720b618fe4d0db21758c95453a67aaa01028e813ebbe773425f1e45",
+      "size": 73008,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/222_beekeeper_yf.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/222_beekeeper_yf.webp",
+      "sha256": "a4d9fa2a66f04dddc9db7ec2d2452801f21e3184db3f406a535d8f2f2350ede8",
+      "size": 87970,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/223_goatherd_om.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/223_goatherd_om.webp",
+      "sha256": "531e6f7901a4dd893a801bdf45959f01ad085ebe854d92b53c82f858e105d4b3",
+      "size": 83950,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/224_poultry_keeper_of.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/224_poultry_keeper_of.webp",
+      "sha256": "a8729e81b932acb0043a6beb66c25801753ea0eee6e6e27334d52415cf1b7a80",
+      "size": 85064,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/225_teen_boy_tm.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/225_teen_boy_tm.webp",
+      "sha256": "e8ba1d31f78ac6d9c4de8a02faa9b4420ff59f263ca5d92a508ef1b81623b67f",
+      "size": 65240,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/226_teen_girl_tf.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/226_teen_girl_tf.webp",
+      "sha256": "da3cd3ca0eb7565a38ce66ad39b956917d73745197edb103522cc34348e0abe1",
+      "size": 54932,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/227_teen_boy_tm.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/227_teen_boy_tm.webp",
+      "sha256": "79fc0febeca85d912b6006a6b575b47c89ce1a3a3292ade867739bc1fa493ca1",
+      "size": 60364,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/228_teen_girl_tf.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/228_teen_girl_tf.webp",
+      "sha256": "6cfddeaac88931be9618ee136e5ce2c7c76e17fd9661ef8016d6ceac0b45577f",
+      "size": 59312,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/229_toddler_boy_dm.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/229_toddler_boy_dm.webp",
+      "sha256": "01dad2cbf422efc332f7e84cfb55a6360bf68d224c058520df73a8f6065d8eaa",
+      "size": 67994,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/230_toddler_girl_df.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/230_toddler_girl_df.webp",
+      "sha256": "7367c383de9dbe7267afcee66cd7f62eda4488287daaf11aa3d73443bf2f22f4",
+      "size": 73746,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/231_toddler_boy_dm.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/231_toddler_boy_dm.webp",
+      "sha256": "9eb840d5a248aed2fcdc8165a56e1e99699959871e7728c8dfbcb2931924a64c",
+      "size": 70464,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/232_toddler_girl_df.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/232_toddler_girl_df.webp",
+      "sha256": "8e4775a1c1042bd9a85031d89c6207d54aeddeb2f8dd615d10c26c364186ce94",
+      "size": 68194,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/233_baby_boy_bm.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/233_baby_boy_bm.webp",
+      "sha256": "890de4524592c15da71ea74750ba8f4bf4a1ad55dda9bdb116b8ec0abc294eab",
+      "size": 58704,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/234_baby_girl_bf.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/234_baby_girl_bf.webp",
+      "sha256": "ef430a7d72938802fb9a7200a9cffbb100338a7a607a2796f19c0690d6af0f88",
+      "size": 56286,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/235_baby_boy_bm.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/235_baby_boy_bm.webp",
+      "sha256": "d85385cc39d421c1f9c9601e8e08b7df46134f5e82f195ac53eb5d374e2abb0a",
+      "size": 62226,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/236_baby_girl_bf.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/236_baby_girl_bf.webp",
+      "sha256": "f0016d3c982b4c25dcd118e975c07f2746b94be40aee48ccd3a625292d6caa7f",
+      "size": 65266,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/237_bannerless_knight_ym.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/237_bannerless_knight_ym.webp",
+      "sha256": "6b1a3f954622f10679d3a9dcdd4a152dd82a2c09d5677fdc9d9191414e169d99",
+      "size": 67718,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/238_bannerless_knight_yf.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/238_bannerless_knight_yf.webp",
+      "sha256": "201b1527edfd2b59a164dfebeefd8b54a0ac02e32cf7921ad582ea3a34024b58",
+      "size": 68974,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/239_bannerless_knight_om.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/239_bannerless_knight_om.webp",
+      "sha256": "0211a6cc79a90380cfb52ff30b950a46f1c325711a0d8e641450e1c33e77d739",
+      "size": 83174,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/240_bannerless_knight_of.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/240_bannerless_knight_of.webp",
+      "sha256": "eaade7af52df1f568f816abe8333a8af3031744a6e52b0865de6ba75b0810cff",
+      "size": 80598,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/241_bannerless_man_at_arms_ym.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/241_bannerless_man_at_arms_ym.webp",
+      "sha256": "4b60cfd222b7077927e8551707bd4d93184a7de36b131d5c3389d6e8fc7cdafa",
+      "size": 79814,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/242_bannerless_man_at_arms_yf.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/242_bannerless_man_at_arms_yf.webp",
+      "sha256": "451956053fd6e01731d8ec875cf5470f81bab5e3a7319eeb12729e1e010643d6",
+      "size": 79340,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/243_bannerless_man_at_arms_om.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/243_bannerless_man_at_arms_om.webp",
+      "sha256": "5e2a3cf5003bfbc4137ec44b96f9eb314dd8fca6ec7887dacf745750d0bfa138",
+      "size": 84062,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/244_bannerless_man_at_arms_of.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/244_bannerless_man_at_arms_of.webp",
+      "sha256": "0911bcb8f0b116bbfd0d9ee6b5a3b87b7e5ebe5866c11b10322b655fd415ff10",
+      "size": 77668,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/245_bannerless_archer_ym.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/245_bannerless_archer_ym.webp",
+      "sha256": "2b5e89c4aba02e6a2e10f75932402d82e025a189f8dd4fc16e7d6dcf29792ad9",
+      "size": 79452,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/246_bannerless_archer_yf.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/246_bannerless_archer_yf.webp",
+      "sha256": "121876297a53704be095f32d39c03474dd159762486ffe48fb3dc317010f0d7a",
+      "size": 75414,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/247_bannerless_archer_om.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/247_bannerless_archer_om.webp",
+      "sha256": "bc9da0068e34a12c97a93421fb014a3a8f632e91542505bba01f578382a16a17",
+      "size": 84406,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/248_bannerless_archer_of.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/248_bannerless_archer_of.webp",
+      "sha256": "b087a975aba28c0f84a7470e37829807c708738ce0277a652f584397edc71c66",
+      "size": 80148,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/249_bannerless_crossbowman_ym.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/249_bannerless_crossbowman_ym.webp",
+      "sha256": "a8df8cf9bb066b8010942f4ac58a1e3c67e2da547c3f208fa579e6223adda633",
+      "size": 74128,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/250_bannerless_crossbowman_yf.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/250_bannerless_crossbowman_yf.webp",
+      "sha256": "fcb80abbe327a37103340d317ad437ae49e00d33a6f6601d22f473d5a2894e4c",
+      "size": 69094,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/251_bannerless_crossbowman_om.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/251_bannerless_crossbowman_om.webp",
+      "sha256": "500a11a1604f7e402f17e14b6d69851b94ba2bb3bf3012f092a244cc796304e7",
+      "size": 76922,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/252_bannerless_crossbowman_of.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/252_bannerless_crossbowman_of.webp",
+      "sha256": "f761e1f12b54562b2f51cc4c46bf8be5e021c802851e84cb7feed46975c61293",
+      "size": 73402,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/253_bannerless_sergeant_ym.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/253_bannerless_sergeant_ym.webp",
+      "sha256": "264873a8ef548c6894c59c0f167f84515122ecc0a8c8b084438d96fab9658368",
+      "size": 71918,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/254_bannerless_sergeant_yf.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/254_bannerless_sergeant_yf.webp",
+      "sha256": "296cfc9f74917ce80570380e14874256dfd611047f879d05251b25a686a137b3",
+      "size": 72686,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/255_bannerless_sergeant_om.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/255_bannerless_sergeant_om.webp",
+      "sha256": "73b089f7e90f10fb18948259da41aaafbddaa4a5d8881f4e2d7e523796209c3d",
+      "size": 76402,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/256_bannerless_sergeant_of.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/256_bannerless_sergeant_of.webp",
+      "sha256": "f7cddbd5e0d45e719b720de1e919df458b4d4c9130b1ae20fd9c670008331786",
+      "size": 76216,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/257_bannerless_swordsman_ym.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/257_bannerless_swordsman_ym.webp",
+      "sha256": "0e6a135f72196c2758fc708ce7523451a5ddb2a7e65f0030701a41d339d4081d",
+      "size": 75016,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/258_bannerless_swordsman_yf.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/258_bannerless_swordsman_yf.webp",
+      "sha256": "a8f44223a3328278a30bdeb161856db1e1a7214f76d58830a4bf2d2f179e00c4",
+      "size": 69708,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/259_bannerless_swordsman_om.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/259_bannerless_swordsman_om.webp",
+      "sha256": "9c472a7fa6cde6a4b949cb8f1187e1da4a09b7d380856a1bb36f6a97ee242e6e",
+      "size": 76936,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/260_bannerless_swordsman_of.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/260_bannerless_swordsman_of.webp",
+      "sha256": "aaa20af882c016c4ec285c8c7b53d4ed07e001d5a6c0f9b53b23d05b4f66db73",
+      "size": 73394,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/261_footman_ym.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/261_footman_ym.webp",
+      "sha256": "9fa5f5f83f9ce898d13057ae210b8e48d8068c5b6318efbb8c50ba23e03f1111",
+      "size": 70884,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/262_footman_yf.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/262_footman_yf.webp",
+      "sha256": "cece4160d902e9e1333038e2a7e884919ecdc9aaaef672f1fc864f61853c2077",
+      "size": 68998,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/263_footman_om.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/263_footman_om.webp",
+      "sha256": "70b255c84ecfc4c938d8f7b5c6e7b5c50dbb73cd14e2105e1d3f11e96cdd2b02",
+      "size": 71670,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/264_footman_of.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/264_footman_of.webp",
+      "sha256": "ec766667e6fbfafc3135a9dac794718dd514769d0cc7493fd0ad15ab10985980",
+      "size": 72346,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/265_militia_recruit_ym.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/265_militia_recruit_ym.webp",
+      "sha256": "05d63ad2fde0696292680b4535e5371fb9449f8e3b681692dc6ed5299924bb6f",
+      "size": 75780,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/266_militia_recruit_yf.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/266_militia_recruit_yf.webp",
+      "sha256": "92765cc1626730adf8a1b54794e0ea11d0e943a17bc3d6eb3fd603edd3aae131",
+      "size": 71770,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/267_militia_recruit_om.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/267_militia_recruit_om.webp",
+      "sha256": "5c617ad857a658b856d1585992b663bfc3bd195973c2af39fe1c58913dbb9ec5",
+      "size": 77458,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/268_militia_recruit_of.webp",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/268_militia_recruit_of.webp",
+      "sha256": "21b2e0e5b9bda6dc130cbe5b704a0c526fb6397f5ab79d4dd67e7de5ea8efed1",
+      "size": 74512,
+      "restart_required": true
+    },
+    {
+      "path": "custom/npc-portraits/v173/registry.json",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/custom/npc-portraits/v173/registry.json",
+      "sha256": "0436aa97eda71452b95bbda313e51080f73f82cc9f3ef1d426ff796e7e92cd44",
+      "size": 102414,
+      "restart_required": true
+    },
+    {
+      "path": "patches/v1.73.0-portrait-data.js",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/patches/v1.73.0-portrait-data.js",
+      "sha256": "e2dc04cc66cb429bbd01ad74f41f4ee69d02bc214049eb808058a837dc7dbe7c",
+      "size": 20586,
+      "restart_required": true
+    },
+    {
+      "path": "patches/v1.73.0-living-portraits.js",
+      "url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/patches/v1.73.0-living-portraits.js",
+      "sha256": "b379778c31992b2a2e97eb07b238e8921223041565b95886ee16336fea17e04d",
+      "size": 33749,
+      "restart_required": true
     }
   ],
-  "notes": "Version 1.72.6 is Android build 195. It restores Lady Alexus's supplied 3D model in her Equipment view and uniquely classifies all 28 mesh sections into foundation plus 12 independently controlled fitted wardrobe slots. Her main-hand, off-hand, ranged, reserve, and ammunition pieces remain independent equipment cards because the supplied GLB has no geometry for those five pieces; nothing is fabricated or falsely described as visible geometry. Portrait-phone layout now constrains the game, modals, equipment, shops, selectors, Systems dock, and notices to one vertical viewport, removing sideways page scrolling and the right-side void. Ordinary shop and market purchases route directly to Valkorion's Carried Inventory. Quartermaster requisitions resolve the correct fitted wagon crate first, then the next compatible crate with capacity, and never treat an empty bare wagon floor as ordinary item storage. The small gameplay repair is available through the in-game updater on v1.72.5, while the full APK retains every prior asset and uses the exact same signing identity. Version 1.72.5 is Android build 194. It restores the fitted 17-slot Valkorion model, makes armor, court clothing, weapons, ammunition, cloak, and jewelry independently visible, and allows armor and court pieces to be mixed without swapping a whole-body model. Removing one item hides only that item. A shared registration contract rejects future baked or partial character models. Version 1.72.4 is Android build 193. It corrects the reversed native query and fragment branches that prevented versioned game files from loading, retains WebView cache between launches, loads the optional Three.js and WebLLM runtimes only when their systems are opened, and prevents already-current state from traversing the entire migration chain on every render. Version 1.72.3 is the fully scanned Android build 192 repair. It removes the false web-patch-as-APK success path, proves the installed native package with a bundled build marker, clears the hidden opening-film guard before Continue renders, mounts Valkorion on both Character and Equipment screens, displays a small live 3D status badge, repairs two zero-byte legacy images, and retains the original update-compatible signing identity. Version 1.72.2 replaces the Android file:// game origin with a secure internal HTTPS-style asset route, allowing the bundled Three.js loader to read the supplied Valkorion and Lady Alexus GLBs. The full APK is required because this correction is inside the native WebView shell; the staged channel adds a visible full-APK download path and does not pretend JavaScript alone can replace it. File access remains disabled. The APK's three fitted models use shape-preserving KHR_mesh_quantization without mesh simplification, cutting their combined bytes and GPU attribute memory while retaining all 23 base/Lord parts, 40 armor parts, 28 Lady Alexus parts, materials, and transforms. Version 1.72.1 repairs the live v80 wardrobe connection that was skipped when historical v97/v98 viewer globals were absent. The supplied Valkorion base, Lord, complete 40-piece armor, and Lady Alexus models now replace the flat portrait fallback in their actual viewers. The verified v1.72 model files are unchanged; Android build 190 corrects the loader hook and retains every v1.72 mobile optimization. Version 1.72.0 repairs Continue, removes the floating gold update control and Android blue tap flash, and keeps Game Updates inside the opening menu and Systems. Android build 189 uses the supplied fitted Valkorion base body, Lord's royal armor, complete armored kit, and his twin sister Lady Alexus Dominus's gothic-ball-gown model. The release preserves every fitted model part and authored transform while using bounded-error mobile geometry; all three GLBs are below the 50 MB mobile and Tripo target. It also removes repeated full-page observers, continuous idle rendering, and repeated model reframing. The Game Updates screen shows the exact channel address, received bytes, percentage, verification, install, and restart states. Base and Lord modes switch fitted-node visibility without rebuilding or separating the figure, complete armor changes the loaded source cleanly, and Lady Alexus's model loads only inside her person or equipment view. Android build 187 restores the finished 40-piece assembled Valkorion kit and playable Corvinus Keep jousting, armored-duel, and archery tournaments with the corrected heraldic scenes. The 106,006,128-byte finished GLB is bundled in the full APK because it exceeds GitHub's ordinary single-file repository limit. Rejected exploded, simplified, empty-arena, and rain-only variants are not active. Existing saves and all prior game systems are preserved. The bundled updater retrieves the stable channel through GitHub's JavaScript-safe Contents response, decodes the exact channel bytes locally, and retains a script-safe CDN fallback; it no longer asks Android to execute GitHub's raw text/plain response. The startup access repair is bundled into the APK: every app launch now stops at the opening menu, even when an autosave exists, so Continue and Game Updates remain reachable without deleting any timeline. Game Updates is also kept in the live Systems dock. The safe updater receives complete patch source before activation; enforces per-module SHA-256 checks, strict size limits, and trusted asset origins; stages updates locally; retains the previous release; automatically rolls back an update that cannot finish starting; and provides Safe Start once plus a permanent return to the built-in version without deleting game saves. It also retains the startup and gameplay hotfix for the curated portrait update. Removes whole-world identity and portrait scans from render, list-view, portrait-view, daily-tick, and already-migrated save paths; save migration now runs once per version and new NPC creation remains checked at its source. A 1,219-person stress save now performs zero portrait-record checks across repeated redraws. The library still installs 110 new lore-matched, labeled full-body NPC portraits plus the unchanged original Quartermaster role portrait. Every image is explicitly tagged for sex, visual age band, race, occupation, faction, mounted status, and individual-person use. Routing is deterministic and location-aware; one curated face cannot be assigned twice in the active world. Exact named-character art remains locked, including Quartermaster Halric Morn, Kael, Valkorion, Alexus, Libita, Nessa, surgeons, officers, and unique companions. Incompatible or unavailable art falls back without changing identity or save progress. The 19.91 MiB library covers human, dwarf, elf, dark-elf, ordinary-orc, Grimhorn beast-orc, civilian, child, infant, elder, knight, guard, rider, and lore-faction roles. All prior economy, shop, wine, wage, dialogue, Narrator, Sophia Help, item-purpose, and world-integrity repairs remain active. Existing saves are preserved. Restart after applying.",
+  "notes": "Version 1.73.0 adds 268 unique, labeled full-body portraits to the existing curated library for 379 reviewed portrait choices. It deduplicates the recruitable catalog against the complete worker catalog; routes art by persistent identity, occupation, gender, visual age, race and bannerless status; and preserves named, canonical, user-created and unique-character art. Twelve teen, toddler and baby portraits appear only as ambient household members and are never workers or recruitable applicants. Missing catalog occupations now have real systems: named bankers keep counter hours inside the existing reserve and currency mechanics; beekeepers, goatherds and poultry keepers maintain persistent hives, herds and flocks that respond to time, season and weather; and skilled artisans plus distinct bannerless archer, crossbowman, sergeant, swordsman, footman and militia-recruit contracts enter labor and recruit halls. Honeycomb, beeswax, goat milk and eggs enter local stock and affect settlement health and prosperity. Existing saves migrate once, newly created people are checked individually, and redraws, schedules and daily ticks never trigger whole-world portrait scans. GitHub portrait delivery has a packaged-art fallback so an offline image cannot break a person view. Version 1.72.10 restores Lady Alexus's original authored anatomy map, maps the actual complete dress mesh to her gown slot, and removes the rejected fabricated torso clone while retaining the v1.72.8 equipment-state and v1.72.7 vertical-scrolling repairs. Version 1.72.6 is Android build 195. It restores Lady Alexus's supplied 3D model in her Equipment view and uniquely classifies all 28 mesh sections into foundation plus 12 independently controlled fitted wardrobe slots. Her main-hand, off-hand, ranged, reserve, and ammunition pieces remain independent equipment cards because the supplied GLB has no geometry for those five pieces; nothing is fabricated or falsely described as visible geometry. Portrait-phone layout now constrains the game, modals, equipment, shops, selectors, Systems dock, and notices to one vertical viewport, removing sideways page scrolling and the right-side void. Ordinary shop and market purchases route directly to Valkorion's Carried Inventory. Quartermaster requisitions resolve the correct fitted wagon crate first, then the next compatible crate with capacity, and never treat an empty bare wagon floor as ordinary item storage. The small gameplay repair is available through the in-game updater on v1.72.5, while the full APK retains every prior asset and uses the exact same signing identity. Version 1.72.5 is Android build 194. It restores the fitted 17-slot Valkorion model, makes armor, court clothing, weapons, ammunition, cloak, and jewelry independently visible, and allows armor and court pieces to be mixed without swapping a whole-body model. Removing one item hides only that item. A shared registration contract rejects future baked or partial character models. Version 1.72.4 is Android build 193. It corrects the reversed native query and fragment branches that prevented versioned game files from loading, retains WebView cache between launches, loads the optional Three.js and WebLLM runtimes only when their systems are opened, and prevents already-current state from traversing the entire migration chain on every render. Version 1.72.3 is the fully scanned Android build 192 repair. It removes the false web-patch-as-APK success path, proves the installed native package with a bundled build marker, clears the hidden opening-film guard before Continue renders, mounts Valkorion on both Character and Equipment screens, displays a small live 3D status badge, repairs two zero-byte legacy images, and retains the original update-compatible signing identity. Version 1.72.2 replaces the Android file:// game origin with a secure internal HTTPS-style asset route, allowing the bundled Three.js loader to read the supplied Valkorion and Lady Alexus GLBs. The full APK is required because this correction is inside the native WebView shell; the staged channel adds a visible full-APK download path and does not pretend JavaScript alone can replace it. File access remains disabled. The APK's three fitted models use shape-preserving KHR_mesh_quantization without mesh simplification, cutting their combined bytes and GPU attribute memory while retaining all 23 base/Lord parts, 40 armor parts, 28 Lady Alexus parts, materials, and transforms. Version 1.72.1 repairs the live v80 wardrobe connection that was skipped when historical v97/v98 viewer globals were absent. The supplied Valkorion base, Lord, complete 40-piece armor, and Lady Alexus models now replace the flat portrait fallback in their actual viewers. The verified v1.72 model files are unchanged; Android build 190 corrects the loader hook and retains every v1.72 mobile optimization. Version 1.72.0 repairs Continue, removes the floating gold update control and Android blue tap flash, and keeps Game Updates inside the opening menu and Systems. Android build 189 uses the supplied fitted Valkorion base body, Lord's royal armor, complete armored kit, and his twin sister Lady Alexus Dominus's gothic-ball-gown model. The release preserves every fitted model part and authored transform while using bounded-error mobile geometry; all three GLBs are below the 50 MB mobile and Tripo target. It also removes repeated full-page observers, continuous idle rendering, and repeated model reframing. The Game Updates screen shows the exact channel address, received bytes, percentage, verification, install, and restart states. Base and Lord modes switch fitted-node visibility without rebuilding or separating the figure, complete armor changes the loaded source cleanly, and Lady Alexus's model loads only inside her person or equipment view. Android build 187 restores the finished 40-piece assembled Valkorion kit and playable Corvinus Keep jousting, armored-duel, and archery tournaments with the corrected heraldic scenes. The 106,006,128-byte finished GLB is bundled in the full APK because it exceeds GitHub's ordinary single-file repository limit. Rejected exploded, simplified, empty-arena, and rain-only variants are not active. Existing saves and all prior game systems are preserved. The bundled updater retrieves the stable channel through GitHub's JavaScript-safe Contents response, decodes the exact channel bytes locally, and retains a script-safe CDN fallback; it no longer asks Android to execute GitHub's raw text/plain response. The startup access repair is bundled into the APK: every app launch now stops at the opening menu, even when an autosave exists, so Continue and Game Updates remain reachable without deleting any timeline. Game Updates is also kept in the live Systems dock. The safe updater receives complete patch source before activation; enforces per-module SHA-256 checks, strict size limits, and trusted asset origins; stages updates locally; retains the previous release; automatically rolls back an update that cannot finish starting; and provides Safe Start once plus a permanent return to the built-in version without deleting game saves. It also retains the startup and gameplay hotfix for the curated portrait update. Removes whole-world identity and portrait scans from render, list-view, portrait-view, daily-tick, and already-migrated save paths; save migration now runs once per version and new NPC creation remains checked at its source. A 1,219-person stress save now performs zero portrait-record checks across repeated redraws. The library still installs 110 new lore-matched, labeled full-body NPC portraits plus the unchanged original Quartermaster role portrait. Every image is explicitly tagged for sex, visual age band, race, occupation, faction, mounted status, and individual-person use. Routing is deterministic and location-aware; one curated face cannot be assigned twice in the active world. Exact named-character art remains locked, including Quartermaster Halric Morn, Kael, Valkorion, Alexus, Libita, Nessa, surgeons, officers, and unique companions. Incompatible or unavailable art falls back without changing identity or save progress. The 19.91 MiB library covers human, dwarf, elf, dark-elf, ordinary-orc, Grimhorn beast-orc, civilian, child, infant, elder, knight, guard, rider, and lore-faction roles. All prior economy, shop, wine, wage, dialogue, Narrator, Sophia Help, item-purpose, and world-integrity repairs remain active. Existing saves are preserved. Restart after applying.",
   "save_policy": {
     "managed": false,
     "preserve_always": true

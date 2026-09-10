@@ -4,7 +4,41 @@ Public update channel for **Aetherion Reforged**.
 
 The Android staged updater reads `channel.js` from this repository through a MIME-safe GitHub Contents response. `manifest.json` records the exact sizes and SHA-256 hashes of managed payloads.
 
-## Current web repair — 1.72.10 (Android build 195)
+## Current web update — 1.73.0 (Android build 195)
+
+Version 1.73.0 expands the living population without replacing the verified
+v1.72.6 APK or clearing saves:
+
+- adds 268 unique labeled full-body portraits to the existing curated library,
+  for 379 reviewed choices in total
+- deduplicates the smaller recruitable catalog against the complete catalog
+  instead of shipping the same pictures twice
+- matches each portrait to occupation, gender, visual age, race, and bannerless
+  allegiance while preserving named, canonical, custom, and unique-character art
+- keeps compatible portraits from the earlier curated set in circulation, so
+  the two libraries add variety instead of replacing one another
+- keeps all 12 teen, toddler, and baby portraits strictly in households,
+  schedules, and nearby-life views; none can become a worker or recruit
+- adds banker, beekeeper, goatherd, poultry keeper, skilled artisan, bannerless
+  archer, crossbowman, sergeant, swordsman, footman, and militia recruit roles
+- gives the new rural occupations persistent hives, goat herds, poultry flocks,
+  seasonal and weather effects, weekly production, local-market stock, household
+  sales, and settlement health/prosperity effects
+- connects named bankers and posted opening hours to the existing deposit,
+  withdrawal, bullion, reserve, mint, and currency systems
+- adds household members to People Here and the schedule ledger with age-specific
+  daily activity rather than treating children as labor
+- migrates each existing save once, then assigns only at NPC creation; ordinary
+  redraws, lists, schedules, and daily ticks perform no whole-world portrait scan
+- loads portrait art from this fixed GitHub release source and falls back to
+  packaged dynasty art when offline, so a failed image cannot break the view
+- retains the v1.72.10 Lady Alexus body-map repair, v1.72.8 equipment-state
+  repair, and v1.72.7 vertical-scrolling repair in the same staged release
+
+The portrait provenance, role mapping, mechanics, and verification results are
+recorded in `AUDIT_v1.73.0.md`.
+
+## Previous web repair — 1.72.10 (Android build 195)
 
 Version 1.72.10 corrects Lady Alexus's model without altering or replacing her
 supplied GLB:

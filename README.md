@@ -4,7 +4,13 @@ Public update channel for **Aetherion Reforged**.
 
 The Android staged updater reads `channel.js` from this repository through a MIME-safe GitHub Contents response. `manifest.json` records the exact sizes and SHA-256 hashes of managed payloads.
 
-## Current web update — 1.73.6 (Android build 195)
+## Current web update — 1.73.7 (Android build 195)
+
+Version 1.73.7 moves the sky dial into the unused top-right space beside the
+lower status rows, where it no longer covers the settlement name or controls.
+The dial and all time mechanics are otherwise unchanged.
+
+## Previous web update — 1.73.6 (Android build 195)
 
 Version 1.73.6 adds an original Aetherion time and moon system:
 

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build the bounded stable channel for the v1.73.6 sky-clock update."""
+"""Build the bounded stable channel for the v1.73.7 sky-clock placement repair."""
 
 from __future__ import annotations
 
@@ -10,7 +10,7 @@ import datetime as dt
 from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 PATCHES = [
-    ("v1736-stable-bundle", ROOT / "patches" / "v1.73.6-stable-bundle.js"),
+    ("v1737-stable-bundle", ROOT / "patches" / "v1.73.7-stable-bundle.js"),
 ]
 APK_NAME = "Aetherion_Reforged_v1.72.6_GAMEPLAY_REPAIR_FULL.apk"
 APK_URL = (
@@ -52,7 +52,7 @@ def main() -> None:
         "schema": 2,
         "channel": "stable",
         "release": {
-            "version": "1.73.6",
+            "version": "1.73.7",
             # This content update targets the verified v1.72.6 full APK. It
             # contains no native files and can stage on Android build 195.
             "build": 195,
@@ -63,7 +63,7 @@ def main() -> None:
             "apkSha256": APK_SHA256,
             "apkSize": APK_SIZE,
             "notes": [
-                "Adds the Aetherion sky dial, seasonal sleep-to-dawn, moon phases, waiting, and persistent wakefulness consequences.",
+                "Moves the Aetherion sky dial into the clear top-right HUD pocket without changing its moving sun, blood moon, wait, or sleep systems.",
             ],
             "modules": modules,
             # Image URLs are constructed from one fixed trusted repository root

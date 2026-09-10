@@ -7,7 +7,7 @@ const path=require('node:path');
 const vm=require('node:vm');
 
 const gameRoot=process.argv[2];
-if(!gameRoot){console.log('v1.73.6 full-game runtime skipped (pass an extracted assets/game path)');process.exit(0)}
+if(!gameRoot){console.log('v1.73.7 full-game runtime skipped (pass an extracted assets/game path)');process.exit(0)}
 const index=fs.readFileSync(path.join(gameRoot,'index.html'),'utf8');
 const scripts=[...index.matchAll(/<script[^>]+src=["']([^"']+)/g)].map(match=>match[1].split('?')[0]).filter(src=>!src.startsWith('http'));
 
@@ -21,7 +21,7 @@ sandbox.window=sandbox;sandbox.globalThis=sandbox;sandbox.self=sandbox;
 const context=vm.createContext(sandbox);
 
 for(const relative of scripts){const target=path.join(gameRoot,relative);assert(fs.existsSync(target),`missing packaged script ${relative}`);vm.runInContext(fs.readFileSync(target,'utf8'),context,{filename:relative})}
-vm.runInContext(fs.readFileSync('patches/v1.73.6-stable-bundle.js','utf8'),context,{filename:'v1.73.6-stable-bundle.js'});
+vm.runInContext(fs.readFileSync('patches/v1.73.7-stable-bundle.js','utf8'),context,{filename:'v1.73.7-stable-bundle.js'});
 
 const api=sandbox.AetherionV173LivingPortraits;
 const knightApi=sandbox.AetherionV1731KnightDiversity;
@@ -29,6 +29,7 @@ const timeApi=sandbox.AetherionV1736Time;
 assert(api);
 assert(knightApi);
 assert(timeApi);
+assert.equal(sandbox.AetherionV1737TimePlacement?.version,'1.73.7');
 assert.equal(api.registry.length,268);
 assert.equal(knightApi.registry.length,16);
 assert.equal(knightApi.generated.length,12);
@@ -184,4 +185,4 @@ campClock=get('v14Now()');get('v24SleepCamp()');assert(Math.abs((get('v14Now()')
 const awakeBeforeWait=get('AetherionV1736Time.state().awakeHours'),energyBeforeWait=get('S.player.energy');
 get('AetherionV1736Time.wait(1)');assert.equal(get('AetherionV1736Time.state().awakeHours'),awakeBeforeWait+1);assert(get('S.player.energy')<=energyBeforeWait);
 
-console.log(`v1.73.6 full-game runtime: ${scripts.length} packaged scripts, original sky dial, seasonal sleep-to-dawn, moon phases, waiting, wakefulness, exact guard-film success routing, poster-backed autoplay, Watch Post gate, clone-save repair, full-body knight diversity, bounded renders, residents, recruits, production, views, and migration passed`);
+console.log(`v1.73.7 full-game runtime: ${scripts.length} packaged scripts, corrected sky-dial placement, seasonal sleep-to-dawn, moon phases, waiting, wakefulness, exact guard-film success routing, poster-backed autoplay, Watch Post gate, clone-save repair, full-body knight diversity, bounded renders, residents, recruits, production, views, and migration passed`);

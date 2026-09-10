@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build the bounded stable channel for the v1.73.7 sky-clock placement repair."""
+"""Build the bounded stable channel for the v1.73.8 portrait repair."""
 
 from __future__ import annotations
 
@@ -10,7 +10,7 @@ import datetime as dt
 from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 PATCHES = [
-    ("v1737-stable-bundle", ROOT / "patches" / "v1.73.7-stable-bundle.js"),
+    ("v1738-stable-bundle", ROOT / "patches" / "v1.73.8-stable-bundle.js"),
 ]
 APK_NAME = "Aetherion_Reforged_v1.72.6_GAMEPLAY_REPAIR_FULL.apk"
 APK_URL = (
@@ -52,7 +52,7 @@ def main() -> None:
         "schema": 2,
         "channel": "stable",
         "release": {
-            "version": "1.73.7",
+            "version": "1.73.8",
             # This content update targets the verified v1.72.6 full APK. It
             # contains no native files and can stage on Android build 195.
             "build": 195,
@@ -63,7 +63,7 @@ def main() -> None:
             "apkSha256": APK_SHA256,
             "apkSize": APK_SIZE,
             "notes": [
-                "Moves the Aetherion sky dial into the clear top-right HUD pocket without changing its moving sun, blood moon, wait, or sleep systems.",
+                "Repairs full-body portraits and existing saves.",
             ],
             "modules": modules,
             # Image URLs are constructed from one fixed trusted repository root
@@ -73,7 +73,7 @@ def main() -> None:
     }
     payload = json.dumps(feed, ensure_ascii=False, separators=(",", ":"))
     output = (
-        "/* Aetherion Reforged safe update channel. This file carries verified staged patch source. */\n"
+        "/* Aetherion Reforged safe update channel. */\n"
         "(()=>{\n"
         f" const feed={payload};\n"
         " window.__aetherionFullApkUrl=feed.release.apkUrl;\n"

@@ -4,7 +4,28 @@ Public update channel for **Aetherion Reforged**.
 
 The Android staged updater reads `channel.js` from this repository through a MIME-safe GitHub Contents response. `manifest.json` records the exact sizes and SHA-256 hashes of managed payloads.
 
-## Current web update — 1.73.7 (Android build 195)
+## Current web update — 1.73.8 (Android build 195)
+
+Version 1.73.8 repairs the full-body portrait regression shown in existing
+saves:
+
+- reruns portrait migration even when the old 1.73.0/1.73.1 markers already
+  claim that the save was repaired
+- redistributes the starting retinue across its matching full-body knight pool
+  and repairs eligible workers still carrying generic dynasty or unit art
+- routes all 280 v1.73/v1.73.1 portraits through an Android-WebView-friendly
+  CDN address, with the same full-body file retried from GitHub if needed
+- removes the cloned dynasty-head fallback from those portraits; if both
+  network sources fail, the neutral Dominus rose is shown instead of a fake
+  repeated person
+- applies the same delivery rule to roster cards, character modals, and shop
+  worker cards while preserving custom and named-character art
+
+No characters, content, jobs, mechanics, or save progress are deleted. The old
+head assets remain available only where they are intentionally used; deleting
+shared files would create broken images rather than repair portrait routing.
+
+## Previous web update — 1.73.7 (Android build 195)
 
 Version 1.73.7 moves the sky dial into the unused top-right space beside the
 lower status rows, where it no longer covers the settlement name or controls.
@@ -510,6 +531,9 @@ node tests/test_v1722_android_shell.cjs
 node tests/test_v1722_character_models.cjs
 node tests/test_v1722_update_center.cjs
 node tests/test_v1722_runtime_repair.cjs
+node tests/test_v1738_channel.cjs
+node tests/test_v1738_portrait_resilience.cjs
+node tests/test_v1738_full_game_runtime.cjs /path/to/extracted/assets/game
 python3 tests/validate_v172_models.py
 python3 tests/validate_v1722_mobile_models.py /path/to/APK/assets/game/assets/v172
 python3 tests/validate_v170_assets.py /path/to/extracted/assets/game

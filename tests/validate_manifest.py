@@ -32,7 +32,7 @@ def main() -> None:
     }
     assert manifest["schema"] == 1
     assert manifest["enabled"] is True
-    assert manifest["latest"]["game_version"] == "1.73.7"
+    assert manifest["latest"]["game_version"] == "1.73.8"
     assert manifest["latest"]["android_version_code"] == 195
     assert manifest["latest"]["min_updater_schema"] <= 1
     apk = manifest["android_apk"]
@@ -151,6 +151,8 @@ def main() -> None:
         "patches/v1.73.6-stable-bundle.js",
         "patches/v1.73.7-time-placement.js",
         "patches/v1.73.7-stable-bundle.js",
+        "patches/v1.73.8-portrait-resilience.js",
+        "patches/v1.73.8-stable-bundle.js",
     ]
     assert len({payload["path"] for payload in payloads}) == len(payloads)
 
@@ -205,6 +207,9 @@ def main() -> None:
         assert payload["restart_required"] is True
 
     assert manifest["save_policy"]["preserve_always"] is True
+    assert "Version 1.73.8 forces a new save-safe portrait repair" in manifest["notes"]
+    assert "never falls back to cloned dynasty heads" in manifest["notes"]
+    assert "No people, jobs, mechanics, items, locations, story, custom art, or save progress are removed" in manifest["notes"]
     assert "Version 1.73.7 moves the Aetherion sky dial down into the clear top-right HUD pocket" in manifest["notes"]
     assert "preventing it from covering the settlement name or any status control" in manifest["notes"]
     assert "Version 1.73.6 adds a compact original Aetherion sky dial" in manifest["notes"]
@@ -263,7 +268,7 @@ def main() -> None:
     assert "zero portrait-record checks" in manifest["notes"]
     assert "110 new lore-matched" in manifest["notes"]
     assert "Quartermaster Halric Morn" in manifest["notes"]
-    print("manifest.json: 1.73.7 payload sizes, release URLs, and SHA-256 hashes passed")
+    print("manifest.json: 1.73.8 payload sizes, release URLs, and SHA-256 hashes passed")
 
 
 if __name__ == "__main__":

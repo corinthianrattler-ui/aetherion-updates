@@ -7,7 +7,7 @@ const path=require('node:path');
 const vm=require('node:vm');
 
 const gameRoot=process.argv[2];
-if(!gameRoot){console.log('v1.73.5 full-game runtime skipped (pass an extracted assets/game path)');process.exit(0)}
+if(!gameRoot){console.log('v1.73.6 full-game runtime skipped (pass an extracted assets/game path)');process.exit(0)}
 const index=fs.readFileSync(path.join(gameRoot,'index.html'),'utf8');
 const scripts=[...index.matchAll(/<script[^>]+src=["']([^"']+)/g)].map(match=>match[1].split('?')[0]).filter(src=>!src.startsWith('http'));
 
@@ -21,21 +21,18 @@ sandbox.window=sandbox;sandbox.globalThis=sandbox;sandbox.self=sandbox;
 const context=vm.createContext(sandbox);
 
 for(const relative of scripts){const target=path.join(gameRoot,relative);assert(fs.existsSync(target),`missing packaged script ${relative}`);vm.runInContext(fs.readFileSync(target,'utf8'),context,{filename:relative})}
-vm.runInContext(fs.readFileSync('patches/v1.73.0-portrait-data.js','utf8'),context,{filename:'v1.73.0-portrait-data.js'});
-vm.runInContext(fs.readFileSync('patches/v1.73.0-living-portraits.js','utf8'),context,{filename:'v1.73.0-living-portraits.js'});
-vm.runInContext(fs.readFileSync('patches/v1.73.1-knight-diversity-performance.js','utf8'),context,{filename:'v1.73.1-knight-diversity-performance.js'});
-vm.runInContext(fs.readFileSync('patches/v1.73.5-camp-scenes.js','utf8'),context,{filename:'v1.73.5-camp-scenes.js'});
+vm.runInContext(fs.readFileSync('patches/v1.73.6-stable-bundle.js','utf8'),context,{filename:'v1.73.6-stable-bundle.js'});
 
 const api=sandbox.AetherionV173LivingPortraits;
 const knightApi=sandbox.AetherionV1731KnightDiversity;
-const campApi=sandbox.AetherionV1735CampScenes;
+const timeApi=sandbox.AetherionV1736Time;
 assert(api);
 assert(knightApi);
-assert(campApi);
+assert(timeApi);
 assert.equal(api.registry.length,268);
 assert.equal(knightApi.registry.length,16);
 assert.equal(knightApi.generated.length,12);
-assert.deepEqual(Object.fromEntries(Object.entries(campApi.scenes)),{make:'make-camp.mp4',strike:'strike-camp.mp4',food:'camp-food.mp4',sleep:'camp-sleep.mp4',guard:'guard-watch.mp4'});
+assert.deepEqual(Object.fromEntries(Object.entries(timeApi.scenes)),{make:'make-camp.mp4',strike:'strike-camp.mp4',food:'camp-food.mp4',sleep:'camp-sleep.mp4',guard:'guard-watch.mp4'});
 vm.runInContext('S=makeStartState()',context);
 const get=source=>vm.runInContext(source,context);
 assert.equal(get('S.meta.v173LivingPortraits.version'),'1.73.0');
@@ -44,6 +41,13 @@ assert.equal(get('S.meta.v173LivingPortraits.totalCuratedPortraits'),379);
 assert.equal(get('S.meta.v1731KnightDiversity.version'),'1.73.1');
 assert.equal(get('S.meta.v1731KnightDiversity.contentRemoved'),0);
 assert.equal(get('S.meta.v1731KnightDiversity.redrawWorldScans'),false);
+const shell=get('mainShell()');
+assert.match(shell,/aethTimeHeader/);
+assert.match(shell,/aethSkyClock/);
+assert.match(shell,/aethBloodMoon/);
+assert.doesNotMatch(shell,/Kingdom Come/i);
+assert.match(get('storyTab()'),/SLEEP UNTIL DAWN/);
+assert.match(get('characterTab()'),/SLEEP UNTIL DAWN/);
 const knights=get(`S.people.filter(p=>p.role==='Lesser Knight'||p.role==='Company Captain').map(p=>({id:p.id,name:p.name,gender:p.gender,age:p.age,bannerless:p.bannerless,portrait:p.portrait}))`);
 assert.equal(knights.length,20);
 assert(knights.every(p=>p.gender==='M'&&p.bannerless===true));
@@ -165,13 +169,19 @@ assert.equal(api.auditState(get('S')).wrong.length,0);
 
 get(`S.v24.camp.active=false;S.v24.camp.placements[0]={kind:'military',name:'Ten-Man Tent',item:'military_ten_man_tent',capacity:10};S.v24.camp.cookReady=true`);
 assert.match(get('v24CampMap()'),/MAKE CAMP/);
-let campClock=get('v14Now()');get('v24EstablishCamp()');assert.equal(get('v14Now()')-campClock,2);assert.equal(campApi.runtime.plays.make,1);let campScene=get('document.getElementById("modalRoot").innerHTML');assert.match(campScene,/make-camp\.mp4/);assert.match(campScene,/poster="[^"]+make-camp\.webp"/);assert.match(campScene,/>SKIP<\/button>/);assert.doesNotMatch(campScene,/\scontrols(?:\s|=|>)/);assert.doesNotMatch(campScene,/>PLAY<|RETURN TO CAMP/);assert.match(get('v24CampMap()'),/TAKE DOWN CAMP/);
-get('v24AssignWatch()');assert.equal(get('S.v24.camp.watchers.length'),0,'guard assignment must fail without a physical Watch Post');assert.equal(campApi.runtime.plays.guard,0,'blocked guard assignment must not play a film');
-get(`(()=>{let guard=S.people.find(p=>p.alive&&/Knight|Footman|Captain|Sergeant|Swordsman/.test(String(p.role)+' '+String(p.rank)));guard.location=S.world.location;S.v24.camp.placements[1]={kind:'watch',name:'Watch Post',item:'camp_watch_kit',capacity:0};v24AssignWatch()})()`);assert(get('S.v24.camp.watchers.length')>0,'an established camp with a Watch Post must accept eligible guards');assert.equal(campApi.runtime.plays.guard,1);assert.match(get('document.getElementById("modalRoot").innerHTML'),/guard-watch\.mp4/);assert.match(get('document.getElementById("modalRoot").innerHTML'),/guard-watch\.webp/);
+assert.match(get('v24CampMap()'),/SLEEP UNTIL DAWN/);
+assert.match(get('v24CampMap()'),/WAIT \/ PASS TIME/);
+let campClock=get('v14Now()');get('v24EstablishCamp()');assert.equal(get('v14Now()')-campClock,2);assert.equal(timeApi.runtime.plays.make,1);let campScene=get('document.getElementById("modalRoot").innerHTML');assert.match(campScene,/make-camp\.mp4/);assert.match(campScene,/poster="[^"]+make-camp\.webp"/);assert.match(campScene,/>SKIP<\/button>/);assert.doesNotMatch(campScene,/\scontrols(?:\s|=|>)/);assert.doesNotMatch(campScene,/>PLAY<|RETURN TO CAMP/);assert.match(get('v24CampMap()'),/TAKE DOWN CAMP/);
+get('v24AssignWatch()');assert.equal(get('S.v24.camp.watchers.length'),0,'guard assignment must fail without a physical Watch Post');assert.equal(timeApi.runtime.plays.guard,0,'blocked guard assignment must not play a film');
+get(`(()=>{let guard=S.people.find(p=>p.alive&&/Knight|Footman|Captain|Sergeant|Swordsman/.test(String(p.role)+' '+String(p.rank)));guard.location=S.world.location;S.v24.camp.placements[1]={kind:'watch',name:'Watch Post',item:'camp_watch_kit',capacity:0};v24AssignWatch()})()`);assert(get('S.v24.camp.watchers.length')>0,'an established camp with a Watch Post must accept eligible guards');assert.equal(timeApi.runtime.plays.guard,1);assert.match(get('document.getElementById("modalRoot").innerHTML'),/guard-watch\.mp4/);assert.match(get('document.getElementById("modalRoot").innerHTML'),/guard-watch\.webp/);
 get('v24RemovePlot(1)');assert.equal(get('S.v24.camp.watchers.length'),0,'removing the final Watch Post must clear its guards');
-campClock=get('v14Now()');get('v24EstablishCamp()');assert.equal(get('v14Now()')-campClock,1);assert.equal(campApi.runtime.plays.strike,1);assert.match(get('document.getElementById("modalRoot").innerHTML'),/strike-camp\.mp4/);
+campClock=get('v14Now()');get('v24EstablishCamp()');assert.equal(get('v14Now()')-campClock,1);assert.equal(timeApi.runtime.plays.strike,1);assert.match(get('document.getElementById("modalRoot").innerHTML'),/strike-camp\.mp4/);
 get(`S.v24.camp.active=true;S.v24.camp.cookReady=true;v24Add('Carried Inventory','salted_meat',100);v24Add('Carried Inventory','firewood',20)`);
-campClock=get('v14Now()');get('v24CookMeal()');assert.equal(get('v14Now()')-campClock,2);assert.equal(campApi.runtime.plays.food,1);assert.match(get('document.getElementById("modalRoot").innerHTML'),/camp-food\.mp4/);
-campClock=get('v14Now()');get('v24SleepCamp()');assert.equal(get('v14Now()')-campClock,8);assert.equal(campApi.runtime.plays.sleep,1);assert.match(get('document.getElementById("modalRoot").innerHTML'),/camp-sleep\.mp4/);
+campClock=get('v14Now()');get('v24CookMeal()');assert.equal(get('v14Now()')-campClock,2);assert.equal(timeApi.runtime.plays.food,1);assert.match(get('document.getElementById("modalRoot").innerHTML'),/camp-food\.mp4/);
+const skyBeforeSleep=get('AetherionV1736Time.celestial()');
+const sleepSpan=(skyBeforeSleep.dawn-skyBeforeSleep.hour+24)%24||24;
+campClock=get('v14Now()');get('v24SleepCamp()');assert(Math.abs((get('v14Now()')-campClock)-sleepSpan)<1e-8);assert(Math.abs(get('S.world.hour')-skyBeforeSleep.dawn)<1e-8);assert.equal(timeApi.runtime.plays.sleep,1);assert.match(get('document.getElementById("modalRoot").innerHTML'),/camp-sleep\.mp4/);
+const awakeBeforeWait=get('AetherionV1736Time.state().awakeHours'),energyBeforeWait=get('S.player.energy');
+get('AetherionV1736Time.wait(1)');assert.equal(get('AetherionV1736Time.state().awakeHours'),awakeBeforeWait+1);assert(get('S.player.energy')<=energyBeforeWait);
 
-console.log(`v1.73.5 full-game runtime: ${scripts.length} packaged scripts, exact guard-film success routing, poster-backed autoplay, hidden native overlay, Watch Post gate, realistic action time, clone-save repair, full-body knight diversity, bounded renders, residents, recruits, production, views, and migration passed`);
+console.log(`v1.73.6 full-game runtime: ${scripts.length} packaged scripts, original sky dial, seasonal sleep-to-dawn, moon phases, waiting, wakefulness, exact guard-film success routing, poster-backed autoplay, Watch Post gate, clone-save repair, full-body knight diversity, bounded renders, residents, recruits, production, views, and migration passed`);

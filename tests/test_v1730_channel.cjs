@@ -12,18 +12,12 @@ vm.runInNewContext(fs.readFileSync('channel.js','utf8'),{window,document,globalT
 assert(feed,'channel did not deliver a release');
 assert.equal(feed.schema,2);
 assert.equal(feed.channel,'stable');
-assert.equal(feed.release.version,'1.73.5');
+assert.equal(feed.release.version,'1.73.6');
 assert.equal(feed.release.build,195);
 assert.equal(feed.release.minimumBundled,'1.72.6');
 assert.equal(feed.release.requiresApk,false);
 const expected=[
- ['v177-scroll-repair','patches/v1.72.7-scroll-repair.js'],
- ['v178-alexus-equipment-repair','patches/v1.72.8-alexus-equipment-repair.js'],
- ['v1710-alexus-original-body-map','patches/v1.72.10-alexus-original-body-map.js'],
- ['v1730-portrait-data','patches/v1.73.0-portrait-data.js'],
- ['v1730-living-portraits','patches/v1.73.0-living-portraits.js'],
- ['v1731-knight-diversity-performance','patches/v1.73.1-knight-diversity-performance.js'],
- ['v1735-camp-scenes','patches/v1.73.5-camp-scenes.js'],
+ ['v1736-stable-bundle','patches/v1.73.6-stable-bundle.js'],
 ];
 assert.deepEqual(Array.from(feed.release.modules,m=>m.id),expected.map(row=>row[0]));
 for(let i=0;i<expected.length;i++){
@@ -32,9 +26,9 @@ for(let i=0;i<expected.length;i++){
  assert.equal(module.sha256,crypto.createHash('sha256').update(source).digest('hex'));
 }
 assert.deepEqual(Object.keys(feed.release.assets),[],'the compact channel must not carry a 268-entry URL map');
-assert(feed.release.notes.some(note=>note.includes('supplied guard film')));
-assert(feed.release.notes.some(note=>note.includes('successful Watch Post assignment')));
-assert(feed.release.notes.some(note=>note.includes('autoplay and Skip-only')));
+assert(feed.release.notes.some(note=>note.includes('Aetherion sky dial')));
+assert(feed.release.notes.some(note=>note.includes('seasonal sleep-to-dawn')));
+assert(feed.release.notes.some(note=>note.includes('persistent wakefulness')));
 assert(fs.statSync('channel.js').size<=100000);
 assert(feed.release.modules.reduce((n,m)=>n+Buffer.byteLength(m.source),0)<1500000);
 
@@ -48,10 +42,10 @@ function element(){return{children:[],dataset:{},style:{},append(...items){this.
  const context=vm.createContext({...updaterWindow,window:updaterWindow,globalThis:updaterWindow,document:updaterDocument,localStorage,sessionStorage,location:updaterWindow.location,MutationObserver:class{observe(){}},console});
  vm.runInContext(fs.readFileSync('patches/v1.72.6-safe-updater.js','utf8'),context,{filename:'v1.72.6-safe-updater.js'});
  const verified=await updaterWindow.AetherionUpdater._test.verifyRelease(feed.release);
- assert.equal(verified.version,'1.73.5');
+ assert.equal(verified.version,'1.73.6');
  assert.equal(verified.build,195);
  const staged=updaterWindow.AetherionUpdater.stage(verified);
- assert.equal(staged.version,'1.73.5');
- assert.equal(updaterWindow.AetherionUpdater.state().staged,'1.73.5');
- console.log('v1.73.5 channel: seven exact modules verify and stage through the installed build-195 safe updater');
+ assert.equal(staged.version,'1.73.6');
+ assert.equal(updaterWindow.AetherionUpdater.state().staged,'1.73.6');
+ console.log('v1.73.6 channel: complete bundled update verifies and stages through the installed build-195 safe updater');
 })().catch(error=>{console.error(error);process.exitCode=1});

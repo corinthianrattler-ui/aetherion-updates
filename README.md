@@ -4,7 +4,27 @@ Public update channel for **Aetherion Reforged**.
 
 The Android staged updater reads `channel.js` from this repository through a MIME-safe GitHub Contents response. `manifest.json` records the exact sizes and SHA-256 hashes of managed payloads.
 
-## Current web update — 1.73.5 (Android build 195)
+## Current web update — 1.73.6 (Android build 195)
+
+Version 1.73.6 adds an original Aetherion time and moon system:
+
+- a compact top-right sky dial shows the exact time with a sun moving around
+  the horizon, a blood-red moon, its 28-day phase, and Dominus rose details
+- tapping the dial opens exact sunrise, sunset, moon illumination, energy, and
+  hours-awake information
+- waiting for one hour, three hours, dusk, or dawn advances the living world
+  without falsely counting as sleep
+- every Sleep action now lasts from the current time until the next seasonal
+  dawn, even when sleep begins during the day
+- staying awake causes escalating tiredness, sleep deprivation, energy and
+  movement penalties, followed by physical collapse damage after two days
+- camp shelter, sentries, security, moonlit visibility, morale, and the supplied
+  sleep scene remain part of overnight resolution
+
+All earlier portrait, knight, model, scrolling, camp-film, and guard-post repairs
+remain in the same checksum-verified update. No replacement APK is required.
+
+## Previous web update — 1.73.5 (Android build 195)
 
 Version 1.73.5 adds the supplied guard-watch scene:
 

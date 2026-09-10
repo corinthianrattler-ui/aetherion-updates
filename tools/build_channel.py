@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build the bounded stable channel for the v1.73.5 guard-film repair."""
+"""Build the bounded stable channel for the v1.73.6 sky-clock update."""
 
 from __future__ import annotations
 
@@ -10,13 +10,7 @@ import datetime as dt
 from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 PATCHES = [
-    ("v177-scroll-repair", ROOT / "patches" / "v1.72.7-scroll-repair.js"),
-    ("v178-alexus-equipment-repair", ROOT / "patches" / "v1.72.8-alexus-equipment-repair.js"),
-    ("v1710-alexus-original-body-map", ROOT / "patches" / "v1.72.10-alexus-original-body-map.js"),
-    ("v1730-portrait-data", ROOT / "patches" / "v1.73.0-portrait-data.js"),
-    ("v1730-living-portraits", ROOT / "patches" / "v1.73.0-living-portraits.js"),
-    ("v1731-knight-diversity-performance", ROOT / "patches" / "v1.73.1-knight-diversity-performance.js"),
-    ("v1735-camp-scenes", ROOT / "patches" / "v1.73.5-camp-scenes.js"),
+    ("v1736-stable-bundle", ROOT / "patches" / "v1.73.6-stable-bundle.js"),
 ]
 APK_NAME = "Aetherion_Reforged_v1.72.6_GAMEPLAY_REPAIR_FULL.apk"
 APK_URL = (
@@ -58,7 +52,7 @@ def main() -> None:
         "schema": 2,
         "channel": "stable",
         "release": {
-            "version": "1.73.5",
+            "version": "1.73.6",
             # This content update targets the verified v1.72.6 full APK. It
             # contains no native files and can stage on Android build 195.
             "build": 195,
@@ -69,7 +63,7 @@ def main() -> None:
             "apkSha256": APK_SHA256,
             "apkSize": APK_SIZE,
             "notes": [
-                "Adds the supplied guard film after successful Watch Post assignment; camp films remain autoplay and Skip-only.",
+                "Adds the Aetherion sky dial, seasonal sleep-to-dawn, moon phases, waiting, and persistent wakefulness consequences.",
             ],
             "modules": modules,
             # Image URLs are constructed from one fixed trusted repository root
@@ -100,7 +94,7 @@ def main() -> None:
     assert len(encoded) <= 100_000, f"channel exceeds the bundled safe-updater limit: {len(encoded):,} bytes"
     (ROOT / "channel.js").write_bytes(encoded)
     print(
-        f"channel.js: {len(modules)} v1.72.6-compatible modules, 280 portraits, 5 camp films, {len(encoded):,} bytes"
+        f"channel.js: {len(modules)} bundled v1.72.6-compatible module, 280 portraits, 5 camp films, {len(encoded):,} bytes"
     )
 
 

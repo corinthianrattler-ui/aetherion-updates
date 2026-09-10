@@ -7,15 +7,16 @@ const path=require('node:path');
 const vm=require('node:vm');
 
 const gameRoot=process.argv[2];
-if(!gameRoot){console.log('v1.73.1 full-game runtime skipped (pass an extracted assets/game path)');process.exit(0)}
+if(!gameRoot){console.log('v1.73.3 full-game runtime skipped (pass an extracted assets/game path)');process.exit(0)}
 const index=fs.readFileSync(path.join(gameRoot,'index.html'),'utf8');
 const scripts=[...index.matchAll(/<script[^>]+src=["']([^"']+)/g)].map(match=>match[1].split('?')[0]).filter(src=>!src.startsWith('http'));
 
 function storage(){const rows=new Map();return{getItem:key=>rows.has(key)?rows.get(key):null,setItem:(key,value)=>rows.set(key,String(value)),removeItem:key=>rows.delete(key),clear:()=>rows.clear()}}
 function element(){return{style:{setProperty(){},removeProperty(){}},dataset:{},classList:{add(){},remove(){},toggle(){},contains(){return false}},children:[],append(){},appendChild(){},prepend(){},remove(){},replaceChildren(){},insertAdjacentHTML(){},addEventListener(){},removeEventListener(){},setAttribute(){},getAttribute(){return null},querySelector(){return null},querySelectorAll(){return[]},closest(){return null},getContext(){return null},play(){return Promise.resolve()},pause(){},load(){},focus(){},click(){},innerHTML:'',textContent:'',value:'',checked:false,disabled:false}}
+let randomSeed=0x1733cafe;const testMath=Object.create(Math);testMath.random=()=>{randomSeed=(Math.imul(randomSeed,1664525)+1013904223)>>>0;return randomSeed/4294967296};
 const elements=new Map(),byId=id=>{if(!elements.has(id))elements.set(id,element());return elements.get(id)};
 const document={readyState:'loading',baseURI:'https://appassets.androidplatform.net/assets/game/index.html',head:element(),body:element(),documentElement:element(),createElement:element,createTextNode:value=>({textContent:String(value)}),getElementById:byId,querySelector(){return null},querySelectorAll(){return[]},addEventListener(){},removeEventListener(){}};
-const sandbox={console,document,localStorage:storage(),sessionStorage:storage(),navigator:{userAgent:'aetherion-integration-test',vibrate(){}},location:{href:document.baseURI,protocol:'https:',hostname:'appassets.androidplatform.net',reload(){}},performance:{now:()=>0},crypto:crypto.webcrypto,TextEncoder,TextDecoder,URL,Blob,Response,Request,Headers,AbortController,structuredClone,atob:value=>Buffer.from(String(value),'base64').toString('binary'),btoa:value=>Buffer.from(String(value),'binary').toString('base64'),setTimeout:()=>0,clearTimeout(){},setInterval:()=>0,clearInterval(){},requestAnimationFrame:()=>0,cancelAnimationFrame(){},matchMedia:()=>({matches:false,addEventListener(){}}),fetch:async()=>new Response('',{status:404}),Image:class{},Audio:class{play(){return Promise.resolve()}pause(){}},MutationObserver:class{observe(){}disconnect(){}},ResizeObserver:class{observe(){}disconnect(){}},addEventListener(){},removeEventListener(){},confirm:()=>true,speechSynthesis:{getVoices(){return[]},addEventListener(){},cancel(){},speak(){}},SpeechSynthesisUtterance:class{}};
+const sandbox={console,Math:testMath,document,localStorage:storage(),sessionStorage:storage(),navigator:{userAgent:'aetherion-integration-test',vibrate(){}},location:{href:document.baseURI,protocol:'https:',hostname:'appassets.androidplatform.net',reload(){}},performance:{now:()=>0},crypto:crypto.webcrypto,TextEncoder,TextDecoder,URL,Blob,Response,Request,Headers,AbortController,structuredClone,atob:value=>Buffer.from(String(value),'base64').toString('binary'),btoa:value=>Buffer.from(String(value),'binary').toString('base64'),setTimeout:()=>0,clearTimeout(){},setInterval:()=>0,clearInterval(){},requestAnimationFrame:()=>0,cancelAnimationFrame(){},matchMedia:()=>({matches:false,addEventListener(){}}),fetch:async()=>new Response('',{status:404}),Image:class{},Audio:class{play(){return Promise.resolve()}pause(){}},MutationObserver:class{observe(){}disconnect(){}},ResizeObserver:class{observe(){}disconnect(){}},addEventListener(){},removeEventListener(){},confirm:()=>true,speechSynthesis:{getVoices(){return[]},addEventListener(){},cancel(){},speak(){}},SpeechSynthesisUtterance:class{}};
 sandbox.window=sandbox;sandbox.globalThis=sandbox;sandbox.self=sandbox;
 const context=vm.createContext(sandbox);
 
@@ -23,18 +24,18 @@ for(const relative of scripts){const target=path.join(gameRoot,relative);assert(
 vm.runInContext(fs.readFileSync('patches/v1.73.0-portrait-data.js','utf8'),context,{filename:'v1.73.0-portrait-data.js'});
 vm.runInContext(fs.readFileSync('patches/v1.73.0-living-portraits.js','utf8'),context,{filename:'v1.73.0-living-portraits.js'});
 vm.runInContext(fs.readFileSync('patches/v1.73.1-knight-diversity-performance.js','utf8'),context,{filename:'v1.73.1-knight-diversity-performance.js'});
-vm.runInContext(fs.readFileSync('patches/v1.73.2-camp-scenes.js','utf8'),context,{filename:'v1.73.2-camp-scenes.js'});
+vm.runInContext(fs.readFileSync('patches/v1.73.3-camp-scenes.js','utf8'),context,{filename:'v1.73.3-camp-scenes.js'});
 
 const api=sandbox.AetherionV173LivingPortraits;
 const knightApi=sandbox.AetherionV1731KnightDiversity;
-const campApi=sandbox.AetherionV1732CampScenes;
+const campApi=sandbox.AetherionV1733CampScenes;
 assert(api);
 assert(knightApi);
 assert(campApi);
 assert.equal(api.registry.length,268);
 assert.equal(knightApi.registry.length,16);
 assert.equal(knightApi.generated.length,12);
-assert.deepEqual(Object.fromEntries(Object.entries(campApi.scenes).map(([key,row])=>[key,row.file])),{make:'make-camp.mp4',strike:'strike-camp.mp4',food:'camp-food.mp4',sleep:'camp-sleep.mp4'});
+assert.deepEqual(Object.fromEntries(Object.entries(campApi.scenes)),{make:'make-camp.mp4',strike:'strike-camp.mp4',food:'camp-food.mp4',sleep:'camp-sleep.mp4'});
 vm.runInContext('S=makeStartState()',context);
 const get=source=>vm.runInContext(source,context);
 assert.equal(get('S.meta.v173LivingPortraits.version'),'1.73.0');
@@ -164,10 +165,10 @@ assert.equal(api.auditState(get('S')).wrong.length,0);
 
 get(`S.v24.camp.active=false;S.v24.camp.placements[0]={kind:'military',name:'Ten-Man Tent',item:'military_ten_man_tent',capacity:10};S.v24.camp.cookReady=true`);
 assert.match(get('v24CampMap()'),/MAKE CAMP/);
-get('v24EstablishCamp()');assert.equal(campApi.runtime.plays.make,1);assert.match(get('document.getElementById("modalRoot").innerHTML'),/make-camp\.mp4/);assert.match(get('v24CampMap()'),/TAKE DOWN CAMP/);
-get('v24EstablishCamp()');assert.equal(campApi.runtime.plays.strike,1);assert.match(get('document.getElementById("modalRoot").innerHTML'),/strike-camp\.mp4/);
+let campClock=get('v14Now()');get('v24EstablishCamp()');assert.equal(get('v14Now()')-campClock,2);assert.equal(campApi.runtime.plays.make,1);let campScene=get('document.getElementById("modalRoot").innerHTML');assert.match(campScene,/make-camp\.mp4/);assert.match(campScene,/>SKIP<\/button>/);assert.doesNotMatch(campScene,/\scontrols(?:\s|=|>)/);assert.doesNotMatch(campScene,/>PLAY<|RETURN TO CAMP/);assert.match(get('v24CampMap()'),/TAKE DOWN CAMP/);
+campClock=get('v14Now()');get('v24EstablishCamp()');assert.equal(get('v14Now()')-campClock,1);assert.equal(campApi.runtime.plays.strike,1);assert.match(get('document.getElementById("modalRoot").innerHTML'),/strike-camp\.mp4/);
 get(`S.v24.camp.active=true;S.v24.camp.cookReady=true;v24Add('Carried Inventory','salted_meat',100);v24Add('Carried Inventory','firewood',20)`);
-get('v24CookMeal()');assert.equal(campApi.runtime.plays.food,1);assert.match(get('document.getElementById("modalRoot").innerHTML'),/camp-food\.mp4/);
-get('v24SleepCamp()');assert.equal(campApi.runtime.plays.sleep,1);assert.match(get('document.getElementById("modalRoot").innerHTML'),/camp-sleep\.mp4/);
+campClock=get('v14Now()');get('v24CookMeal()');assert.equal(get('v14Now()')-campClock,2);assert.equal(campApi.runtime.plays.food,1);assert.match(get('document.getElementById("modalRoot").innerHTML'),/camp-food\.mp4/);
+campClock=get('v14Now()');get('v24SleepCamp()');assert.equal(get('v14Now()')-campClock,8);assert.equal(campApi.runtime.plays.sleep,1);assert.match(get('document.getElementById("modalRoot").innerHTML'),/camp-sleep\.mp4/);
 
-console.log(`v1.73.2 full-game runtime: ${scripts.length} packaged scripts, camp films, clone-save repair, full-body knight diversity, bounded renders, residents, recruits, production, views, and migration passed`);
+console.log(`v1.73.3 full-game runtime: ${scripts.length} packaged scripts, control-free camp films, realistic action time, clone-save repair, full-body knight diversity, bounded renders, residents, recruits, production, views, and migration passed`);

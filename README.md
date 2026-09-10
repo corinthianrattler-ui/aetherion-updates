@@ -4,7 +4,21 @@ Public update channel for **Aetherion Reforged**.
 
 The Android staged updater reads `channel.js` from this repository through a MIME-safe GitHub Contents response. `manifest.json` records the exact sizes and SHA-256 hashes of managed payloads.
 
-## Current web update — 1.73.2 (Android build 195)
+## Current web update — 1.73.3 (Android build 195)
+
+Version 1.73.3 makes each camp film a short, automatic in-game scene:
+
+- removes the browser's pause, play, seek, fullscreen, and download controls
+- blocks touch and long-press interaction with the video itself
+- keeps only a small **Skip** button and returns to the interactive camp when
+  the film ends or is skipped
+- keeps realistic action time: two hours to make camp, one hour to take it down,
+  two hours to cook the company meal, and eight hours to sleep
+- blocked actions consume no time and play no film
+
+No content or save progress is removed, and no replacement APK is required.
+
+## Previous web update — 1.73.2 (Android build 195)
 
 Version 1.73.2 connects four supplied camp films to four different successful
 camp actions:

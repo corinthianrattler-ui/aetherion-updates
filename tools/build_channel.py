@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build the bounded stable channel for the v1.73.2 camp-film update."""
+"""Build the bounded stable channel for the v1.73.3 camp-film UI repair."""
 
 from __future__ import annotations
 
@@ -16,13 +16,15 @@ PATCHES = [
     ("v1730-portrait-data", ROOT / "patches" / "v1.73.0-portrait-data.js"),
     ("v1730-living-portraits", ROOT / "patches" / "v1.73.0-living-portraits.js"),
     ("v1731-knight-diversity-performance", ROOT / "patches" / "v1.73.1-knight-diversity-performance.js"),
-    ("v1732-camp-scenes", ROOT / "patches" / "v1.73.2-camp-scenes.js"),
+    ("v1733-camp-scenes", ROOT / "patches" / "v1.73.3-camp-scenes.js"),
 ]
 APK_NAME = "Aetherion_Reforged_v1.72.6_GAMEPLAY_REPAIR_FULL.apk"
 APK_URL = (
     "https://github.com/corinthianrattler-ui/aetherion-updates/"
     f"releases/download/v1.72.6/{APK_NAME}"
 )
+APK_SHA256 = "2fd692cb05cb163e5bde55abfae8789c3131e15e956831921abe07f905f2c645"
+APK_SIZE = 499_039_030
 
 
 def file_sha256(path: Path) -> str:
@@ -35,10 +37,13 @@ def file_sha256(path: Path) -> str:
 
 def main() -> None:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--apk", type=Path, required=True)
+    parser.add_argument("--apk", type=Path)
     args = parser.parse_args()
-    if not args.apk.is_file():
-        raise FileNotFoundError(args.apk)
+    if args.apk is not None:
+        if not args.apk.is_file():
+            raise FileNotFoundError(args.apk)
+        assert args.apk.stat().st_size == APK_SIZE, "verified APK size changed"
+        assert file_sha256(args.apk) == APK_SHA256, "verified APK hash changed"
     modules = []
     for module_id, path in PATCHES:
         source = path.read_text(encoding="utf-8")
@@ -53,7 +58,7 @@ def main() -> None:
         "schema": 2,
         "channel": "stable",
         "release": {
-            "version": "1.73.2",
+            "version": "1.73.3",
             # This content update targets the verified v1.72.6 full APK. It
             # contains no native files and can stage on Android build 195.
             "build": 195,
@@ -61,12 +66,12 @@ def main() -> None:
             "releasedAt": dt.datetime.now(dt.timezone.utc).replace(microsecond=0).isoformat().replace("+00:00", "Z"),
             "requiresApk": False,
             "apkUrl": APK_URL,
-            "apkSha256": file_sha256(args.apk),
-            "apkSize": args.apk.stat().st_size,
+            "apkSha256": APK_SHA256,
+            "apkSize": APK_SIZE,
             "notes": [
-                "Adds four distinct camp films: Make Camp, Take Down Camp, Cook Company Meal, and Sleep 8 Hours.",
-                "Blocked actions play no film; media failure never changes a completed action or save state.",
-                "Retains v1.73.1 knight diversity and every earlier character, job, item, mechanic, location, story, model, voice, image, and save. No APK or reset is required.",
+                "Camp films autoplay without browser pause, play, seek, fullscreen, or download controls; only a small Skip button remains.",
+                "Make Camp takes 2 hours, Take Down Camp 1 hour, Cook 2 hours, and Sleep 8 hours; blocked actions still do nothing.",
+                "Retains the four camp films, knight diversity, all earlier content, and every save. No APK or reset is required.",
             ],
             "modules": modules,
             # Image URLs are constructed from one fixed trusted repository root
@@ -94,7 +99,7 @@ def main() -> None:
         "})();\n"
     )
     encoded = output.encode()
-    assert len(encoded) <= 100_000, "channel exceeds the bundled safe-updater limit"
+    assert len(encoded) <= 100_000, f"channel exceeds the bundled safe-updater limit: {len(encoded):,} bytes"
     (ROOT / "channel.js").write_bytes(encoded)
     print(
         f"channel.js: {len(modules)} v1.72.6-compatible modules, 280 portraits, 4 camp films, {len(encoded):,} bytes"

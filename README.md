@@ -4,7 +4,21 @@ Public update channel for **Aetherion Reforged**.
 
 The Android staged updater reads `channel.js` from this repository through a MIME-safe GitHub Contents response. `manifest.json` records the exact sizes and SHA-256 hashes of managed payloads.
 
-## Current web update — 1.73.4 (Android build 195)
+## Current web update — 1.73.5 (Android build 195)
+
+Version 1.73.5 adds the supplied guard-watch scene:
+
+- `guard-watch.mp4` plays only after **Assign Guard Watch** succeeds
+- the camp must be established, a physical Watch Post must exist, and an
+  eligible fighting retainer must be present
+- failed guard assignments play no film
+- the scene shares the same first-frame poster, automatic playback, hidden
+  native controls, and small **Skip** button as the other camp scenes
+
+All earlier content, saves, camp timing, and Watch Post cleanup remain intact.
+No replacement APK is required.
+
+## Previous web update — 1.73.4 (Android build 195)
 
 Version 1.73.4 repairs Android camp playback and guard-post logic:
 
@@ -16,8 +30,8 @@ Version 1.73.4 repairs Android camp playback and guard-post logic:
   Watch Post
 - removing the final Watch Post clears its now-invalid guard assignment
 
-The four supplied clips remain mapped only to Make Camp, Take Down Camp, Cook,
-and Sleep. There is no separate guard clip in the supplied set.
+The original four clips remain mapped only to Make Camp, Take Down Camp, Cook,
+and Sleep.
 
 ## Previous web update — 1.73.3 (Android build 195)
 

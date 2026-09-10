@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate the four supplied v1.73.2 camp-action films."""
+"""Validate the five supplied camp-action films and matching posters."""
 
 from __future__ import annotations
 
@@ -12,7 +12,7 @@ from PIL import Image
 
 ROOT = Path(__file__).resolve().parents[1]
 MEDIA = ROOT / "custom" / "camp-scenes" / "v1732"
-EXPECTED = {"make-camp.mp4", "strike-camp.mp4", "camp-food.mp4", "camp-sleep.mp4"}
+EXPECTED = {"make-camp.mp4", "strike-camp.mp4", "camp-food.mp4", "camp-sleep.mp4", "guard-watch.mp4"}
 POSTERS = {name.replace(".mp4", ".webp") for name in EXPECTED}
 
 
@@ -32,7 +32,7 @@ def main() -> None:
         assert len(audio) == 1, path
         assert 5.9 <= float(probe["format"]["duration"]) <= 6.2, path
         hashes.add(hashlib.sha256(path.read_bytes()).hexdigest())
-    assert len(hashes) == 4
+    assert len(hashes) == 5
     posters = sorted(MEDIA.glob("*.webp"))
     assert {path.name for path in posters} == POSTERS
     poster_hashes = set()
@@ -41,8 +41,8 @@ def main() -> None:
             assert image.format == "WEBP" and image.size == (672, 448), path
             image.load()
         poster_hashes.add(hashlib.sha256(path.read_bytes()).hexdigest())
-    assert len(poster_hashes) == 4
-    print("v1.73.4 camp media: 4 distinct six-second H.264/AAC films and 4 matching 672x448 WebP posters passed")
+    assert len(poster_hashes) == 5
+    print("v1.73.5 camp media: 5 distinct six-second H.264/AAC films and 5 matching 672x448 WebP posters passed")
 
 
 if __name__ == "__main__":

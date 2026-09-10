@@ -32,7 +32,7 @@ def main() -> None:
     }
     assert manifest["schema"] == 1
     assert manifest["enabled"] is True
-    assert manifest["latest"]["game_version"] == "1.73.4"
+    assert manifest["latest"]["game_version"] == "1.73.5"
     assert manifest["latest"]["android_version_code"] == 195
     assert manifest["latest"]["min_updater_schema"] <= 1
     apk = manifest["android_apk"]
@@ -71,6 +71,8 @@ def main() -> None:
         "custom/camp-scenes/v1732/camp-food.webp",
         "custom/camp-scenes/v1732/camp-sleep.mp4",
         "custom/camp-scenes/v1732/camp-sleep.webp",
+        "custom/camp-scenes/v1732/guard-watch.mp4",
+        "custom/camp-scenes/v1732/guard-watch.webp",
         "custom/camp-scenes/v1732/make-camp.mp4",
         "custom/camp-scenes/v1732/make-camp.webp",
         "custom/camp-scenes/v1732/strike-camp.mp4",
@@ -144,7 +146,7 @@ def main() -> None:
         "custom/npc-portraits/v1731/registry.json",
         "patches/v1.73.1-knight-diversity-performance.js",
         *camp_paths_v1732,
-        "patches/v1.73.4-camp-scenes.js",
+        "patches/v1.73.5-camp-scenes.js",
     ]
     assert len({payload["path"] for payload in payloads}) == len(payloads)
 
@@ -199,6 +201,9 @@ def main() -> None:
         assert payload["restart_required"] is True
 
     assert manifest["save_policy"]["preserve_always"] is True
+    assert "Version 1.73.5 adds the supplied guard-watch film" in manifest["notes"]
+    assert "only after a successful guard assignment" in manifest["notes"]
+    assert "Failed guard requirements play no film" in manifest["notes"]
     assert "Version 1.73.4 gives every camp film a matching first-frame poster" in manifest["notes"]
     assert "suppresses Android's native gray play overlay" in manifest["notes"]
     assert "falls back to muted autoplay" in manifest["notes"]
@@ -246,7 +251,7 @@ def main() -> None:
     assert "zero portrait-record checks" in manifest["notes"]
     assert "110 new lore-matched" in manifest["notes"]
     assert "Quartermaster Halric Morn" in manifest["notes"]
-    print("manifest.json: 1.73.4 payload sizes, release URLs, and SHA-256 hashes passed")
+    print("manifest.json: 1.73.5 payload sizes, release URLs, and SHA-256 hashes passed")
 
 
 if __name__ == "__main__":

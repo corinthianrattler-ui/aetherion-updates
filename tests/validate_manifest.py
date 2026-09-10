@@ -32,7 +32,7 @@ def main() -> None:
     }
     assert manifest["schema"] == 1
     assert manifest["enabled"] is True
-    assert manifest["latest"]["game_version"] == "1.73.1"
+    assert manifest["latest"]["game_version"] == "1.73.2"
     assert manifest["latest"]["android_version_code"] == 195
     assert manifest["latest"]["min_updater_schema"] <= 1
     apk = manifest["android_apk"]
@@ -58,9 +58,20 @@ def main() -> None:
         if payload["path"].startswith("custom/npc-portraits/v1731/")
         and payload["path"].endswith(".webp")
     ]
+    camp_paths_v1732 = [
+        payload["path"] for payload in payloads
+        if payload["path"].startswith("custom/camp-scenes/v1732/")
+        and payload["path"].endswith(".mp4")
+    ]
     assert len(portrait_paths) == 111
     assert len(portrait_paths_v173) == 268
     assert len(portrait_paths_v1731) == 12
+    assert camp_paths_v1732 == [
+        "custom/camp-scenes/v1732/camp-food.mp4",
+        "custom/camp-scenes/v1732/camp-sleep.mp4",
+        "custom/camp-scenes/v1732/make-camp.mp4",
+        "custom/camp-scenes/v1732/strike-camp.mp4",
+    ]
     assert [payload["path"] for payload in payloads] == [
         "patches/v1.59.2-dominus-art-fix.js",
         "assets/v109/valkorion_final.glb",
@@ -128,6 +139,8 @@ def main() -> None:
         *portrait_paths_v1731,
         "custom/npc-portraits/v1731/registry.json",
         "patches/v1.73.1-knight-diversity-performance.js",
+        *camp_paths_v1732,
+        "patches/v1.73.2-camp-scenes.js",
     ]
     assert len({payload["path"] for payload in payloads}) == len(payloads)
 
@@ -182,6 +195,9 @@ def main() -> None:
         assert payload["restart_required"] is True
 
     assert manifest["save_policy"]["preserve_always"] is True
+    assert "Version 1.73.2 adds four distinct camp films" in manifest["notes"]
+    assert "Make Camp, Take Down Camp, Cook Company Meal, and Sleep 8 Hours" in manifest["notes"]
+    assert "blocked actions do not play a film" in manifest["notes"]
     assert "Version 1.73.1 adds 12 new individually generated 2:3 full-body bannerless-knight portraits" in manifest["notes"]
     assert "starting twenty mounted retainers across ten compatible full-body identities" in manifest["notes"]
     assert "no image used more than three times" in manifest["notes"]
@@ -217,7 +233,7 @@ def main() -> None:
     assert "zero portrait-record checks" in manifest["notes"]
     assert "110 new lore-matched" in manifest["notes"]
     assert "Quartermaster Halric Morn" in manifest["notes"]
-    print("manifest.json: 1.73.1 payload sizes, release URLs, and SHA-256 hashes passed")
+    print("manifest.json: 1.73.2 payload sizes, release URLs, and SHA-256 hashes passed")
 
 
 if __name__ == "__main__":

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build the bounded stable channel for the v1.73.1 knight-diversity update."""
+"""Build the bounded stable channel for the v1.73.2 camp-film update."""
 
 from __future__ import annotations
 
@@ -16,6 +16,7 @@ PATCHES = [
     ("v1730-portrait-data", ROOT / "patches" / "v1.73.0-portrait-data.js"),
     ("v1730-living-portraits", ROOT / "patches" / "v1.73.0-living-portraits.js"),
     ("v1731-knight-diversity-performance", ROOT / "patches" / "v1.73.1-knight-diversity-performance.js"),
+    ("v1732-camp-scenes", ROOT / "patches" / "v1.73.2-camp-scenes.js"),
 ]
 APK_NAME = "Aetherion_Reforged_v1.72.6_GAMEPLAY_REPAIR_FULL.apk"
 APK_URL = (
@@ -52,7 +53,7 @@ def main() -> None:
         "schema": 2,
         "channel": "stable",
         "release": {
-            "version": "1.73.1",
+            "version": "1.73.2",
             # This content update targets the verified v1.72.6 full APK. It
             # contains no native files and can stage on Android build 195.
             "build": 195,
@@ -63,18 +64,9 @@ def main() -> None:
             "apkSha256": file_sha256(args.apk),
             "apkSize": args.apk.stat().st_size,
             "notes": [
-                "Adds 12 new, individually generated 2:3 full-body bannerless-knight portraits, with young and older men and women, distinct faces, builds, hair, armor, weapons, and poses.",
-                "Repairs the starting twenty-person mounted retinue on existing saves, replacing repeated dynasty headshots with ten compatible full-body identities; no one portrait appears more than three times in the age-weighted starting roster.",
-                "Matches every repaired knight to stored gender and visual age, retains the four compatible full-body bannerless knights from v1.73.0, and preserves canonical, named, user-supplied, and custom-companion art.",
-                "Displays curated people art uncropped at a 2:3 ratio and lazily decodes roster thumbnails, so the list shows the full figure instead of a large face crop.",
-                "Removes redundant per-card and legacy whole-world identity repairs from ordinary redraws, preventing older upgrade code from changing curated art back to dynasty heads; settlement, labor, surgeon, and recruit structure setup is bounded to one pass per save version.",
-                "Does not remove characters, jobs, items, mechanics, locations, story, save progress, or other content; only redundant repeated setup and render work is bypassed.",
-                "Adds 268 new labeled full-body portraits to the existing 111-image curated library, producing 379 reviewed choices without duplicating the smaller recruitable catalog.",
-                "Teen, toddler, and baby portraits appear only as ambient household members in People Here, family records, and daily schedules. They are never workers or recruitable applicants.",
-                "Retains v1.73.0's bankers, recruit jobs, settlement residents, and village apiaries, goat herds, and poultry flocks with time, weather, production, market, health, and prosperity mechanics.",
-                "Portrait files load from this trusted GitHub repository and fall back to packaged dynasty art if offline or unavailable, so a missing network image cannot break a person view.",
-                "Retains Lady Alexus's original authored body map and gown mapping, the v1.72.8 equipment-state repair, and the v1.72.7 vertical-scrolling repair.",
-                "This is a staged script-and-portrait update for the verified v1.72.6 APK; it uses the original packaged GLB unchanged and requires no replacement APK, model, or save reset.",
+                "Adds four distinct camp films: Make Camp, Take Down Camp, Cook Company Meal, and Sleep 8 Hours.",
+                "Blocked actions play no film; media failure never changes a completed action or save state.",
+                "Retains v1.73.1 knight diversity and every earlier character, job, item, mechanic, location, story, model, voice, image, and save. No APK or reset is required.",
             ],
             "modules": modules,
             # Image URLs are constructed from one fixed trusted repository root
@@ -105,7 +97,7 @@ def main() -> None:
     assert len(encoded) <= 100_000, "channel exceeds the bundled safe-updater limit"
     (ROOT / "channel.js").write_bytes(encoded)
     print(
-        f"channel.js: {len(modules)} v1.72.6-compatible modules, 280 lazy portrait assets, {len(encoded):,} bytes"
+        f"channel.js: {len(modules)} v1.72.6-compatible modules, 280 portraits, 4 camp films, {len(encoded):,} bytes"
     )
 
 

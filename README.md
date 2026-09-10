@@ -4,7 +4,25 @@ Public update channel for **Aetherion Reforged**.
 
 The Android staged updater reads `channel.js` from this repository through a MIME-safe GitHub Contents response. `manifest.json` records the exact sizes and SHA-256 hashes of managed payloads.
 
-## Current web update — 1.73.1 (Android build 195)
+## Current web update — 1.73.2 (Android build 195)
+
+Version 1.73.2 connects four supplied camp films to four different successful
+camp actions:
+
+- `make-camp.mp4` plays only when the planned camp is successfully established
+- `strike-camp.mp4` plays only when an active camp is taken down and packed
+- `camp-food.mp4` plays only after a company meal is successfully cooked
+- `camp-sleep.mp4` plays only after the company completes eight hours of camp sleep
+- the combined camp toggle now reads **Make Camp** or **Take Down Camp** according
+  to the actual state
+- failed requirements never trigger a film; media failure leaves the completed
+  action and save state intact
+
+The four files retain their supplied H.264 video, AAC audio, 672×448 frame, and
+approximately six-second runtime. This staged update preserves every earlier
+system and requires no replacement APK or save reset.
+
+## Previous web update — 1.73.1 (Android build 195)
 
 Version 1.73.1 fixes the repeated cropped-head knight roster without replacing
 the verified v1.72.6 APK or clearing saves:

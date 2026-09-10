@@ -23,14 +23,18 @@ for(const relative of scripts){const target=path.join(gameRoot,relative);assert(
 vm.runInContext(fs.readFileSync('patches/v1.73.0-portrait-data.js','utf8'),context,{filename:'v1.73.0-portrait-data.js'});
 vm.runInContext(fs.readFileSync('patches/v1.73.0-living-portraits.js','utf8'),context,{filename:'v1.73.0-living-portraits.js'});
 vm.runInContext(fs.readFileSync('patches/v1.73.1-knight-diversity-performance.js','utf8'),context,{filename:'v1.73.1-knight-diversity-performance.js'});
+vm.runInContext(fs.readFileSync('patches/v1.73.2-camp-scenes.js','utf8'),context,{filename:'v1.73.2-camp-scenes.js'});
 
 const api=sandbox.AetherionV173LivingPortraits;
 const knightApi=sandbox.AetherionV1731KnightDiversity;
+const campApi=sandbox.AetherionV1732CampScenes;
 assert(api);
 assert(knightApi);
+assert(campApi);
 assert.equal(api.registry.length,268);
 assert.equal(knightApi.registry.length,16);
 assert.equal(knightApi.generated.length,12);
+assert.deepEqual(Object.fromEntries(Object.entries(campApi.scenes).map(([key,row])=>[key,row.file])),{make:'make-camp.mp4',strike:'strike-camp.mp4',food:'camp-food.mp4',sleep:'camp-sleep.mp4'});
 vm.runInContext('S=makeStartState()',context);
 const get=source=>vm.runInContext(source,context);
 assert.equal(get('S.meta.v173LivingPortraits.version'),'1.73.0');
@@ -158,4 +162,12 @@ assert(knightApi.runtime.legacyUpgradeSkips>=3);
 assert(knightApi.runtime.commerceEnsureSkips>=2);
 assert.equal(api.auditState(get('S')).wrong.length,0);
 
-console.log(`v1.73.1 full-game runtime: ${scripts.length} packaged scripts, clone-save repair, full-body knight diversity, bounded renders, residents, recruits, production, views, and migration passed`);
+get(`S.v24.camp.active=false;S.v24.camp.placements[0]={kind:'military',name:'Ten-Man Tent',item:'military_ten_man_tent',capacity:10};S.v24.camp.cookReady=true`);
+assert.match(get('v24CampMap()'),/MAKE CAMP/);
+get('v24EstablishCamp()');assert.equal(campApi.runtime.plays.make,1);assert.match(get('document.getElementById("modalRoot").innerHTML'),/make-camp\.mp4/);assert.match(get('v24CampMap()'),/TAKE DOWN CAMP/);
+get('v24EstablishCamp()');assert.equal(campApi.runtime.plays.strike,1);assert.match(get('document.getElementById("modalRoot").innerHTML'),/strike-camp\.mp4/);
+get(`S.v24.camp.active=true;S.v24.camp.cookReady=true;v24Add('Carried Inventory','salted_meat',100);v24Add('Carried Inventory','firewood',20)`);
+get('v24CookMeal()');assert.equal(campApi.runtime.plays.food,1);assert.match(get('document.getElementById("modalRoot").innerHTML'),/camp-food\.mp4/);
+get('v24SleepCamp()');assert.equal(campApi.runtime.plays.sleep,1);assert.match(get('document.getElementById("modalRoot").innerHTML'),/camp-sleep\.mp4/);
+
+console.log(`v1.73.2 full-game runtime: ${scripts.length} packaged scripts, camp films, clone-save repair, full-body knight diversity, bounded renders, residents, recruits, production, views, and migration passed`);

@@ -4,7 +4,30 @@ Public update channel for **Aetherion Reforged**.
 
 The Android staged updater reads `channel.js` from this repository through a MIME-safe GitHub Contents response. `manifest.json` records the exact sizes and SHA-256 hashes of managed payloads.
 
-## Current web update — 1.73.0 (Android build 195)
+## Current web update — 1.73.1 (Android build 195)
+
+Version 1.73.1 fixes the repeated cropped-head knight roster without replacing
+the verified v1.72.6 APK or clearing saves:
+
+- adds 12 new 512×768 full-body bannerless knights: young and older men and
+  women with distinct faces, builds, hair, armor, weapons, and poses
+- repairs the existing twenty mounted retainers once, balancing them across ten
+  compatible full-body identities instead of two repeated headshots
+- matches stored gender and visual age and keeps a bounded amount of reuse when
+  an age group is larger than its portrait pool
+- preserves canonical, named, user-supplied, and custom-companion art
+- shows curated roster art uncropped at 2:3 and lazily decodes off-screen cards
+- removes per-card and legacy whole-world identity repairs from ordinary
+  redraws, preventing older code from changing curated art back to headshots
+- runs settlement, labor, surgeon, and recruit structure setup once per save
+  version instead of repeating the same work during daily ticks and services
+- removes no characters, roles, jobs, mechanics, items, locations, story, or
+  save progress
+
+The root-cause analysis, image provenance, compatibility rules, and verification
+results are recorded in `AUDIT_v1.73.1.md`.
+
+## Previous web update — 1.73.0 (Android build 195)
 
 Version 1.73.0 expands the living population without replacing the verified
 v1.72.6 APK or clearing saves:

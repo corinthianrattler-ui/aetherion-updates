@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build the bounded stable channel for the v1.73.0 living portrait update."""
+"""Build the bounded stable channel for the v1.73.1 knight-diversity update."""
 
 from __future__ import annotations
 
@@ -15,6 +15,7 @@ PATCHES = [
     ("v1710-alexus-original-body-map", ROOT / "patches" / "v1.72.10-alexus-original-body-map.js"),
     ("v1730-portrait-data", ROOT / "patches" / "v1.73.0-portrait-data.js"),
     ("v1730-living-portraits", ROOT / "patches" / "v1.73.0-living-portraits.js"),
+    ("v1731-knight-diversity-performance", ROOT / "patches" / "v1.73.1-knight-diversity-performance.js"),
 ]
 APK_NAME = "Aetherion_Reforged_v1.72.6_GAMEPLAY_REPAIR_FULL.apk"
 APK_URL = (
@@ -51,7 +52,7 @@ def main() -> None:
         "schema": 2,
         "channel": "stable",
         "release": {
-            "version": "1.73.0",
+            "version": "1.73.1",
             # This content update targets the verified v1.72.6 full APK. It
             # contains no native files and can stage on Android build 195.
             "build": 195,
@@ -62,21 +63,17 @@ def main() -> None:
             "apkSha256": file_sha256(args.apk),
             "apkSize": args.apk.stat().st_size,
             "notes": [
+                "Adds 12 new, individually generated 2:3 full-body bannerless-knight portraits, with young and older men and women, distinct faces, builds, hair, armor, weapons, and poses.",
+                "Repairs the starting twenty-person mounted retinue on existing saves, replacing repeated dynasty headshots with ten compatible full-body identities; no one portrait appears more than three times in the age-weighted starting roster.",
+                "Matches every repaired knight to stored gender and visual age, retains the four compatible full-body bannerless knights from v1.73.0, and preserves canonical, named, user-supplied, and custom-companion art.",
+                "Displays curated people art uncropped at a 2:3 ratio and lazily decodes roster thumbnails, so the list shows the full figure instead of a large face crop.",
+                "Removes redundant per-card and legacy whole-world identity repairs from ordinary redraws, preventing older upgrade code from changing curated art back to dynasty heads; settlement, labor, surgeon, and recruit structure setup is bounded to one pass per save version.",
+                "Does not remove characters, jobs, items, mechanics, locations, story, save progress, or other content; only redundant repeated setup and render work is bypassed.",
                 "Adds 268 new labeled full-body portraits to the existing 111-image curated library, producing 379 reviewed choices without duplicating the smaller recruitable catalog.",
-                "Routes portraits deterministically by the person's persistent identity, occupation, gender, visual age, race, and bannerless status; named, canonical, user-created, and unique-character art remains protected.",
                 "Teen, toddler, and baby portraits appear only as ambient household members in People Here, family records, and daily schedules. They are never workers or recruitable applicants.",
-                "Adds real occupations where the catalog exposed genuine gaps: banker, beekeeper, goatherd, poultry keeper, skilled artisan, bannerless archer, crossbowman, sergeant, swordsman, footman, and militia recruit.",
-                "Village apiaries, goat herds, and poultry flocks now persist across weeks, respond to season and weather, produce honeycomb, beeswax, goat milk, and eggs, stock local markets, and affect settlement health and prosperity.",
-                "Named bankers keep posted counter hours and serve the existing reserve, deposit, withdrawal, bullion, mint, and currency systems. A Dominus banker appears when its bank is founded.",
-                "Existing settlements gain compatible named residents and labor candidates without replacing established people. Recruit halls gain a bounded rotating sample of the new military and artisan jobs.",
-                "Portrait assignment scans existing saves once during migration and checks only newly created people afterward; redraws, lists, schedules, and daily ticks do not rescan the world.",
+                "Retains v1.73.0's bankers, recruit jobs, settlement residents, and village apiaries, goat herds, and poultry flocks with time, weather, production, market, health, and prosperity mechanics.",
                 "Portrait files load from this trusted GitHub repository and fall back to packaged dynasty art if offline or unavailable, so a missing network image cannot break a person view.",
-                "Restores Lady Alexus's original authored body map: her head, hair, upper chest, torso, arms, hands, and legs remain visible regardless of empty wardrobe slots.",
-                "Maps GOWN_tripo_part_10, the actual full dress, to the Tailored Dominus Lady's Gown so removing that item removes the dress instead of her body.",
-                "Removes the fabricated v1.72.9 torso clone; no replacement geometry, recolouring, or guessed body layer remains.",
-                "Classifies all 28 packaged mesh nodes exactly once. Nine items have genuine independent model geometry; cards with no separate source mesh never hide anatomy or another garment.",
-                "Retains the v1.72.8 equipment-state repair, so empty slots survive redraw migration and already-created duplicate unique items are recovered safely.",
-                "Retains the v1.72.7 vertical scrolling repair without restoring the right-side void.",
+                "Retains Lady Alexus's original authored body map and gown mapping, the v1.72.8 equipment-state repair, and the v1.72.7 vertical-scrolling repair.",
                 "This is a staged script-and-portrait update for the verified v1.72.6 APK; it uses the original packaged GLB unchanged and requires no replacement APK, model, or save reset.",
             ],
             "modules": modules,
@@ -108,7 +105,7 @@ def main() -> None:
     assert len(encoded) <= 100_000, "channel exceeds the bundled safe-updater limit"
     (ROOT / "channel.js").write_bytes(encoded)
     print(
-        f"channel.js: {len(modules)} v1.72.6-compatible modules, 268 lazy portrait assets, {len(encoded):,} bytes"
+        f"channel.js: {len(modules)} v1.72.6-compatible modules, 280 lazy portrait assets, {len(encoded):,} bytes"
     )
 
 

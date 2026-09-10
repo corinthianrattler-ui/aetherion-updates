@@ -7,7 +7,7 @@ const path=require('node:path');
 const vm=require('node:vm');
 
 const gameRoot=process.argv[2];
-if(!gameRoot){console.log('v1.73.0 full-game runtime skipped (pass an extracted assets/game path)');process.exit(0)}
+if(!gameRoot){console.log('v1.73.1 full-game runtime skipped (pass an extracted assets/game path)');process.exit(0)}
 const index=fs.readFileSync(path.join(gameRoot,'index.html'),'utf8');
 const scripts=[...index.matchAll(/<script[^>]+src=["']([^"']+)/g)].map(match=>match[1].split('?')[0]).filter(src=>!src.startsWith('http'));
 
@@ -22,15 +22,66 @@ const context=vm.createContext(sandbox);
 for(const relative of scripts){const target=path.join(gameRoot,relative);assert(fs.existsSync(target),`missing packaged script ${relative}`);vm.runInContext(fs.readFileSync(target,'utf8'),context,{filename:relative})}
 vm.runInContext(fs.readFileSync('patches/v1.73.0-portrait-data.js','utf8'),context,{filename:'v1.73.0-portrait-data.js'});
 vm.runInContext(fs.readFileSync('patches/v1.73.0-living-portraits.js','utf8'),context,{filename:'v1.73.0-living-portraits.js'});
+vm.runInContext(fs.readFileSync('patches/v1.73.1-knight-diversity-performance.js','utf8'),context,{filename:'v1.73.1-knight-diversity-performance.js'});
 
 const api=sandbox.AetherionV173LivingPortraits;
+const knightApi=sandbox.AetherionV1731KnightDiversity;
 assert(api);
+assert(knightApi);
 assert.equal(api.registry.length,268);
+assert.equal(knightApi.registry.length,16);
+assert.equal(knightApi.generated.length,12);
 vm.runInContext('S=makeStartState()',context);
 const get=source=>vm.runInContext(source,context);
 assert.equal(get('S.meta.v173LivingPortraits.version'),'1.73.0');
 assert.equal(get('S.meta.v173LivingPortraits.youthAreWorkers'),false);
 assert.equal(get('S.meta.v173LivingPortraits.totalCuratedPortraits'),379);
+assert.equal(get('S.meta.v1731KnightDiversity.version'),'1.73.1');
+assert.equal(get('S.meta.v1731KnightDiversity.contentRemoved'),0);
+assert.equal(get('S.meta.v1731KnightDiversity.redrawWorldScans'),false);
+const knights=get(`S.people.filter(p=>p.role==='Lesser Knight'||p.role==='Company Captain').map(p=>({id:p.id,name:p.name,gender:p.gender,age:p.age,bannerless:p.bannerless,portrait:p.portrait}))`);
+assert.equal(knights.length,20);
+assert(knights.every(p=>p.gender==='M'&&p.bannerless===true));
+assert(knights.every(p=>/\/custom\/npc-portraits\/v173(?:1)?\//.test(p.portrait)));
+assert(knights.every(p=>!p.portrait.includes('/assets/dynasty/')&&!p.portrait.includes('/assets/units/')));
+const knightAudit=knightApi.auditState(get('S'));
+assert.equal(knightAudit.wrong.length,0,JSON.stringify(knightAudit.wrong,null,2));
+assert.equal(knightAudit.headshots.length,0,JSON.stringify(knightAudit.headshots,null,2));
+assert.equal(knightAudit.roster,20);
+assert.equal(knightAudit.unique,10);
+assert(knightAudit.maxReuse<=3,JSON.stringify(knightAudit,null,2));
+assert.equal(get(`S.people.filter(p=>p.role==='Lesser Knight'||p.role==='Company Captain').every(p=>{let row=AetherionV1731KnightDiversity.registry.find(r=>r.path===p.portrait);return row&&row.gender===p.gender&&row.ageBand===(AetherionV168Portraits.visualAge(p)<40?'young':'older')})`),true);
+
+const woman=get(`(()=>{let p={id:'future_woman_knight',name:'Ser Alys Test',gender:'F',age:31,role:'Lesser Knight',rank:'Lesser Knight',alive:true,portrait:'assets/dynasty/female_adult_1.webp'};AetherionV1731KnightDiversity.assignOne(p);let row=AetherionV1731KnightDiversity.registry.find(r=>r.path===p.portrait);return{p,row}})()`);
+assert.equal(woman.row.gender,'F');
+assert.equal(woman.row.ageBand,'young');
+const authoredKnight=get(`(()=>{let p={id:'custom_knight',name:'Custom Knight',gender:'F',age:44,role:'Lesser Knight',alive:true,customCompanion:true,portrait:'user/portraits/custom-knight.webp'};AetherionV1731KnightDiversity.assignOne(p);return p})()`);
+assert.equal(authoredKnight.portrait,'user/portraits/custom-knight.webp');
+const stableKnightPaths=get(`S.people.filter(p=>p.role==='Lesser Knight'||p.role==='Company Captain').map(p=>p.portrait)`);
+get('AetherionV1731KnightDiversity.repairState(S)');
+assert.deepEqual(Array.from(get(`S.people.filter(p=>p.role==='Lesser Knight'||p.role==='Company Captain').map(p=>p.portrait)`)),Array.from(stableKnightPaths),'current-version migration must be idempotent');
+const mutationId=get(`S.people.find(p=>p.role==='Lesser Knight').id`);
+get(`setFormationRole('${mutationId}','Footman')`);
+assert.equal(get(`S.people.find(p=>p.id==='${mutationId}').role`),'Footman');
+assert.equal(get(`AetherionV1731KnightDiversity.registry.some(r=>r.path===S.people.find(p=>p.id==='${mutationId}').portrait)`),false,'leaving the role must release knight-only art');
+get(`setFormationRole('${mutationId}','Lesser Knight')`);
+assert.equal(get(`AetherionV1731KnightDiversity.registry.some(r=>r.path===S.people.find(p=>p.id==='${mutationId}').portrait)`),true,'returning to the role must assign compatible knight art');
+
+const identityChecksBefore=get('AetherionV167Integrity.runtime.recordsChecked');
+const knightCards=get(`peopleCards(S.people.filter(p=>p.role==='Lesser Knight'||p.role==='Company Captain'))`);
+assert.equal(get('AetherionV167Integrity.runtime.recordsChecked'),identityChecksBefore,'roster rendering must not repair every person again');
+assert(knightCards.includes('loading="lazy" decoding="async" fetchpriority="low"'));
+assert(knightCards.includes('Ser Owyn Carr')&&knightCards.includes('Morale')&&knightCards.includes('Order:'));
+assert.equal(knightApi.runtime.renderRepairs,0);
+const structurePasses=api.runtime.structuralPasses;
+get('AetherionV173LivingPortraits.ensureState(S);AetherionV173LivingPortraits.ensureState(S);AetherionV173LivingPortraits.worldTick(S)');
+assert.equal(api.runtime.structuralPasses,structurePasses,'settlement and labor structure setup must remain one-time');
+
+const repairedCloneSave=get(`(()=>{let people=S.people.filter(p=>p.role==='Lesser Knight'||p.role==='Company Captain').map(p=>({...p,portrait:'assets/dynasty/male_adult_1.webp'})),save={world:{day:0,permanentNPCs:{},laborMarkets:{}},meta:{},people,v173:{version:'1.73.0',lastWeek:0,rural:{},structures:'1.73.1-bounded'}};AetherionV1731KnightDiversity.repairState(save);return AetherionV1731KnightDiversity.auditState(save)})()`);
+assert.equal(repairedCloneSave.wrong.length,0);
+assert.equal(repairedCloneSave.headshots.length,0);
+assert.equal(repairedCloneSave.unique,10);
+assert(repairedCloneSave.maxReuse<=3);
 
 const uncoveredRoles=get(`(()=>{let pools=new Set([...V10_WORKER_ROLES,...V14_JOB_ROLES,...V15_JOBS.map(job=>job.role)]),dedicated=new Set(['Loader','Teamster','Wheelwright','Privateer Captain','Marine Captain','Surgeon','Shopkeeper']);return[...new Set(AetherionV173LivingPortraits.registry.filter(row=>!row.ambientOnly).map(row=>row.role))].filter(role=>{let row=AetherionV173LivingPortraits.registry.find(item=>item.role===role),terms=[row.role,...row.aliases];return!terms.some(term=>pools.has(term))&&!dedicated.has(role)})})()`);
 assert.deepEqual(Array.from(uncoveredRoles),[],'every adult catalog role must have a worker, labor, recruit, commerce, maritime, or medicine system');
@@ -94,8 +145,17 @@ assert.equal(api.bankOpen('solaris'),false);
 
 get('S.world.location="Goldmeadow";S.world.hour=11');
 const checks=api.runtime.recordsChecked;
+const legacyChecks=get('AetherionV167Integrity.runtime.recordsChecked');
+const curatedBefore=get(`JSON.stringify({knights:S.people.filter(p=>p.role==='Lesser Knight'||p.role==='Company Captain').map(p=>p.portrait),rural:S.world.permanentNPCs.Goldmeadow.filter(p=>['Beekeeper','Goatherd','Poultry Keeper'].includes(p.role)).map(p=>p.portrait),labor:S.world.laborMarkets.Goldmeadow.map(p=>p.portrait)})`);
 get('nearbyPeople();v27Schedules();render();migrateState(S)');
 assert.equal(api.runtime.recordsChecked,checks,'real packaged redraw, schedule, and migrated-save paths must not rescan people');
+assert.equal(get('AetherionV167Integrity.runtime.recordsChecked'),legacyChecks,'legacy identity migration must not rescan or overwrite the current world during redraw');
+assert.equal(get(`JSON.stringify({knights:S.people.filter(p=>p.role==='Lesser Knight'||p.role==='Company Captain').map(p=>p.portrait),rural:S.world.permanentNPCs.Goldmeadow.filter(p=>['Beekeeper','Goatherd','Poultry Keeper'].includes(p.role)).map(p=>p.portrait),labor:S.world.laborMarkets.Goldmeadow.map(p=>p.portrait)})`),curatedBefore,'redraw must not restore dynasty headshots');
+const commerceChecks=get('AetherionV167Integrity.runtime.recordsChecked');
+get('v55Ensure(S);v55Ensure(S)');
+assert.equal(get('AetherionV167Integrity.runtime.recordsChecked'),commerceChecks,'unchanged shop setup must not rescan all people');
+assert(knightApi.runtime.legacyUpgradeSkips>=3);
+assert(knightApi.runtime.commerceEnsureSkips>=2);
 assert.equal(api.auditState(get('S')).wrong.length,0);
 
-console.log(`v1.73.0 full-game runtime: ${scripts.length} packaged scripts, fresh save, portraits, residents, recruits, production, views, and migration passed`);
+console.log(`v1.73.1 full-game runtime: ${scripts.length} packaged scripts, clone-save repair, full-body knight diversity, bounded renders, residents, recruits, production, views, and migration passed`);

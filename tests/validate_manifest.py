@@ -32,7 +32,7 @@ def main() -> None:
     }
     assert manifest["schema"] == 1
     assert manifest["enabled"] is True
-    assert manifest["latest"]["game_version"] == "1.73.0"
+    assert manifest["latest"]["game_version"] == "1.73.1"
     assert manifest["latest"]["android_version_code"] == 195
     assert manifest["latest"]["min_updater_schema"] <= 1
     apk = manifest["android_apk"]
@@ -53,8 +53,14 @@ def main() -> None:
         if payload["path"].startswith("custom/npc-portraits/v173/")
         and payload["path"].endswith(".webp")
     ]
+    portrait_paths_v1731 = [
+        payload["path"] for payload in payloads
+        if payload["path"].startswith("custom/npc-portraits/v1731/")
+        and payload["path"].endswith(".webp")
+    ]
     assert len(portrait_paths) == 111
     assert len(portrait_paths_v173) == 268
+    assert len(portrait_paths_v1731) == 12
     assert [payload["path"] for payload in payloads] == [
         "patches/v1.59.2-dominus-art-fix.js",
         "assets/v109/valkorion_final.glb",
@@ -119,6 +125,9 @@ def main() -> None:
         "custom/npc-portraits/v173/registry.json",
         "patches/v1.73.0-portrait-data.js",
         "patches/v1.73.0-living-portraits.js",
+        *portrait_paths_v1731,
+        "custom/npc-portraits/v1731/registry.json",
+        "patches/v1.73.1-knight-diversity-performance.js",
     ]
     assert len({payload["path"] for payload in payloads}) == len(payloads)
 
@@ -173,6 +182,12 @@ def main() -> None:
         assert payload["restart_required"] is True
 
     assert manifest["save_policy"]["preserve_always"] is True
+    assert "Version 1.73.1 adds 12 new individually generated 2:3 full-body bannerless-knight portraits" in manifest["notes"]
+    assert "starting twenty mounted retainers across ten compatible full-body identities" in manifest["notes"]
+    assert "no image used more than three times" in manifest["notes"]
+    assert "legacy whole-world identity repairs from ordinary redraws" in manifest["notes"]
+    assert "skips unchanged staffed-commerce setup" in manifest["notes"]
+    assert "It removes no characters, jobs, items, mechanics, locations, story, or save progress" in manifest["notes"]
     assert "Version 1.73.0 adds 268 unique" in manifest["notes"]
     assert "379 reviewed portrait choices" in manifest["notes"]
     assert "never workers or recruitable applicants" in manifest["notes"]
@@ -202,7 +217,7 @@ def main() -> None:
     assert "zero portrait-record checks" in manifest["notes"]
     assert "110 new lore-matched" in manifest["notes"]
     assert "Quartermaster Halric Morn" in manifest["notes"]
-    print("manifest.json: 1.73.0 payload sizes, release URLs, and SHA-256 hashes passed")
+    print("manifest.json: 1.73.1 payload sizes, release URLs, and SHA-256 hashes passed")
 
 
 if __name__ == "__main__":

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build the bounded stable channel for the v1.73.3 camp-film UI repair."""
+"""Build the bounded stable channel for the v1.73.4 camp runtime repair."""
 
 from __future__ import annotations
 
@@ -16,7 +16,7 @@ PATCHES = [
     ("v1730-portrait-data", ROOT / "patches" / "v1.73.0-portrait-data.js"),
     ("v1730-living-portraits", ROOT / "patches" / "v1.73.0-living-portraits.js"),
     ("v1731-knight-diversity-performance", ROOT / "patches" / "v1.73.1-knight-diversity-performance.js"),
-    ("v1733-camp-scenes", ROOT / "patches" / "v1.73.3-camp-scenes.js"),
+    ("v1734-camp-scenes", ROOT / "patches" / "v1.73.4-camp-scenes.js"),
 ]
 APK_NAME = "Aetherion_Reforged_v1.72.6_GAMEPLAY_REPAIR_FULL.apk"
 APK_URL = (
@@ -58,7 +58,7 @@ def main() -> None:
         "schema": 2,
         "channel": "stable",
         "release": {
-            "version": "1.73.3",
+            "version": "1.73.4",
             # This content update targets the verified v1.72.6 full APK. It
             # contains no native files and can stage on Android build 195.
             "build": 195,
@@ -69,9 +69,7 @@ def main() -> None:
             "apkSha256": APK_SHA256,
             "apkSize": APK_SIZE,
             "notes": [
-                "Camp films autoplay without browser pause, play, seek, fullscreen, or download controls; only a small Skip button remains.",
-                "Make Camp takes 2 hours, Take Down Camp 1 hour, Cook 2 hours, and Sleep 8 hours; blocked actions still do nothing.",
-                "Retains the four camp films, knight diversity, all earlier content, and every save. No APK or reset is required.",
+                "Camp films autoplay with only Skip and no native UI. Guards require an active camp and Watch Post; all content and saves remain.",
             ],
             "modules": modules,
             # Image URLs are constructed from one fixed trusted repository root

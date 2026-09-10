@@ -7,11 +7,13 @@ import hashlib
 import json
 from pathlib import Path
 import subprocess
+from PIL import Image
 
 
 ROOT = Path(__file__).resolve().parents[1]
 MEDIA = ROOT / "custom" / "camp-scenes" / "v1732"
 EXPECTED = {"make-camp.mp4", "strike-camp.mp4", "camp-food.mp4", "camp-sleep.mp4"}
+POSTERS = {name.replace(".mp4", ".webp") for name in EXPECTED}
 
 
 def main() -> None:
@@ -31,7 +33,16 @@ def main() -> None:
         assert 5.9 <= float(probe["format"]["duration"]) <= 6.2, path
         hashes.add(hashlib.sha256(path.read_bytes()).hexdigest())
     assert len(hashes) == 4
-    print("v1.73.2 camp media: 4/4 distinct H.264/AAC films at 672x448 and about six seconds passed")
+    posters = sorted(MEDIA.glob("*.webp"))
+    assert {path.name for path in posters} == POSTERS
+    poster_hashes = set()
+    for path in posters:
+        with Image.open(path) as image:
+            assert image.format == "WEBP" and image.size == (672, 448), path
+            image.load()
+        poster_hashes.add(hashlib.sha256(path.read_bytes()).hexdigest())
+    assert len(poster_hashes) == 4
+    print("v1.73.4 camp media: 4 distinct six-second H.264/AAC films and 4 matching 672x448 WebP posters passed")
 
 
 if __name__ == "__main__":

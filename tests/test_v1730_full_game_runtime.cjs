@@ -7,7 +7,7 @@ const path=require('node:path');
 const vm=require('node:vm');
 
 const gameRoot=process.argv[2];
-if(!gameRoot){console.log('v1.73.3 full-game runtime skipped (pass an extracted assets/game path)');process.exit(0)}
+if(!gameRoot){console.log('v1.73.4 full-game runtime skipped (pass an extracted assets/game path)');process.exit(0)}
 const index=fs.readFileSync(path.join(gameRoot,'index.html'),'utf8');
 const scripts=[...index.matchAll(/<script[^>]+src=["']([^"']+)/g)].map(match=>match[1].split('?')[0]).filter(src=>!src.startsWith('http'));
 
@@ -24,11 +24,11 @@ for(const relative of scripts){const target=path.join(gameRoot,relative);assert(
 vm.runInContext(fs.readFileSync('patches/v1.73.0-portrait-data.js','utf8'),context,{filename:'v1.73.0-portrait-data.js'});
 vm.runInContext(fs.readFileSync('patches/v1.73.0-living-portraits.js','utf8'),context,{filename:'v1.73.0-living-portraits.js'});
 vm.runInContext(fs.readFileSync('patches/v1.73.1-knight-diversity-performance.js','utf8'),context,{filename:'v1.73.1-knight-diversity-performance.js'});
-vm.runInContext(fs.readFileSync('patches/v1.73.3-camp-scenes.js','utf8'),context,{filename:'v1.73.3-camp-scenes.js'});
+vm.runInContext(fs.readFileSync('patches/v1.73.4-camp-scenes.js','utf8'),context,{filename:'v1.73.4-camp-scenes.js'});
 
 const api=sandbox.AetherionV173LivingPortraits;
 const knightApi=sandbox.AetherionV1731KnightDiversity;
-const campApi=sandbox.AetherionV1733CampScenes;
+const campApi=sandbox.AetherionV1734CampScenes;
 assert(api);
 assert(knightApi);
 assert(campApi);
@@ -165,10 +165,13 @@ assert.equal(api.auditState(get('S')).wrong.length,0);
 
 get(`S.v24.camp.active=false;S.v24.camp.placements[0]={kind:'military',name:'Ten-Man Tent',item:'military_ten_man_tent',capacity:10};S.v24.camp.cookReady=true`);
 assert.match(get('v24CampMap()'),/MAKE CAMP/);
-let campClock=get('v14Now()');get('v24EstablishCamp()');assert.equal(get('v14Now()')-campClock,2);assert.equal(campApi.runtime.plays.make,1);let campScene=get('document.getElementById("modalRoot").innerHTML');assert.match(campScene,/make-camp\.mp4/);assert.match(campScene,/>SKIP<\/button>/);assert.doesNotMatch(campScene,/\scontrols(?:\s|=|>)/);assert.doesNotMatch(campScene,/>PLAY<|RETURN TO CAMP/);assert.match(get('v24CampMap()'),/TAKE DOWN CAMP/);
+let campClock=get('v14Now()');get('v24EstablishCamp()');assert.equal(get('v14Now()')-campClock,2);assert.equal(campApi.runtime.plays.make,1);let campScene=get('document.getElementById("modalRoot").innerHTML');assert.match(campScene,/make-camp\.mp4/);assert.match(campScene,/poster="[^"]+make-camp\.webp"/);assert.match(campScene,/>SKIP<\/button>/);assert.doesNotMatch(campScene,/\scontrols(?:\s|=|>)/);assert.doesNotMatch(campScene,/>PLAY<|RETURN TO CAMP/);assert.match(get('v24CampMap()'),/TAKE DOWN CAMP/);
+get('v24AssignWatch()');assert.equal(get('S.v24.camp.watchers.length'),0,'guard assignment must fail without a physical Watch Post');
+get(`(()=>{let guard=S.people.find(p=>p.alive&&/Knight|Footman|Captain|Sergeant|Swordsman/.test(String(p.role)+' '+String(p.rank)));guard.location=S.world.location;S.v24.camp.placements[1]={kind:'watch',name:'Watch Post',item:'camp_watch_kit',capacity:0};v24AssignWatch()})()`);assert(get('S.v24.camp.watchers.length')>0,'an established camp with a Watch Post must accept eligible guards');
+get('v24RemovePlot(1)');assert.equal(get('S.v24.camp.watchers.length'),0,'removing the final Watch Post must clear its guards');
 campClock=get('v14Now()');get('v24EstablishCamp()');assert.equal(get('v14Now()')-campClock,1);assert.equal(campApi.runtime.plays.strike,1);assert.match(get('document.getElementById("modalRoot").innerHTML'),/strike-camp\.mp4/);
 get(`S.v24.camp.active=true;S.v24.camp.cookReady=true;v24Add('Carried Inventory','salted_meat',100);v24Add('Carried Inventory','firewood',20)`);
 campClock=get('v14Now()');get('v24CookMeal()');assert.equal(get('v14Now()')-campClock,2);assert.equal(campApi.runtime.plays.food,1);assert.match(get('document.getElementById("modalRoot").innerHTML'),/camp-food\.mp4/);
 campClock=get('v14Now()');get('v24SleepCamp()');assert.equal(get('v14Now()')-campClock,8);assert.equal(campApi.runtime.plays.sleep,1);assert.match(get('document.getElementById("modalRoot").innerHTML'),/camp-sleep\.mp4/);
 
-console.log(`v1.73.3 full-game runtime: ${scripts.length} packaged scripts, control-free camp films, realistic action time, clone-save repair, full-body knight diversity, bounded renders, residents, recruits, production, views, and migration passed`);
+console.log(`v1.73.4 full-game runtime: ${scripts.length} packaged scripts, poster-backed camp autoplay, hidden native overlay, Watch Post guard gate, realistic action time, clone-save repair, full-body knight diversity, bounded renders, residents, recruits, production, views, and migration passed`);

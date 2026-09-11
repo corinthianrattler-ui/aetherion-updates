@@ -1,0 +1,104 @@
+name: Publish Aetherion v1.74.4 HUD and quartermaster hotfix
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/publish-v1744-hotfix.yml'
+      - 'changes/1.74.4/**'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Validate hotfix source
+        shell: bash
+        run: |
+          set -euo pipefail
+          node --check changes/1.74.4/aetherion-v1744-hotfix.js
+          test -s custom/npc-portraits/v168/00_quartermaster_original_unchanged.webp
+          grep -F "position:absolute!important" changes/1.74.4/aetherion-v1744-hotfix.js >/dev/null
+          grep -F "00_quartermaster_original_unchanged.webp" changes/1.74.4/aetherion-v1744-hotfix.js >/dev/null
+
+      - name: Install signing dependency
+        shell: bash
+        run: python3 -m pip install --disable-pip-version-check --quiet cryptography
+
+      - name: Build signed cumulative v1.74.4 update
+        shell: bash
+        env:
+          AETHERION_UPDATE_PRIVATE_KEY: ${{ secrets.AETHERION_UPDATE_PRIVATE_KEY }}
+        run: |
+          set -euo pipefail
+          keydir=/tmp/aetherion-update-signing
+          install -m 700 -d "$keydir"
+          if [ -z "${AETHERION_UPDATE_PRIVATE_KEY:-}" ]; then
+            echo '::error::AETHERION_UPDATE_PRIVATE_KEY is not configured for this repository.'
+            exit 1
+          fi
+          printf '%s' "$AETHERION_UPDATE_PRIVATE_KEY" > "$keydir/private.pem"
+          chmod 600 "$keydir/private.pem"
+          python3 tools/build_v2_update.py 1.74.4 \
+            --private-key "$keydir/private.pem" \
+            --extension v1744-hud-quartermaster-hotfix=changes/1.74.4/aetherion-v1744-hotfix.js \
+            --asset custom/npc-portraits/v168/00_quartermaster_original_unchanged.webp=custom/npc-portraits/v168/00_quartermaster_original_unchanged.webp \
+            --notes "Fixes the Android top HUD and House Dominus dial placement and restores Quartermaster Edwyn Rook's unique original portrait. No APK replacement or save reset is required."
+
+      - name: Verify generated channel and signature
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import base64, hashlib, json
+          from pathlib import Path
+          from cryptography.hazmat.primitives import hashes
+          from cryptography.hazmat.primitives.asymmetric import padding, rsa
+
+          root = Path('.')
+          channel = json.loads((root/'v2/channel.json').read_text('utf-8'))
+          assert channel['latest'] == '1.74.4'
+          release = next(r for r in channel['releases'] if r['version'] == '1.74.4')
+          manifest_bytes = (root/'v2/releases/1.74.4.json').read_bytes()
+          assert hashlib.sha256(manifest_bytes).hexdigest() == release['manifestSha256']
+          manifest = json.loads(manifest_bytes)
+          by_id = {f['id']: f for f in manifest['files']}
+          assert 'dominus-blood-dial' in by_id, 'prior House Dominus dial was not inherited'
+          assert 'v1744-hud-quartermaster-hotfix' in by_id
+          assert any(f.get('path') == 'custom/ui/dominus-time/dominus-blood-dial-base.webp' for f in manifest['files'])
+          assert any(f.get('path') == 'custom/npc-portraits/v168/00_quartermaster_original_unchanged.webp' for f in manifest['files'])
+          assert manifest.get('deletePaths') == []
+
+          pub = json.loads((root/'v2/update-public.json').read_text('utf-8'))
+          key = rsa.RSAPublicNumbers(int(pub['e']), int(pub['n'], 16)).public_key()
+          canonical = json.dumps({
+              'appId':'aetherion-reforged',
+              'version':'1.74.4',
+              'manifestUrl':release['manifestUrl'],
+              'manifestSha256':release['manifestSha256'],
+          }, separators=(',', ':'), ensure_ascii=False).encode('utf-8')
+          key.verify(base64.b64decode(release['signature']), canonical, padding.PKCS1v15(), hashes.SHA256())
+          print('v1.74.4 cumulative manifest and RSA signature verified')
+          PY
+
+      - name: Publish update channel
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'Aetherion Release Bot'
+          git config user.email 'actions@users.noreply.github.com'
+          git add v2/channel.json v2/releases/1.74.4.json v2/files/1.74.4/
+          git diff --cached --check
+          git commit -m 'Publish v1.74.4 HUD and quartermaster hotfix'
+          git push origin HEAD:main
+
+      - name: Remove temporary signing key
+        if: always()
+        shell: bash
+        run: rm -rf /tmp/aetherion-update-signing

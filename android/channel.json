@@ -1,0 +1,20 @@
+{
+  "schema": 1,
+  "appId": "aetherion-reforged",
+  "channel": "stable",
+  "release": {
+    "version": "1.74.2",
+    "build": 197,
+    "releasedAt": "2026-09-11T06:35:36Z",
+    "apkUrl": "https://github.com/corinthianrattler-ui/aetherion-updates/releases/download/v1.74.2/Aetherion_Reforged_v1.74.2_FULLBODY_BUGFIX_FULL.apk",
+    "apkSha256": "81d0d1d3fdad0fd06e3a37a25e3d130db336faa673b46188df8cc06de4f945dc",
+    "apkSize": 519356685,
+    "notes": [
+      "Complete replacement APK; install over the current app without uninstalling so saves remain in place.",
+      "All Piper neural voices, models, maps, films, mechanics, story, items, and the existing save format are preserved.",
+      "Every known NPC head/bust reference now migrates to compatible packaged full-body art; existing full-body art is left unchanged.",
+      "Only 163 obsolete head/bust portrait files and three superseded technical updater markers were physically removed.",
+      "Includes the House Dominus Blood Rose sky dial with live sun, blood moon, Wait, and Sleep Until Dawn behavior intact."
+    ]
+  }
+}

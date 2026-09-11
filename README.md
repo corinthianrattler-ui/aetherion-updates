@@ -2,54 +2,36 @@
 
 Public update channel for **Aetherion Reforged**.
 
-## Current signed update — 1.74.1 (Android build 196)
+## Current full build — 1.74.2 (Android build 197)
 
-Version 1.74.1 replaces the small top-right sky dial with a House Dominus
-Blood Rose design: blackened metal, antique gold, garnet, a blood chalice,
-rosework, and a radiant nimbus frame.
+Version 1.74.2 is a complete replacement APK built directly from the verified
+v1.74.0 full app. It preserves every voice, model, map, film, mechanic, story,
+item, and the existing save format.
 
-- live in-world time remains readable on the dial
-- the sun and blood moon continue to move with the current hour
-- all eight blood-moon phases remain visible
-- the detailed sky modal and every Wait / Sleep Until Dawn action remain intact
-- fatigue, world advancement, saves, rollback, and all other game content are
-  unchanged
+- fresh games and old saves now route every known generic head/bust portrait to
+  compatible packaged full-body art
+- prior migration markers no longer allow the broken worker/dynasty/v29/v34
+  paths to survive in old saves
+- every already-full-body image remains unchanged
+- exactly 163 obsolete head/bust portrait assets are physically removed after
+  their state and display references are repaired
+- the House Dominus Blood Rose sky dial is built into the APK with live time,
+  sun, blood moon, moon phases, Wait, and Sleep Until Dawn intact
+- the complete Piper neural voice system remains byte-identical to v1.74.0
+- the update screen now explains that only a full APK can replace or remove
+  baked files; downloaded-web-update cleanup affects downloaded files only
 
-The signed download contains one WebP artwork asset and one small display
-extension. It installs through **Systems → Game Updates** without replacing the
-APK or resetting a save.
-
-## Current full build — 1.74.0 (Android build 196)
-
-Version 1.74.0 is a content-preserving maintenance APK built directly over the
-verified 499 MB v1.72.6 app. It keeps the offline Piper neural voices, models,
-maps, films, mechanics, lore, and save format byte-for-byte while adding the
-full-body portrait and camp-scene releases locally.
-
-- 280 new local 512×768 full-body portraits remain available offline
-- existing clone-head saves receive one bounded portrait migration
-- portrait failure retries full-body art, then uses the Dominus rose—never a
-  repeated generic head
-- the sky dial occupies its own topbar space instead of covering controls
-- Sleep runs from the current time to seasonal dawn; Wait advances time without
-  pretending the player slept
-- camp films, clean autoplay, Watch Post guard gating, and living-world jobs
-  remain intact
-- 35 unreferenced historical patch copies/build markers are physically removed;
-  no game content is removed
-- the schema-2 signed updater can add, replace, retire, roll back, deduplicate,
-  and garbage-collect downloaded update files without touching saves
-
-The APK is 543,684,738 bytes with SHA-256
-`08791fdc068bcfa6a1809961dc01954c3f1d614cf5a684f4b33fd2308be0d3c7`.
-Full verification is recorded in `AUDIT_v1.74.0.md`.
+The APK is 519,356,685 bytes with SHA-256
+`81d0d1d3fdad0fd06e3a37a25e3d130db336faa673b46188df8cc06de4f945dc`.
+Full verification is recorded in `AUDIT_v1.74.2.md`.
 
 ## Upgrade handoff for existing installs
 
-Builds through 195 read `channel.js`, which now directs them to the complete
-v1.74.0 APK instead of stacking another runtime patch. Build 196 and later read
-the signed `v2/` channel, which supports replacement and retirement instead of
-indefinitely accumulating source and downloaded blobs.
+Older builds read `channel.js`, which now directs them to the complete v1.74.2
+APK instead of stacking another portrait patch. Build 197 also reads the
+dedicated `android/channel.json` for future full APK releases. Android always
+requires the player to open the downloaded APK and approve **Update**; installing
+over the current app keeps its private save storage.
 
 ## Previous web update — 1.73.8 (Android build 195)
 

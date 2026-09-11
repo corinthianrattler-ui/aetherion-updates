@@ -3,24 +3,24 @@
   "channel": "stable",
   "enabled": true,
   "latest": {
-    "game_version": "1.74.0",
-    "android_version_code": 196,
+    "game_version": "1.74.2",
+    "android_version_code": 197,
     "min_updater_schema": 1,
     "requires_full_apk": true
   },
   "manifest_url": "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/manifest.json",
   "release_base": "https://github.com/corinthianrattler-ui/aetherion-updates/releases/download/",
   "android_apk": {
-    "version": "1.74.0",
-    "version_code": 196,
-    "filename": "Aetherion_Reforged_v1.74.0_CLEAN_MAINTENANCE_FULL.apk",
-    "url": "https://github.com/corinthianrattler-ui/aetherion-updates/releases/download/v1.74.0/Aetherion_Reforged_v1.74.0_CLEAN_MAINTENANCE_FULL.apk",
-    "size": 543684738,
-    "sha256": "08791fdc068bcfa6a1809961dc01954c3f1d614cf5a684f4b33fd2308be0d3c7",
+    "version": "1.74.2",
+    "version_code": 197,
+    "filename": "Aetherion_Reforged_v1.74.2_FULLBODY_BUGFIX_FULL.apk",
+    "url": "https://github.com/corinthianrattler-ui/aetherion-updates/releases/download/v1.74.2/Aetherion_Reforged_v1.74.2_FULLBODY_BUGFIX_FULL.apk",
+    "size": 519356685,
+    "sha256": "81d0d1d3fdad0fd06e3a37a25e3d130db336faa673b46188df8cc06de4f945dc",
     "signing_certificate_sha256": "5e68318c3e12c9f5915976a25bbfd5039a2f7e651682b65744b2747b618c3e77"
   },
   "payloads": [],
-  "notes": "Android build 196 is a content-preserving maintenance rebuild made directly from the verified 499 MB build 195 app. It retains the offline Piper neural voices, every model, map, film, mechanic and save format. It packages 280 local full-body portraits, repairs cloned-head fallback routing, gives the sky dial its own header space, preserves sleep-to-seasonal-dawn, waiting, moon phases and Watch Post guard rules, and removes only verified unreferenced technical patch copies and obsolete build markers. The new signed updater can add, replace and retire files, keeps one rollback and garbage-collects obsolete downloaded blobs without touching saves.",
+  "notes": "Android build 197 is a full content-preserving replacement built directly from verified v1.74.0. It retains the complete Piper neural voice system and every existing model, map, film, mechanic, story, item, and save format. It repairs old and new NPC portrait routing across all live state pools, preserves every existing full-body image, physically removes only 163 obsolete head/bust portrait assets plus three superseded technical updater markers, and installs the House Dominus Blood Rose sky dial with all Wait and Sleep Until Dawn behavior intact. The update center now distinguishes a full APK replacement from downloaded web-update cleanup and never claims that a web patch can alter baked APK files.",
   "save_policy": {
     "managed": false,
     "preserve_always": true

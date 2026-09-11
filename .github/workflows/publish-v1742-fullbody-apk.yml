@@ -1,0 +1,73 @@
+name: Publish Aetherion v1.74.2 full-body bugfix APK
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/publish-v1742-fullbody-apk.yml'
+      - '.release-patches/v1.74.0-to-v1.74.2/**'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install reconstruction tools
+        shell: bash
+        run: |
+          set -euo pipefail
+          sudo apt-get update
+          sudo apt-get install --yes zstd unzip
+
+      - name: Download and verify the complete v1.74.0 base
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          base='Aetherion_Reforged_v1.74.0_CLEAN_MAINTENANCE_FULL.apk'
+          gh release download v1.74.0 --pattern "$base"
+          test "$(stat -c%s "$base")" = '543684738'
+          echo '08791fdc068bcfa6a1809961dc01954c3f1d614cf5a684f4b33fd2308be0d3c7  Aetherion_Reforged_v1.74.0_CLEAN_MAINTENANCE_FULL.apk' | sha256sum --check --strict
+
+      - name: Verify the exact reconstruction patch
+        shell: bash
+        run: |
+          set -euo pipefail
+          patch='.release-patches/v1.74.0-to-v1.74.2/v1.74.0-to-v1.74.2.zstpatch'
+          test "$(stat -c%s "$patch")" = '1398187'
+          echo '965463c23744c29cec4401a5d9ef8e0bd54ad3ea73b312019fd9c5e1b4bff009  .release-patches/v1.74.0-to-v1.74.2/v1.74.0-to-v1.74.2.zstpatch' | sha256sum --check --strict
+
+      - name: Reconstruct and verify signed Android build 197
+        shell: bash
+        run: |
+          set -euo pipefail
+          base='Aetherion_Reforged_v1.74.0_CLEAN_MAINTENANCE_FULL.apk'
+          patch='.release-patches/v1.74.0-to-v1.74.2/v1.74.0-to-v1.74.2.zstpatch'
+          output='Aetherion_Reforged_v1.74.2_FULLBODY_BUGFIX_FULL.apk'
+          zstd --decompress --long=30 --patch-from="$base" "$patch" -o "$output"
+          test "$(stat -c%s "$output")" = '519356685'
+          echo '81d0d1d3fdad0fd06e3a37a25e3d130db336faa673b46188df8cc06de4f945dc  Aetherion_Reforged_v1.74.2_FULLBODY_BUGFIX_FULL.apk' | sha256sum --check --strict
+          unzip -tq "$output"
+          jarsigner -verify "$output"
+
+      - name: Publish the complete Android app
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          apk='Aetherion_Reforged_v1.74.2_FULLBODY_BUGFIX_FULL.apk'
+          notes='Android build 197 is a complete replacement APK built from the verified v1.74.0 full app. It preserves the entire Piper neural voice system and every model, map, film, mechanic, story, item, and save format. It repairs fresh and existing saves so known generic head/bust paths use compatible packaged full-body art while every already-full-body image remains unchanged. Exactly 163 obsolete head/bust portrait assets and three superseded technical updater markers are physically removed. The House Dominus Blood Rose sky dial is built in with live sun, blood moon, Wait, and Sleep Until Dawn controls intact. The update screen now states clearly that only a full APK can replace baked files. Install over the current app with the same package/signing identity; do not uninstall. APK SHA-256: 81d0d1d3fdad0fd06e3a37a25e3d130db336faa673b46188df8cc06de4f945dc'
+          if gh release view v1.74.2 >/dev/null 2>&1; then
+            gh release upload v1.74.2 "$apk" --clobber
+            gh release edit v1.74.2 --title 'Aetherion Reforged v1.74.2 (Android build 197)' --notes "$notes"
+          else
+            gh release create v1.74.2 "$apk" --target "$GITHUB_SHA" --title 'Aetherion Reforged v1.74.2 (Android build 197)' --notes "$notes"
+          fi

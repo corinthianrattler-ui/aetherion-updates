@@ -1,0 +1,193 @@
+name: Audit current Aetherion v1.74.3 APK
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/audit-v1743-current-game.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download exact current release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          apk='Aetherion_Reforged_v1.74.3_FULL_GAME_REPAIR.apk'
+          gh release download v1.74.3 --pattern "$apk"
+          test "$(stat -c%s "$apk")" = '519238034'
+          echo 'd055b620e9f434fbba8ce0505d293be3141f072b81543a34340db0ca4996e00f  Aetherion_Reforged_v1.74.3_FULL_GAME_REPAIR.apk' | sha256sum --check --strict
+          unzip -tq "$apk"
+          jarsigner -verify "$apk"
+
+      - name: Static full-package audit
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY' | tee audit-v1743.txt
+          import zipfile, re, json, hashlib, os, posixpath, collections, sys
+          apk='Aetherion_Reforged_v1.74.3_FULL_GAME_REPAIR.apk'
+          z=zipfile.ZipFile(apk)
+          infos=z.infolist(); names=[i.filename for i in infos]; nset=set(names)
+          print('=== AETHERION v1.74.3 STATIC PACKAGE AUDIT ===')
+          print('entries',len(infos),'duplicate_zip_names',len(names)-len(nset))
+          cats=collections.Counter()
+          for n in names:
+              l=n.lower()
+              if l.endswith(('.js','.mjs')): cats['js']+=1
+              if l.endswith('.css'): cats['css']+=1
+              if l.endswith(('.html','.htm')): cats['html']+=1
+              if l.endswith('.json'): cats['json']+=1
+              if l.endswith(('.png','.jpg','.jpeg','.webp','.gif','.svg')): cats['images']+=1
+              if l.endswith(('.mp3','.wav','.ogg','.flac')): cats['audio']+=1
+              if l.endswith(('.mp4','.webm','.mkv')): cats['video']+=1
+              if l.endswith(('.glb','.gltf')): cats['models']+=1
+              if l.endswith('.so'): cats['native_libs']+=1
+          print('counts',dict(cats))
+          print('uncompressed_bytes',sum(i.file_size for i in infos),'compressed_bytes',sum(i.compress_size for i in infos))
+          print('\n=== 30 LARGEST ENTRIES ===')
+          for i in sorted(infos,key=lambda x:x.file_size,reverse=True)[:30]:
+              print(f'{i.file_size:>12} {i.filename}')
+
+          text_ext=('.js','.mjs','.css','.html','.htm','.json','.xml','.txt','.md')
+          texts={}
+          for i in infos:
+              if i.filename.lower().endswith(text_ext) and i.file_size <= 20_000_000:
+                  try: texts[i.filename]=z.read(i).decode('utf-8','replace')
+                  except Exception as e: print('TEXT_READ_ERROR',i.filename,repr(e))
+          print('\ntext_files_loaded',len(texts))
+
+          bad_json=[]
+          for n,t in texts.items():
+              if n.lower().endswith('.json'):
+                  try: json.loads(t)
+                  except Exception as e: bad_json.append((n,str(e)))
+          print('invalid_json',len(bad_json))
+          for x in bad_json[:50]: print('BAD_JSON',*x)
+
+          print('\n=== HUD / DIAL / CLOCK MATCHES ===')
+          keyrx=re.compile(r'(sundial|astrolabe|sky[-_ ]?clock|blood[-_ ]?rose[-_ ]?dial|day[-_ ]?night|clock[-_ ]?dial|dial)',re.I)
+          dial_matches=0
+          for n,t in texts.items():
+              lines=t.splitlines()
+              for idx,line in enumerate(lines,1):
+                  if keyrx.search(line):
+                      dial_matches+=1
+                      if dial_matches<=180:
+                          s=line.strip().replace('\t',' ')
+                          print(f'{n}:{idx}: {s[:800]}')
+          print('dial_match_lines',dial_matches)
+
+          print('\n=== POSSIBLE DIAL ROTATION / TRANSFORM RULES ===')
+          for n,t in texts.items():
+              lines=t.splitlines()
+              for idx,line in enumerate(lines,1):
+                  low=line.lower()
+                  if ('transform' in low or 'rotate' in low) and any(k in low for k in ('clock','dial','astro','sky')):
+                      print(f'{n}:{idx}: {line.strip()[:1000]}')
+
+          print('\n=== QUARTERMASTER / EDWYN ROOK / WYLL FEN MATCHES ===')
+          qrx=re.compile(r'(quartermaster|edwyn\s+rook|wyll\s+fen)',re.I)
+          qmatches=0
+          for n,t in texts.items():
+              lines=t.splitlines()
+              for idx,line in enumerate(lines,1):
+                  if qrx.search(line):
+                      qmatches+=1
+                      if qmatches<=260:
+                          print(f'{n}:{idx}: {line.strip()[:1200]}')
+          print('quartermaster_match_lines',qmatches)
+
+          print('\n=== PORTRAIT / PERSON IMAGE DUPLICATES BY CONTENT ===')
+          portrait_infos=[]
+          for i in infos:
+              l=i.filename.lower()
+              if l.endswith(('.png','.jpg','.jpeg','.webp')) and any(k in l for k in ('portrait','people','person','npc','worker','recruit','quartermaster','character')):
+                  portrait_infos.append(i)
+          hashes=collections.defaultdict(list)
+          for i in portrait_infos:
+              try: hashes[hashlib.sha256(z.read(i)).hexdigest()].append(i.filename)
+              except Exception as e: print('HASH_ERROR',i.filename,repr(e))
+          dup_groups=[v for v in hashes.values() if len(v)>1]
+          dup_groups.sort(key=lambda v:(-len(v),v[0]))
+          print('portrait_candidate_files',len(portrait_infos),'duplicate_content_groups',len(dup_groups))
+          for g in dup_groups[:80]:
+              print('DUP',len(g),' | '.join(g[:12]))
+
+          print('\n=== DEFINITE MISSING STATIC MEDIA BASENAMES ===')
+          media_ext=r'(?:png|jpe?g|webp|gif|svg|mp3|wav|ogg|flac|mp4|webm|glb|gltf)'
+          ref_rx=re.compile(r'''(?P<q>["'`])(?P<p>[^"'`\n\r?#<>]+\.'''+media_ext+r''')(?P=q)''',re.I)
+          basenames=collections.defaultdict(list)
+          for n in names: basenames[posixpath.basename(n)].append(n)
+          misses=collections.defaultdict(set)
+          refs=0
+          for src,t in texts.items():
+              for m in ref_rx.finditer(t):
+                  p=m.group('p').strip(); refs+=1
+                  if any(x in p for x in ('${','{{','://')) or p.startswith(('data:','blob:')): continue
+                  base=posixpath.basename(p)
+                  if base and base not in basenames:
+                      misses[base].add(src)
+          print('media_refs_scanned',refs,'missing_unique_basenames',len(misses))
+          for base,srcs in sorted(misses.items())[:120]:
+              print('MISSING',base,'referenced_by',','.join(sorted(srcs)[:8]))
+
+          print('\n=== SUSPICIOUS ZERO-BYTE / TINY AUTHORED ASSETS ===')
+          bad=[]
+          for i in infos:
+              l=i.filename.lower()
+              if l.endswith(('.png','.jpg','.jpeg','.webp','.mp3','.wav','.ogg','.mp4','.glb')) and i.file_size<128:
+                  bad.append((i.file_size,i.filename))
+          print('tiny_binary_assets',len(bad))
+          for s,n in bad[:100]: print('TINY',s,n)
+
+          print('\n=== AUDIT SUMMARY ===')
+          print('invalid_json',len(bad_json))
+          print('duplicate_zip_names',len(names)-len(nset))
+          print('tiny_binary_assets',len(bad))
+          print('missing_static_media_basenames',len(misses))
+          print('dial_match_lines',dial_matches)
+          print('quartermaster_match_lines',qmatches)
+          PY
+
+      - name: JavaScript syntax audit
+        shell: bash
+        run: |
+          set -euo pipefail
+          rm -rf /tmp/aetherion-js && mkdir -p /tmp/aetherion-js
+          python3 - <<'PY'
+          import zipfile, os
+          z=zipfile.ZipFile('Aetherion_Reforged_v1.74.3_FULL_GAME_REPAIR.apk')
+          for i in z.infolist():
+              if i.filename.lower().endswith(('.js','.mjs')) and i.file_size <= 20_000_000:
+                  p='/tmp/aetherion-js/'+i.filename
+                  os.makedirs(os.path.dirname(p),exist_ok=True)
+                  open(p,'wb').write(z.read(i))
+          PY
+          failures=0
+          while IFS= read -r -d '' f; do
+            if ! node --check "$f" >/tmp/nodecheck.out 2>&1; then
+              echo "JS_SYNTAX_FAIL $f"
+              cat /tmp/nodecheck.out
+              failures=$((failures+1))
+            fi
+          done < <(find /tmp/aetherion-js -type f \( -name '*.js' -o -name '*.mjs' \) -print0)
+          echo "js_syntax_failures=$failures"
+          test "$failures" -eq 0
+
+      - name: Upload audit report
+        uses: actions/upload-artifact@v4
+        with:
+          name: aetherion-v1743-static-audit
+          path: audit-v1743.txt
+          if-no-files-found: error

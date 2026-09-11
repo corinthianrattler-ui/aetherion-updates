@@ -2,6 +2,23 @@
 
 Public update channel for **Aetherion Reforged**.
 
+## Current signed update — 1.74.1 (Android build 196)
+
+Version 1.74.1 replaces the small top-right sky dial with a House Dominus
+Blood Rose design: blackened metal, antique gold, garnet, a blood chalice,
+rosework, and a radiant nimbus frame.
+
+- live in-world time remains readable on the dial
+- the sun and blood moon continue to move with the current hour
+- all eight blood-moon phases remain visible
+- the detailed sky modal and every Wait / Sleep Until Dawn action remain intact
+- fatigue, world advancement, saves, rollback, and all other game content are
+  unchanged
+
+The signed download contains one WebP artwork asset and one small display
+extension. It installs through **Systems → Game Updates** without replacing the
+APK or resetting a save.
+
 ## Current full build — 1.74.0 (Android build 196)
 
 Version 1.74.0 is a content-preserving maintenance APK built directly over the

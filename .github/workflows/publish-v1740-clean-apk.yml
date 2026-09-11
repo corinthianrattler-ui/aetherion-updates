@@ -1,0 +1,68 @@
+name: Publish Aetherion v1.74.0 clean maintenance APK
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/publish-v1740-clean-apk.yml'
+      - '.release-patches/v1.72.6-to-v1.74.0-clean/**'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install reconstruction tools
+        shell: bash
+        run: |
+          set -euo pipefail
+          sudo apt-get update
+          sudo apt-get install --yes zstd unzip
+
+      - name: Download and verify the content-complete build 195 base
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          base='Aetherion_Reforged_v1.72.6_GAMEPLAY_REPAIR_FULL.apk'
+          gh release download v1.72.6 --pattern "$base"
+          test "$(stat -c%s "$base")" = '499039030'
+          echo '2fd692cb05cb163e5bde55abfae8789c3131e15e956831921abe07f905f2c645  Aetherion_Reforged_v1.72.6_GAMEPLAY_REPAIR_FULL.apk' | sha256sum --check --strict
+
+      - name: Reconstruct and verify build 196
+        shell: bash
+        run: |
+          set -euo pipefail
+          base='Aetherion_Reforged_v1.72.6_GAMEPLAY_REPAIR_FULL.apk'
+          patch='v1.72.6-to-v1.74.0-exact.zstpatch'
+          output='Aetherion_Reforged_v1.74.0_CLEAN_MAINTENANCE_FULL.apk'
+          cat .release-patches/v1.72.6-to-v1.74.0-clean/part-* > "$patch"
+          test "$(stat -c%s "$patch")" = '45629755'
+          echo '48f926e1cc59f1f1488256ef8f40f71516e0e1969eb2f7a5f82842f7fe11d181  v1.72.6-to-v1.74.0-exact.zstpatch' | sha256sum --check --strict
+          zstd --decompress --long=30 --patch-from="$base" "$patch" -o "$output"
+          test "$(stat -c%s "$output")" = '543684738'
+          echo '08791fdc068bcfa6a1809961dc01954c3f1d614cf5a684f4b33fd2308be0d3c7  Aetherion_Reforged_v1.74.0_CLEAN_MAINTENANCE_FULL.apk' | sha256sum --check --strict
+          unzip -tq "$output"
+          jarsigner -verify "$output"
+
+      - name: Publish the complete Android app
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          apk='Aetherion_Reforged_v1.74.0_CLEAN_MAINTENANCE_FULL.apk'
+          notes='Android build 196 is a content-preserving maintenance install built directly over the verified 499 MB v1.72.6 app. It retains the offline Piper neural voice system, every existing model, map, film, mechanic, and save format; adds 280 local full-body portraits and all five camp films; repairs clone-head fallbacks, sky-dial placement, sleep-to-dawn, waiting, and Watch Post guard gating; removes only 35 unreferenced technical patch copies/build markers; and installs the signed schema-2 updater with add, replace, retire, rollback, and downloaded-file garbage collection. Same Android package and signing identity. APK SHA-256: 08791fdc068bcfa6a1809961dc01954c3f1d614cf5a684f4b33fd2308be0d3c7'
+          if gh release view v1.74.0 >/dev/null 2>&1; then
+            gh release upload v1.74.0 "$apk" --clobber
+            gh release edit v1.74.0 --title 'Aetherion Reforged v1.74.0 (Android build 196)' --notes "$notes"
+          else
+            gh release create v1.74.0 "$apk" --target "$GITHUB_SHA" --title 'Aetherion Reforged v1.74.0 (Android build 196)' --notes "$notes"
+          fi

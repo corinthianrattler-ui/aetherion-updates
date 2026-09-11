@@ -2,9 +2,39 @@
 
 Public update channel for **Aetherion Reforged**.
 
-The Android staged updater reads `channel.js` from this repository through a MIME-safe GitHub Contents response. `manifest.json` records the exact sizes and SHA-256 hashes of managed payloads.
+## Current full build — 1.74.0 (Android build 196)
 
-## Current web update — 1.73.8 (Android build 195)
+Version 1.74.0 is a content-preserving maintenance APK built directly over the
+verified 499 MB v1.72.6 app. It keeps the offline Piper neural voices, models,
+maps, films, mechanics, lore, and save format byte-for-byte while adding the
+full-body portrait and camp-scene releases locally.
+
+- 280 new local 512×768 full-body portraits remain available offline
+- existing clone-head saves receive one bounded portrait migration
+- portrait failure retries full-body art, then uses the Dominus rose—never a
+  repeated generic head
+- the sky dial occupies its own topbar space instead of covering controls
+- Sleep runs from the current time to seasonal dawn; Wait advances time without
+  pretending the player slept
+- camp films, clean autoplay, Watch Post guard gating, and living-world jobs
+  remain intact
+- 35 unreferenced historical patch copies/build markers are physically removed;
+  no game content is removed
+- the schema-2 signed updater can add, replace, retire, roll back, deduplicate,
+  and garbage-collect downloaded update files without touching saves
+
+The APK is 543,684,738 bytes with SHA-256
+`08791fdc068bcfa6a1809961dc01954c3f1d614cf5a684f4b33fd2308be0d3c7`.
+Full verification is recorded in `AUDIT_v1.74.0.md`.
+
+## Upgrade handoff for existing installs
+
+Builds through 195 read `channel.js`, which now directs them to the complete
+v1.74.0 APK instead of stacking another runtime patch. Build 196 and later read
+the signed `v2/` channel, which supports replacement and retirement instead of
+indefinitely accumulating source and downloaded blobs.
+
+## Previous web update — 1.73.8 (Android build 195)
 
 Version 1.73.8 repairs the full-body portrait regression shown in existing
 saves:
@@ -189,7 +219,7 @@ supplied GLB:
 The source comparison and all 4,096 non-weapon wardrobe-state results are
 recorded in `AUDIT_v1.72.10.md`.
 
-## Current full build — 1.72.6 (Android build 195)
+## Previous full build — 1.72.6 (Android build 195)
 
 Version 1.72.6 is the full gameplay-repair APK. It adds Lady Alexus's packaged
 3D viewer, portrait-phone containment, personal purchase routing, fitted wagon

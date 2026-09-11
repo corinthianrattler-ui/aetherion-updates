@@ -1,45 +1,28 @@
 #!/usr/bin/env python3
-"""Build the stable update manifest from the exact committed payload bytes."""
+"""Build the legacy JSON handoff to the complete v1.74.0 APK.
+
+The current in-app updater consumes channel.js. This compact schema-1 file is
+kept for older clients and deliberately contains no cumulative web-patch list:
+build 196 is a full, same-signature maintenance install.
+"""
 
 from __future__ import annotations
 
+import argparse
 import hashlib
 import json
-import argparse
 from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
-RAW_BASE = "https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/"
-V171_RELEASE_BASE = (
-    "https://github.com/corinthianrattler-ui/"
-    "aetherion-updates/releases/download/v1.71.0/"
+APK_NAME = "Aetherion_Reforged_v1.74.0_CLEAN_MAINTENANCE_FULL.apk"
+APK_URL = (
+    "https://github.com/corinthianrattler-ui/aetherion-updates/"
+    f"releases/download/v1.74.0/{APK_NAME}"
 )
-V171_ASSETS = {
-    "assets/v171/valkorion-base-lord.glb",
-    "assets/v171/valkorion-armored.glb",
-    "assets/v171/libita-gothic-gown.glb",
-}
-V172_RELEASE_BASE = (
-    "https://github.com/corinthianrattler-ui/"
-    "aetherion-updates/releases/download/v1.72.0/"
-)
-V172_ASSETS = {
-    "assets/v172/valkorion-base-lord.glb",
-    "assets/v172/valkorion-armored.glb",
-    "assets/v172/alexus-gothic-gown.glb",
-}
-PORTRAIT_V168_ROOT = ROOT / "custom" / "npc-portraits" / "v168"
-PORTRAIT_V173_ROOT = ROOT / "custom" / "npc-portraits" / "v173"
-PORTRAIT_V1731_ROOT = ROOT / "custom" / "npc-portraits" / "v1731"
-CAMP_V1732_ROOT = ROOT / "custom" / "camp-scenes" / "v1732"
-APK_NAME = "Aetherion_Reforged_v1.72.6_GAMEPLAY_REPAIR_FULL.apk"
-APK_SHA256 = "2fd692cb05cb163e5bde55abfae8789c3131e15e956831921abe07f905f2c645"
-APK_SIZE = 499_039_030
-
-
-def portrait_number(path: Path) -> int:
-    return int(path.name.split("_", 1)[0])
+APK_SHA256 = "08791fdc068bcfa6a1809961dc01954c3f1d614cf5a684f4b33fd2308be0d3c7"
+APK_SIZE = 543_684_738
+CERT_SHA256 = "5e68318c3e12c9f5915976a25bbfd5039a2f7e651682b65744b2747b618c3e77"
 
 
 def file_sha256(path: Path) -> str:
@@ -48,28 +31,6 @@ def file_sha256(path: Path) -> str:
         for block in iter(lambda: handle.read(1024 * 1024), b""):
             digest.update(block)
     return digest.hexdigest()
-
-
-def payload(path: str, previous: dict[str, dict[str, object]]) -> dict[str, object]:
-    local = ROOT / path
-    if not local.is_file():
-        if path not in previous:
-            raise FileNotFoundError(local)
-        return previous[path]
-    data = local.read_bytes()
-    if path in V172_ASSETS:
-        url = V172_RELEASE_BASE + Path(path).name
-    elif path in V171_ASSETS:
-        url = V171_RELEASE_BASE + Path(path).name
-    else:
-        url = RAW_BASE + path
-    return {
-        "path": path,
-        "url": url,
-        "sha256": hashlib.sha256(data).hexdigest(),
-        "size": len(data),
-        "restart_required": True,
-    }
 
 
 def main() -> None:
@@ -81,213 +42,51 @@ def main() -> None:
             raise FileNotFoundError(args.apk)
         assert args.apk.stat().st_size == APK_SIZE, "verified APK size changed"
         assert file_sha256(args.apk) == APK_SHA256, "verified APK hash changed"
-    old = json.loads((ROOT / "manifest.json").read_text(encoding="utf-8"))
-    previous = {row["path"]: row for row in old.get("payloads", [])}
-    portraits_v168 = [
-        str(path.relative_to(ROOT))
-        for path in sorted(PORTRAIT_V168_ROOT.glob("*.webp"), key=portrait_number)
-    ]
-    if not portraits_v168:
-        portraits_v168 = sorted(
-            path for path in previous if path.startswith("custom/npc-portraits/v168/")
-        )
-    portraits_v173 = [
-        str(path.relative_to(ROOT))
-        for path in sorted(PORTRAIT_V173_ROOT.glob("*.webp"), key=portrait_number)
-    ]
-    portraits_v1731 = [
-        str(path.relative_to(ROOT))
-        for path in sorted(PORTRAIT_V1731_ROOT.glob("*.webp"), key=portrait_number)
-    ]
-    assert len(portraits_v168) == 111
-    assert len(portraits_v173) == 268
-    assert len(portraits_v1731) == 12
-    camp_v1732 = [
-        str(path.relative_to(ROOT))
-        for path in sorted(CAMP_V1732_ROOT.iterdir())
-        if path.suffix in {".mp4", ".webp"}
-    ]
-    assert len(camp_v1732) == 10
-    paths = [
-        "patches/v1.59.2-dominus-art-fix.js",
-        "assets/v109/valkorion_final.glb",
-        "patches/v1.63.0-valkorion-final.js",
-        "patches/v1.64.0-world-ui-integrity.js",
-        "patches/v1.65.0-world-economy-cleanup.js",
-        "patches/v1.66.0-living-world-balance.js",
-        "patches/v1.66.1-immersive-narrator-sophia.js",
-        "patches/v1.67.0-identity-world-integrity.js",
-        *portraits_v168,
-        "patches/v1.68.0-curated-npc-portraits.js",
-        "patches/v1.69.0-safe-updater.js",
-        "patches/v1.69.1-start-menu-access.js",
-        "patches/v1.69.2-safe-updater.js",
-        "patches/v1.70.0-safe-updater.js",
-        "patches/v1.70.0-valkorion-complete.js",
-        "patches/v1.70.0-tournaments.js",
-        "assets/v170/jousting-arena.png",
-        "assets/v170/duel-arena.png",
-        "assets/v170/archery-range.png",
-        "patches/v1.71.0-safe-updater.js",
-        "patches/v1.71.0-update-center.js",
-        "patches/v1.71.0-character-models.js",
-        "assets/v171/valkorion-base-lord.glb",
-        "assets/v171/valkorion-armored.glb",
-        "assets/v171/libita-gothic-gown.glb",
-        "patches/v1.72.0-safe-updater.js",
-        "patches/v1.72.0-update-center.js",
-        "patches/v1.72.0-character-models.js",
-        "patches/v1.72.0-runtime-repair.js",
-        "assets/v172/valkorion-base-lord.glb",
-        "assets/v172/valkorion-armored.glb",
-        "assets/v172/alexus-gothic-gown.glb",
-        "patches/v1.72.1-safe-updater.js",
-        "patches/v1.72.1-update-center.js",
-        "patches/v1.72.1-character-models.js",
-        "patches/v1.72.1-runtime-repair.js",
-        "patches/v1.72.1-character-loader-hotfix.js",
-        "patches/v1.72.2-safe-updater.js",
-        "patches/v1.72.2-update-center.js",
-        "patches/v1.72.2-character-models.js",
-        "patches/v1.72.2-runtime-repair.js",
-        "patches/v1.72.3-safe-updater.js",
-        "patches/v1.72.3-update-center.js",
-        "patches/v1.72.3-character-models.js",
-        "patches/v1.72.3-runtime-repair.js",
-        "assets/v173/native-build-192.json",
-        "patches/v1.72.4-performance.js",
-        "assets/v174/native-build-193.json",
-        "patches/v1.72.5-safe-updater.js",
-        "patches/v1.72.5-update-center.js",
-        "patches/v1.72.5-character-models.js",
-        "assets/v175/native-build-194.json",
-        "patches/v1.72.6-safe-updater.js",
-        "patches/v1.72.6-update-center.js",
-        "patches/v1.72.6-gameplay-repair.js",
-        "assets/v176/native-build-195.json",
-        "patches/v1.72.7-scroll-repair.js",
-        "patches/v1.72.8-alexus-equipment-repair.js",
-        "patches/v1.72.10-alexus-original-body-map.js",
-        *portraits_v173,
-        "custom/npc-portraits/v173/registry.json",
-        "patches/v1.73.0-portrait-data.js",
-        "patches/v1.73.0-living-portraits.js",
-        *portraits_v1731,
-        "custom/npc-portraits/v1731/registry.json",
-        "patches/v1.73.1-knight-diversity-performance.js",
-        *camp_v1732,
-        "patches/v1.73.5-camp-scenes.js",
-        "patches/v1.73.6-time-cycle.js",
-        "patches/v1.73.6-stable-bundle.js",
-        "patches/v1.73.7-time-placement.js",
-        "patches/v1.73.7-stable-bundle.js",
-        "patches/v1.73.8-portrait-resilience.js",
-        "patches/v1.73.8-stable-bundle.js",
-    ]
+
     manifest = {
         "schema": 1,
         "channel": "stable",
         "enabled": True,
         "latest": {
-            "game_version": "1.73.8",
-            "android_version_code": 195,
+            "game_version": "1.74.0",
+            "android_version_code": 196,
             "min_updater_schema": 1,
+            "requires_full_apk": True,
         },
-        "manifest_url": RAW_BASE + "manifest.json",
+        "manifest_url": (
+            "https://raw.githubusercontent.com/corinthianrattler-ui/"
+            "aetherion-updates/main/manifest.json"
+        ),
         "release_base": (
             "https://github.com/corinthianrattler-ui/"
             "aetherion-updates/releases/download/"
         ),
         "android_apk": {
-            "version": "1.72.6",
-            "version_code": 195,
+            "version": "1.74.0",
+            "version_code": 196,
             "filename": APK_NAME,
-            "url": (
-                "https://github.com/corinthianrattler-ui/aetherion-updates/"
-                "releases/download/v1.72.6/"
-                f"{APK_NAME}"
-            ),
+            "url": APK_URL,
             "size": APK_SIZE,
             "sha256": APK_SHA256,
-            "signing_certificate_sha256": (
-                "5e68318c3e12c9f5915976a25bbfd5039a2f7e651682b65744b2747b618c3e77"
-            ),
+            "signing_certificate_sha256": CERT_SHA256,
         },
-        "payloads": [payload(path, previous) for path in paths],
+        "payloads": [],
         "notes": (
-            "Version 1.73.8 forces a new save-safe portrait repair even when an older portrait migration marker is already present. Eligible workers and bannerless knights are restored to matching full-body art. Portrait display now uses a WebView-reliable encoded CDN path, retries the same full-body file through the raw source, and never falls back to cloned dynasty heads; a neutral rose appears only if both network sources fail. Direct roster, modal, and shop-worker render paths share the same delivery rule. No people, jobs, mechanics, items, locations, story, custom art, or save progress are removed. Version 1.73.7 moves the Aetherion sky dial down into the clear top-right HUD pocket beside the lower status rows, preventing it from covering the settlement name or any status control. Its size, interaction, moving sun, blood moon and time mechanics are unchanged. Version 1.73.6 adds a compact original Aetherion sky dial to the top-right HUD with a moving sun, a blood-red 28-day moon cycle, exact time, seasonal sunrise and sunset, and rose ornamentation. The dial opens a time panel with one-hour, three-hour, dawn and dusk waiting. Waiting advances hunger, thirst, schedules and world events without restoring sleep; persistent wakefulness causes tiredness, sleep deprivation, movement loss, energy loss and eventual collapse damage. All Sleep actions now run from the current hour to the next seasonal dawn, including midday sleep, while camp shelter, morale, security, moonlit visibility and the supplied sleep film remain active. The stable channel is bundled and checksum-verified to remain below the installed updater's 100,000-byte limit without dropping any earlier repair. Version 1.73.5 adds the supplied guard-watch film and plays it only after a successful guard assignment at an established camp with a physical Watch Post and an eligible present fighter. Failed guard requirements play no film. Version 1.73.4 gives every camp film a matching first-frame poster, suppresses Android's native gray play overlay, retries playback when media becomes ready, and falls back to muted autoplay if the WebView blocks sound autoplay. Only the small Skip button remains interactive. Assign Guard Watch now requires both an established camp and a physical Watch Post; removing the final post clears its guard assignment. Version 1.73.3 removes every native video control from the camp films, including pause, playback, seeking, fullscreen and download. Each film autoplays after its successful action and exposes only a small Skip button. Make Camp consumes two hours, Take Down Camp one hour, cooking two hours and sleep until the next seasonal dawn; blocked actions consume nothing. Version 1.73.2 adds four distinct camp films and maps them exactly to successful Make Camp, Take Down Camp, Cook Company Meal, and Sleep actions. Camp prerequisites remain authoritative: blocked actions do not play a film. Media failure cannot undo an action or damage save state, and the camp returns to its interactive map when a film finishes. Version 1.73.1 adds 12 new individually generated 2:3 full-body bannerless-knight portraits covering young and older men and women with distinct faces, builds, hair, armor, weapons and poses. A one-time, save-safe repair rebalances the starting twenty mounted retainers across ten compatible full-body identities, with no image used more than three times even when one visual-age group is larger. It matches stored gender and visual age, keeps four compatible full-body v1.73.0 knights in circulation, and preserves canonical, named, user-supplied and custom-companion art. Curated roster thumbnails now use uncropped 2:3 presentation, lazy decoding and low fetch priority. The update removes redundant per-card and legacy whole-world identity repairs from ordinary redraws, preventing older upgrade code from changing curated art back to dynasty heads. It bounds settlement, labor, surgeon and recruit setup to one structural pass per save version and skips unchanged staffed-commerce setup while preserving one-time worker creation for a new shop. It removes no characters, jobs, items, mechanics, locations, story, or save progress. Version 1.73.0 adds 268 unique, labeled full-body portraits to the existing curated library for 379 reviewed portrait choices. It deduplicates the recruitable catalog against the complete worker catalog; routes art by persistent identity, occupation, gender, visual age, race and bannerless status; and preserves named, canonical, user-created and unique-character art. Twelve teen, toddler and baby portraits appear only as ambient household members and are never workers or recruitable applicants. Missing catalog occupations now have real systems: named bankers keep counter hours inside the existing reserve and currency mechanics; beekeepers, goatherds and poultry keepers maintain persistent hives, herds and flocks that respond to time, season and weather; and skilled artisans plus distinct bannerless archer, crossbowman, sergeant, swordsman, footman and militia-recruit contracts enter labor and recruit halls. Honeycomb, beeswax, goat milk and eggs enter local stock and affect settlement health and prosperity. Existing saves migrate once, newly created people are checked individually, and redraws, schedules and daily ticks never trigger whole-world portrait scans. GitHub portrait delivery has a packaged-art fallback so an offline image cannot break a person view. Version 1.72.10 restores Lady Alexus's original authored anatomy map, maps the actual complete dress mesh to her gown slot, and removes the rejected fabricated torso clone while retaining the v1.72.8 equipment-state and v1.72.7 vertical-scrolling repairs. "
-            "Version 1.72.6 is Android build 195. It restores Lady Alexus's supplied 3D model in her Equipment view and uniquely classifies all 28 mesh sections into foundation plus 12 independently controlled fitted wardrobe slots. Her main-hand, off-hand, ranged, reserve, and ammunition pieces remain independent equipment cards because the supplied GLB has no geometry for those five pieces; nothing is fabricated or falsely described as visible geometry. Portrait-phone layout now constrains the game, modals, equipment, shops, selectors, Systems dock, and notices to one vertical viewport, removing sideways page scrolling and the right-side void. Ordinary shop and market purchases route directly to Valkorion's Carried Inventory. Quartermaster requisitions resolve the correct fitted wagon crate first, then the next compatible crate with capacity, and never treat an empty bare wagon floor as ordinary item storage. The small gameplay repair is available through the in-game updater on v1.72.5, while the full APK retains every prior asset and uses the exact same signing identity. Version 1.72.5 is Android build 194. It restores the fitted 17-slot Valkorion model, makes armor, court clothing, weapons, ammunition, cloak, and jewelry independently visible, and allows armor and court pieces to be mixed without swapping a whole-body model. Removing one item hides only that item. A shared registration contract rejects future baked or partial character models. Version 1.72.4 is Android build 193. It corrects the reversed native query and fragment branches that prevented versioned game files from loading, retains WebView cache between launches, loads the optional Three.js and WebLLM runtimes only when their systems are opened, and prevents already-current state from traversing the entire migration chain on every render. Version 1.72.3 is the fully scanned Android build 192 repair. It removes the false "
-            "web-patch-as-APK success path, proves the installed native package with a bundled "
-            "build marker, clears the hidden opening-film guard before Continue renders, mounts Valkorion on both Character and Equipment screens, displays a "
-            "small live 3D status badge, repairs two zero-byte legacy images, and retains the "
-            "original update-compatible signing identity. Version 1.72.2 replaces the Android file:// game origin with a secure internal "
-            "HTTPS-style asset route, allowing the bundled Three.js loader to read the supplied "
-            "Valkorion and Lady Alexus GLBs. The full APK is required because this correction is "
-            "inside the native WebView shell; the staged channel adds a visible full-APK download "
-            "path and does not pretend JavaScript alone can replace it. File access remains disabled. "
-            "The APK's three fitted models use shape-preserving KHR_mesh_quantization without mesh "
-            "simplification, cutting their combined bytes and GPU attribute memory while retaining "
-            "all 23 base/Lord parts, 40 armor parts, 28 Lady Alexus parts, materials, and transforms. "
-            "Version 1.72.1 repairs the live v80 wardrobe connection that was skipped when "
-            "historical v97/v98 viewer globals were absent. The supplied Valkorion base, "
-            "Lord, complete 40-piece armor, and Lady Alexus models now replace the flat "
-            "portrait fallback in their actual viewers. The verified v1.72 model files are "
-            "unchanged; Android build 190 corrects the loader hook and retains every v1.72 "
-            "mobile optimization. Version 1.72.0 repairs Continue, removes the floating gold update control and "
-            "Android blue tap flash, and keeps Game Updates inside the opening menu and Systems. "
-            "Android build 189 uses the supplied fitted Valkorion base body, Lord's royal "
-            "armor, complete armored kit, and his twin sister Lady Alexus Dominus's gothic-ball-gown model. The release "
-            "preserves every fitted model part and authored transform while using bounded-error "
-            "mobile geometry; all three GLBs are below the 50 MB mobile and Tripo target. It also "
-            "removes repeated full-page observers, continuous idle rendering, and repeated model "
-            "reframing. The Game Updates screen shows the exact channel address, received bytes, "
-            "percentage, verification, install, and restart states. Base and "
-            "Lord modes switch fitted-node visibility without rebuilding or separating the "
-            "figure, complete armor changes the loaded source cleanly, and Lady Alexus's model "
-            "loads only inside her person or equipment view. Android build 187 restores the "
-            "finished 40-piece assembled Valkorion kit and "
-            "playable Corvinus Keep jousting, armored-duel, and archery tournaments with the "
-            "corrected heraldic scenes. The 106,006,128-byte finished GLB is bundled in the full "
-            "APK because it exceeds GitHub's ordinary single-file repository limit. Rejected "
-            "exploded, simplified, empty-arena, and rain-only variants are not active. Existing "
-            "saves and all prior game systems are preserved. The bundled updater retrieves the "
-            "stable channel through GitHub's JavaScript-safe Contents response, decodes the "
-            "exact channel bytes locally, and retains a script-safe CDN fallback; it no longer "
-            "asks Android to execute GitHub's raw text/plain response. The startup access repair "
-            "is bundled into the APK: every app launch now stops at the opening menu, even when "
-            "an autosave exists, so Continue and Game Updates remain reachable without deleting "
-            "any timeline. Game Updates is also kept in the live Systems dock. "
-            "The safe updater receives complete patch source before activation; "
-            "enforces per-module SHA-256 checks, strict size limits, and trusted asset "
-            "origins; stages updates locally; retains the previous release; automatically "
-            "rolls back an update that cannot finish starting; and provides Safe Start once "
-            "plus a permanent return to the built-in version without deleting game saves. "
-            "It also retains the startup and gameplay hotfix for the curated portrait update. Removes "
-            "whole-world identity and portrait scans from render, list-view, portrait-view, "
-            "daily-tick, and already-migrated save paths; save migration now runs once per "
-            "version and new NPC creation remains checked at its source. A 1,219-person "
-            "stress save now performs zero portrait-record checks across repeated redraws. "
-            "The library still installs 110 new lore-matched, labeled "
-            "full-body NPC portraits plus the unchanged original Quartermaster role "
-            "portrait. Every image is explicitly tagged for sex, visual age band, race, "
-            "occupation, faction, mounted status, and individual-person use. Routing is "
-            "deterministic and location-aware; one curated face cannot be assigned twice "
-            "in the active world. Exact named-character art remains locked, including "
-            "Quartermaster Halric Morn, Kael, Valkorion, Alexus, Libita, Nessa, surgeons, "
-            "officers, and unique companions. Incompatible or unavailable art falls back "
-            "without changing identity or save progress. The 19.91 MiB library covers "
-            "human, dwarf, elf, dark-elf, ordinary-orc, Grimhorn beast-orc, civilian, "
-            "child, infant, elder, knight, guard, rider, and lore-faction roles. All prior "
-            "economy, shop, wine, wage, dialogue, Narrator, Sophia Help, item-purpose, "
-            "and world-integrity repairs remain active. Existing saves are preserved. "
-            "Restart after applying."
+            "Android build 196 is a content-preserving maintenance rebuild made directly "
+            "from the verified 499 MB build 195 app. It retains the offline Piper neural "
+            "voices, every model, map, film, mechanic and save format. It packages 280 local "
+            "full-body portraits, repairs cloned-head fallback routing, gives the sky dial its "
+            "own header space, preserves sleep-to-seasonal-dawn, waiting, moon phases and Watch "
+            "Post guard rules, and removes only verified unreferenced technical patch copies and "
+            "obsolete build markers. The new signed updater can add, replace and retire files, "
+            "keeps one rollback and garbage-collects obsolete downloaded blobs without touching saves."
         ),
         "save_policy": {"managed": False, "preserve_always": True},
     }
     (ROOT / "manifest.json").write_text(
         json.dumps(manifest, indent=2, ensure_ascii=False) + "\n", encoding="utf-8"
     )
-    print(f"manifest.json: wrote {len(paths)} verified payload entries for v1.73.8")
+    print("manifest.json: full-APK handoff to v1.74.0 build 196")
 
 
 if __name__ == "__main__":

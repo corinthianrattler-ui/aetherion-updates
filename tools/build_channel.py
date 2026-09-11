@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build the bounded stable channel for the v1.73.8 portrait repair."""
+"""Build the legacy-channel handoff to the complete v1.74.0 APK."""
 
 from __future__ import annotations
 
@@ -9,16 +9,14 @@ import argparse
 import datetime as dt
 from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
-PATCHES = [
-    ("v1738-stable-bundle", ROOT / "patches" / "v1.73.8-stable-bundle.js"),
-]
-APK_NAME = "Aetherion_Reforged_v1.72.6_GAMEPLAY_REPAIR_FULL.apk"
+PATCHES = []
+APK_NAME = "Aetherion_Reforged_v1.74.0_CLEAN_MAINTENANCE_FULL.apk"
 APK_URL = (
     "https://github.com/corinthianrattler-ui/aetherion-updates/"
-    f"releases/download/v1.72.6/{APK_NAME}"
+    f"releases/download/v1.74.0/{APK_NAME}"
 )
-APK_SHA256 = "2fd692cb05cb163e5bde55abfae8789c3131e15e956831921abe07f905f2c645"
-APK_SIZE = 499_039_030
+APK_SHA256 = "08791fdc068bcfa6a1809961dc01954c3f1d614cf5a684f4b33fd2308be0d3c7"
+APK_SIZE = 543_684_738
 
 
 def file_sha256(path: Path) -> str:
@@ -52,18 +50,20 @@ def main() -> None:
         "schema": 2,
         "channel": "stable",
         "release": {
-            "version": "1.73.8",
-            # This content update targets the verified v1.72.6 full APK. It
-            # contains no native files and can stage on Android build 195.
-            "build": 195,
+            "version": "1.74.0",
+            # Build 196 changes the packaged game and updater, so build 195
+            # must use the complete same-signature APK instead of stacking
+            # another web patch.
+            "build": 196,
             "minimumBundled": "1.72.6",
             "releasedAt": dt.datetime.now(dt.timezone.utc).replace(microsecond=0).isoformat().replace("+00:00", "Z"),
-            "requiresApk": False,
+            "requiresApk": True,
             "apkUrl": APK_URL,
             "apkSha256": APK_SHA256,
             "apkSize": APK_SIZE,
             "notes": [
-                "Repairs full-body portraits and existing saves.",
+                "Complete maintenance rebuild; preserves voices, content, mechanics and saves.",
+                "Repairs full-body portrait routing and removes only verified technical debris.",
             ],
             "modules": modules,
             # Image URLs are constructed from one fixed trusted repository root
@@ -94,7 +94,7 @@ def main() -> None:
     assert len(encoded) <= 100_000, f"channel exceeds the bundled safe-updater limit: {len(encoded):,} bytes"
     (ROOT / "channel.js").write_bytes(encoded)
     print(
-        f"channel.js: {len(modules)} bundled v1.72.6-compatible module, 280 portraits, 5 camp films, {len(encoded):,} bytes"
+        f"channel.js: full-APK handoff to Android build 196, {len(encoded):,} bytes"
     )
 
 

@@ -4,6 +4,7 @@
   const VERSION = '1.74.4';
   const STYLE_ID = 'aetherion-v1744-hud-quartermaster-hotfix';
   const SPECIAL_PATH = 'custom/npc-portraits/v168/00_quartermaster_original_unchanged.webp';
+  const REMOTE_SPECIAL = 'https://cdn.jsdelivr.net/gh/corinthianrattler-ui/aetherion-updates@829c283d4e1140c51ebb21ffc8bc6bd64a51f808/custom/npc-portraits/v168/00_quartermaster_original_unchanged.webp';
   const TARGET = 'edwyn rook';
   const runtime = { stateRepairs: 0, domRepairs: 0, scans: 0 };
 
@@ -23,8 +24,10 @@
   };
 
   const assetUrl = () => {
-    try { return window.AetherionUpdater?.asset?.(SPECIAL_PATH) || SPECIAL_PATH; }
-    catch (_) { return SPECIAL_PATH; }
+    try {
+      const routed = window.AetherionUpdater?.asset?.(SPECIAL_PATH);
+      return routed && routed !== SPECIAL_PATH ? routed : REMOTE_SPECIAL;
+    } catch (_) { return REMOTE_SPECIAL; }
   };
 
   function installStyle() {

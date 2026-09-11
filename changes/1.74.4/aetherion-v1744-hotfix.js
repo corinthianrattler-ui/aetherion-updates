@@ -189,7 +189,6 @@
       scheduled = false;
       installStyle();
       installPortraitCoreOverride();
-      repairLiveState();
       repairRenderedPortraits();
     };
     (window.requestAnimationFrame || (fn => setTimeout(fn, 0)))(run);
@@ -213,6 +212,9 @@
   repairLiveState();
   repairRenderedPortraits();
   installObserver();
-  document?.addEventListener?.('aetherion:update-ready', scheduleRepair);
+  document?.addEventListener?.('aetherion:update-ready', () => {
+    repairLiveState();
+    scheduleRepair();
+  });
   setTimeout(scheduleRepair, 50);
 })();

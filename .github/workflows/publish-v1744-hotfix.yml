@@ -6,6 +6,7 @@ on:
     paths:
       - '.github/workflows/publish-v1744-hotfix.yml'
       - 'changes/1.74.4/**'
+      - 'channel.js'
   workflow_dispatch:
 
 permissions:
@@ -18,20 +19,41 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Validate hotfix source
+      - name: Validate live compatibility hotfix
         shell: bash
         run: |
           set -euo pipefail
           node --check changes/1.74.4/aetherion-v1744-hotfix.js
+          node --check channel.js
           test -s custom/npc-portraits/v168/00_quartermaster_original_unchanged.webp
+          echo 'f2df55f5ab385a161aaccc22b039863f975fee6e549a196af60e46ddf6e865cf  changes/1.74.4/aetherion-v1744-hotfix.js' | sha256sum --check --strict
           grep -F "position:absolute!important" changes/1.74.4/aetherion-v1744-hotfix.js >/dev/null
+          grep -F "aetherion-android-safearea" changes/1.74.4/aetherion-v1744-hotfix.js >/dev/null
           grep -F "00_quartermaster_original_unchanged.webp" changes/1.74.4/aetherion-v1744-hotfix.js >/dev/null
+          grep -F "e103ec3098be9f6dd90657a9e085370e319c11f5/changes/1.74.4/aetherion-v1744-hotfix.js" channel.js >/dev/null
+          grep -F "f2df55f5ab385a161aaccc22b039863f975fee6e549a196af60e46ddf6e865cf" channel.js >/dev/null
+          curl -fsSL --retry 3 --retry-delay 1 \
+            'https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/e103ec3098be9f6dd90657a9e085370e319c11f5/changes/1.74.4/aetherion-v1744-hotfix.js' \
+            -o /tmp/live-v1744-hotfix.js
+          echo 'f2df55f5ab385a161aaccc22b039863f975fee6e549a196af60e46ddf6e865cf  /tmp/live-v1744-hotfix.js' | sha256sum --check --strict
+          node --check /tmp/live-v1744-hotfix.js
+          curl -fsSL --retry 3 --retry-delay 1 \
+            'https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/channel.js' \
+            -o /tmp/live-channel.js
+          node --check /tmp/live-channel.js
+          cmp -s channel.js /tmp/live-channel.js
+          curl -fsSL --retry 3 --retry-delay 1 \
+            'https://cdn.jsdelivr.net/gh/corinthianrattler-ui/aetherion-updates@829c283d4e1140c51ebb21ffc8bc6bd64a51f808/custom/npc-portraits/v168/00_quartermaster_original_unchanged.webp' \
+            -o /tmp/edwyn.webp
+          test "$(stat -c%s /tmp/edwyn.webp)" -gt 1000
+          echo 'Compatibility hotfix source, channel bootstrap, and Edwyn portrait are live and verified.'
 
       - name: Install signing dependency
         shell: bash
         run: python3 -m pip install --disable-pip-version-check --quiet cryptography
 
-      - name: Build signed cumulative v1.74.4 update
+      - name: Build signed cumulative v1.74.4 update when signer is available
+        id: signed
         shell: bash
         env:
           AETHERION_UPDATE_PRIVATE_KEY: ${{ secrets.AETHERION_UPDATE_PRIVATE_KEY }}
@@ -40,8 +62,9 @@ jobs:
           keydir=/tmp/aetherion-update-signing
           install -m 700 -d "$keydir"
           if [ -z "${AETHERION_UPDATE_PRIVATE_KEY:-}" ]; then
-            echo '::error::AETHERION_UPDATE_PRIVATE_KEY is not configured for this repository.'
-            exit 1
+            echo 'published=false' >> "$GITHUB_OUTPUT"
+            echo 'The repository has no AETHERION_UPDATE_PRIVATE_KEY secret; signed v2 packaging is skipped. The verified legacy compatibility channel remains active.'
+            exit 0
           fi
           printf '%s' "$AETHERION_UPDATE_PRIVATE_KEY" > "$keydir/private.pem"
           chmod 600 "$keydir/private.pem"
@@ -50,8 +73,10 @@ jobs:
             --extension v1744-hud-quartermaster-hotfix=changes/1.74.4/aetherion-v1744-hotfix.js \
             --asset custom/npc-portraits/v168/00_quartermaster_original_unchanged.webp=custom/npc-portraits/v168/00_quartermaster_original_unchanged.webp \
             --notes "Fixes the Android top HUD and House Dominus dial placement and restores Quartermaster Edwyn Rook's unique original portrait. No APK replacement or save reset is required."
+          echo 'published=true' >> "$GITHUB_OUTPUT"
 
-      - name: Verify generated channel and signature
+      - name: Verify generated signed channel
+        if: steps.signed.outputs.published == 'true'
         shell: bash
         run: |
           set -euo pipefail
@@ -69,7 +94,7 @@ jobs:
           assert hashlib.sha256(manifest_bytes).hexdigest() == release['manifestSha256']
           manifest = json.loads(manifest_bytes)
           by_id = {f['id']: f for f in manifest['files']}
-          assert 'dominus-blood-dial' in by_id, 'prior House Dominus dial was not inherited'
+          assert 'dominus-blood-dial' in by_id
           assert 'v1744-hud-quartermaster-hotfix' in by_id
           assert any(f.get('path') == 'custom/ui/dominus-time/dominus-blood-dial-base.webp' for f in manifest['files'])
           assert any(f.get('path') == 'custom/npc-portraits/v168/00_quartermaster_original_unchanged.webp' for f in manifest['files'])
@@ -87,7 +112,8 @@ jobs:
           print('v1.74.4 cumulative manifest and RSA signature verified')
           PY
 
-      - name: Publish update channel
+      - name: Publish signed update channel
+        if: steps.signed.outputs.published == 'true'
         shell: bash
         run: |
           set -euo pipefail

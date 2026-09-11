@@ -48,6 +48,35 @@ jobs:
           test "$(stat -c%s /tmp/edwyn.webp)" -gt 1000
           echo 'Compatibility hotfix source, channel bootstrap, and Edwyn portrait are live and verified.'
 
+      - name: Confirm current v1.74.3 APK reaches compatibility channel
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          apk='Aetherion_Reforged_v1.74.3_FULL_GAME_REPAIR.apk'
+          gh release download v1.74.3 --pattern "$apk"
+          echo 'd055b620e9f434fbba8ce0505d293be3141f072b81543a34340db0ca4996e00f  Aetherion_Reforged_v1.74.3_FULL_GAME_REPAIR.apk' | sha256sum --check --strict
+          python3 - <<'PY'
+          import re, zipfile
+          apk='Aetherion_Reforged_v1.74.3_FULL_GAME_REPAIR.apk'
+          with zipfile.ZipFile(apk) as z:
+              index=z.read('assets/game/index.html').decode('utf-8','replace')
+              refs=re.findall(r'<script[^>]+src=["\']([^"\']+)', index, flags=re.I)
+              reachable=[]
+              for ref in refs:
+                  clean=ref.split('?',1)[0].lstrip('./')
+                  path='assets/game/'+clean
+                  if path not in z.namelist():
+                      continue
+                  try: text=z.read(path).decode('utf-8','replace')
+                  except Exception: continue
+                  if 'channel.js' in text and 'scheduleAutomaticCheck' in text and 'checkForUpdates' in text:
+                      reachable.append(path)
+              print('compatibility-channel bootstrap scripts:', reachable)
+              assert reachable, 'The installed v1.74.3 index does not execute a legacy updater that checks channel.js.'
+          PY
+
       - name: Install signing dependency
         shell: bash
         run: python3 -m pip install --disable-pip-version-check --quiet cryptography

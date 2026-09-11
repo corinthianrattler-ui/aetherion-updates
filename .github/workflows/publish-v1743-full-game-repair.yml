@@ -1,0 +1,73 @@
+name: Publish Aetherion v1.74.3 complete game repair APK
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/publish-v1743-full-game-repair.yml'
+      - '.release-patches/v1.74.2-to-v1.74.3/**'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install reconstruction tools
+        shell: bash
+        run: |
+          set -euo pipefail
+          sudo apt-get update
+          sudo apt-get install --yes zstd unzip
+
+      - name: Download and verify the complete v1.74.2 base
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          base='Aetherion_Reforged_v1.74.2_FULLBODY_BUGFIX_FULL.apk'
+          gh release download v1.74.2 --pattern "$base"
+          test "$(stat -c%s "$base")" = '519356685'
+          echo '81d0d1d3fdad0fd06e3a37a25e3d130db336faa673b46188df8cc06de4f945dc  Aetherion_Reforged_v1.74.2_FULLBODY_BUGFIX_FULL.apk' | sha256sum --check --strict
+
+      - name: Verify the exact reconstruction transport
+        shell: bash
+        run: |
+          set -euo pipefail
+          patch='.release-patches/v1.74.2-to-v1.74.3/v1.74.2-to-v1.74.3.zstpatch'
+          test "$(stat -c%s "$patch")" = '590171'
+          echo '9a87c280e7123d09bc952a739a334e199a6c5c581bcff793dbcce51e8f553168  .release-patches/v1.74.2-to-v1.74.3/v1.74.2-to-v1.74.3.zstpatch' | sha256sum --check --strict
+
+      - name: Reconstruct and verify signed Android build 198
+        shell: bash
+        run: |
+          set -euo pipefail
+          base='Aetherion_Reforged_v1.74.2_FULLBODY_BUGFIX_FULL.apk'
+          patch='.release-patches/v1.74.2-to-v1.74.3/v1.74.2-to-v1.74.3.zstpatch'
+          output='Aetherion_Reforged_v1.74.3_FULL_GAME_REPAIR.apk'
+          zstd --decompress --long=30 --patch-from="$base" "$patch" -o "$output"
+          test "$(stat -c%s "$output")" = '519238034'
+          echo 'd055b620e9f434fbba8ce0505d293be3141f072b81543a34340db0ca4996e00f  Aetherion_Reforged_v1.74.3_FULL_GAME_REPAIR.apk' | sha256sum --check --strict
+          unzip -tq "$output"
+          jarsigner -verify "$output"
+
+      - name: Publish the complete repaired Android app
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          apk='Aetherion_Reforged_v1.74.3_FULL_GAME_REPAIR.apk'
+          notes='Android build 198 is a complete replacement APK, not a downloaded overlay. It removes the repeated portrait startup scans that made difficulty selection take minutes, consolidates the portrait system into one indexed pass, and scopes full-body sizing to the correct person-card layouts. Fresh games, all four difficulties, old-save migration, 40 screens, 713 controls, battle, travel, hiring, crafting, voice handoff, save/reload, and a 32-day simulation were validated from the exact signed APK. Four named underworld contacts, prisoners, port officers, clothiers, stevedores, surgeons, fishing crew, bonded workers, and old saved portrait paths now resolve to packaged full-body art without scene/item pictures being stored as personal portraits. Thirteen additional obsolete head/bust files and eight redundant runtime files are absent; all already-valid full-body art stays. The full Piper neural voice payload, story, mechanics, maps, models, films, items, native libraries, and save format are preserved. Install over the current app; do not uninstall or clear data. APK SHA-256: d055b620e9f434fbba8ce0505d293be3141f072b81543a34340db0ca4996e00f'
+          if gh release view v1.74.3 >/dev/null 2>&1; then
+            gh release upload v1.74.3 "$apk" --clobber
+            gh release edit v1.74.3 --target "$GITHUB_SHA" --title 'Aetherion Reforged v1.74.3 (Android build 198)' --notes "$notes"
+          else
+            gh release create v1.74.3 "$apk" --target "$GITHUB_SHA" --title 'Aetherion Reforged v1.74.3 (Android build 198)' --notes "$notes"
+          fi

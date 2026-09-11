@@ -3,18 +3,18 @@
   "appId": "aetherion-reforged",
   "channel": "stable",
   "release": {
-    "version": "1.74.2",
-    "build": 197,
-    "releasedAt": "2026-09-11T06:35:36Z",
-    "apkUrl": "https://github.com/corinthianrattler-ui/aetherion-updates/releases/download/v1.74.2/Aetherion_Reforged_v1.74.2_FULLBODY_BUGFIX_FULL.apk",
-    "apkSha256": "81d0d1d3fdad0fd06e3a37a25e3d130db336faa673b46188df8cc06de4f945dc",
-    "apkSize": 519356685,
+    "version": "1.74.3",
+    "build": 198,
+    "releasedAt": "2026-09-11T10:10:09Z",
+    "apkUrl": "https://github.com/corinthianrattler-ui/aetherion-updates/releases/download/v1.74.3/Aetherion_Reforged_v1.74.3_FULL_GAME_REPAIR.apk",
+    "apkSha256": "d055b620e9f434fbba8ce0505d293be3141f072b81543a34340db0ca4996e00f",
+    "apkSize": 519238034,
     "notes": [
-      "Complete replacement APK; install over the current app without uninstalling so saves remain in place.",
-      "All Piper neural voices, models, maps, films, mechanics, story, items, and the existing save format are preserved.",
-      "Every known NPC head/bust reference now migrates to compatible packaged full-body art; existing full-body art is left unchanged.",
-      "Only 163 obsolete head/bust portrait files and three superseded technical updater markers were physically removed.",
-      "Includes the House Dominus Blood Rose sky dial with live sun, blood moon, Wait, and Sleep Until Dawn behavior intact."
+      "Complete replacement APK, not a downloaded overlay; install over the current app without uninstalling so saves remain in place.",
+      "Removes repeated portrait startup scans and consolidates full-body routing into one cached, single-pass system.",
+      "Fixes person-picture routing and layout across workers, criminals, prisoners, port officers, surgeons, fishing crew, bonded workers, households, and old saves.",
+      "All Piper neural voices, story, mechanics, maps, models, films, items, valid full-body art, native libraries, and the save format are preserved.",
+      "Validated from the exact signed APK across all four difficulties, 40 screens, 713 controls, gameplay routes, save/reload, and a 32-day simulation."
     ]
   }
 }

@@ -1,0 +1,30 @@
+name: Export v1.74.3 APK artifact
+
+on:
+  push:
+    paths:
+      - '.github/workflows/export-v1743-apk-artifact.yml'
+
+permissions:
+  contents: read
+
+env:
+  APK_URL: https://github.com/corinthianrattler-ui/aetherion-updates/releases/download/v1.74.3/Aetherion_Reforged_v1.74.3_FULL_GAME_REPAIR.apk
+  APK_SHA256: d055b620e9f434fbba8ce0505d293be3141f072b81543a34340db0ca4996e00f
+
+jobs:
+  export:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Download exact current full APK
+        run: |
+          curl -fL --retry 5 --retry-delay 2 "$APK_URL" -o Aetherion_Reforged_v1.74.3_FULL_GAME_REPAIR.apk
+          echo "$APK_SHA256  Aetherion_Reforged_v1.74.3_FULL_GAME_REPAIR.apk" | sha256sum -c -
+      - name: Upload exact APK as workflow artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: aetherion-v1743-exact-apk
+          path: Aetherion_Reforged_v1.74.3_FULL_GAME_REPAIR.apk
+          compression-level: 0
+          retention-days: 1

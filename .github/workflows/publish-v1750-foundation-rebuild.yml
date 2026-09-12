@@ -1,0 +1,131 @@
+name: Publish Aetherion v1.75.0 full foundation rebuild
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.release-triggers/v1750-foundation-rebuild.txt'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install reconstruction tools
+        shell: bash
+        run: |
+          set -euo pipefail
+          sudo apt-get update
+          sudo apt-get install --yes zstd unzip
+
+      - name: Download verified signed source APKs
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          base='Aetherion_Reforged_v1.74.3_FULL_GAME_REPAIR.apk'
+          legacy='Aetherion_Reforged_v1.66.1_Immersive_Narrator_Sophia.apk'
+          gh release download v1.74.3 --pattern "$base"
+          gh release download v1.66.1 --pattern "$legacy"
+          test "$(stat -c%s "$base")" = '519238034'
+          echo 'd055b620e9f434fbba8ce0505d293be3141f072b81543a34340db0ca4996e00f  Aetherion_Reforged_v1.74.3_FULL_GAME_REPAIR.apk' | sha256sum --check --strict
+          test "$(stat -c%s "$legacy")" = '534398594'
+          echo '6dcbff5ddabfeab9b3e22010672cf39322f93782ba452fdf5b0ea027a709037f  Aetherion_Reforged_v1.66.1_Immersive_Narrator_Sophia.apk' | sha256sum --check --strict
+
+      - name: Rebuild deterministic legacy-media base
+        shell: bash
+        run: |
+          set -euo pipefail
+          cp Aetherion_Reforged_v1.74.3_FULL_GAME_REPAIR.apk v1743_plus_legacy_videos.apk
+          python - <<'PY'
+          import zipfile, hashlib
+          legacy='Aetherion_Reforged_v1.66.1_Immersive_Narrator_Sophia.apk'
+          mid='v1743_plus_legacy_videos.apk'
+          files={
+            'assets/game/assets/v52/pleasure_tavern_01.mp4':('ec7e3e49246c727d5be30805f690aa6b2af093305483af7e5c0c5da2c158ce18',22679023),
+            'assets/game/assets/v52/pleasure_tavern_02.mp4':('e73ed3a69e2d75992a2a21cf268e7ec1fc6dae6fd83d96d78d72c79deb9eb926',10118496),
+            'assets/game/assets/v52/pleasure_tavern_03.mp4':('6b324741f8619b5fc4646fe31b4855df32ca42857784e13c9c36703c09f1569e',14540187),
+            'assets/game/assets/v54/camp_pleasure_01.mp4':('aafcb83e4027d44bb5a1471bdf7e28fce38e98a5385738ddf8ab4b9eee48538b',17014729),
+            'assets/game/assets/v54/camp_pleasure_02.mp4':('c82452acff3b62e7dcd1739ee149fb5d69012719253b4c785370c3e186481a44',9490825),
+          }
+          with zipfile.ZipFile(legacy,'r') as zo, zipfile.ZipFile(mid,'a') as zm:
+              for name,(want_hash,want_size) in files.items():
+                  data=zo.read(name)
+                  got=hashlib.sha256(data).hexdigest()
+                  assert len(data)==want_size, (name,len(data),want_size)
+                  assert got==want_hash, (name,got,want_hash)
+                  zi=zipfile.ZipInfo(name,(1980,1,1,0,0,0))
+                  zi.compress_type=zipfile.ZIP_STORED
+                  zi.create_system=3
+                  zi.external_attr=(0o100644 << 16)
+                  zm.writestr(zi,data,compress_type=zipfile.ZIP_STORED)
+          PY
+          test "$(stat -c%s v1743_plus_legacy_videos.apk)" = '593081294'
+          echo '9897812e1fa1fa6817f5c26bebad0bd61c191608deee7d5f4ff0010390d6c8a6  v1743_plus_legacy_videos.apk' | sha256sum --check --strict
+
+      - name: Reconstruct exact signed v1.75.0 APK
+        shell: bash
+        run: |
+          set -euo pipefail
+          cat .release-patches/v1.74.3-to-v1.75.0/final-patch.b64.part-* > final-patch.b64
+          base64 --decode final-patch.b64 > mid-to-final.zstpatch
+          test "$(stat -c%s mid-to-final.zstpatch)" = '1878770'
+          echo '4b556743a08d031a0a645e4b6368e5a5502c764152e31c236bad98c8e00cbf1e  mid-to-final.zstpatch' | sha256sum --check --strict
+          out='Aetherion_Reforged_v1.75.0_FULL_FOUNDATION_REBUILD.apk'
+          zstd --decompress --long=30 --patch-from=v1743_plus_legacy_videos.apk mid-to-final.zstpatch -o "$out"
+          test "$(stat -c%s "$out")" = '583478575'
+          echo 'a79795fbbb3d84365d3031dff5410299422d9188417c1e23c164ffa65fd7af4d  Aetherion_Reforged_v1.75.0_FULL_FOUNDATION_REBUILD.apk' | sha256sum --check --strict
+          unzip -tq "$out"
+          jarsigner -verify "$out"
+
+      - name: Audit restored content and code
+        shell: bash
+        run: |
+          set -euo pipefail
+          out='Aetherion_Reforged_v1.75.0_FULL_FOUNDATION_REBUILD.apk'
+          rm -rf audit && mkdir audit
+          unzip -q "$out" 'assets/game/*' -d audit
+          python - <<'PY'
+          import zipfile
+          p='Aetherion_Reforged_v1.75.0_FULL_FOUNDATION_REBUILD.apk'
+          required=[
+            'assets/game/assets/v52/pleasure_tavern_01.mp4',
+            'assets/game/assets/v52/pleasure_tavern_02.mp4',
+            'assets/game/assets/v52/pleasure_tavern_03.mp4',
+            'assets/game/assets/v54/camp_pleasure_01.mp4',
+            'assets/game/assets/v54/camp_pleasure_02.mp4',
+            'assets/game/systems-v1746-tournaments.js',
+            'assets/game/systems-v1747-living-roads.js',
+            'assets/game/custom/items/v1747/dominus-tourney-lance.webp',
+            'assets/game/custom/npc-portraits/v1750/quartermaster-edwyn-rook-dominus.webp',
+          ]
+          with zipfile.ZipFile(p) as z:
+              names=z.namelist()
+              assert len(names)==len(set(names)), 'duplicate APK paths found'
+              for r in required: assert r in names, r
+              assert sum(n.lower().endswith('.mp4') for n in names)==23
+              assert sum(n.lower().endswith(('.mp3','.wav','.ogg','.flac')) for n in names)==111
+          PY
+          while IFS= read -r -d '' f; do node --check "$f" >/dev/null; done < <(find audit/assets/game -type f -name '*.js' -print0)
+
+      - name: Publish v1.75.0 release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          apk='Aetherion_Reforged_v1.75.0_FULL_FOUNDATION_REBUILD.apk'
+          notes='Full foundation rebuild. Restores the missing original Libita tavern/camp media, preserves the packaged custom neural voices and 111 audio assets, carries forward the tournament and Living Roads systems, keeps the approved House Dominus content, repairs portrait identity routing including carriage-driver/baby cross-mapping, and removes only obsolete technical clutter rather than game content. The exact release APK was checksum-verified, ZIP-tested, JavaScript syntax-checked and Android-signature verified. APK SHA-256: a79795fbbb3d84365d3031dff5410299422d9188417c1e23c164ffa65fd7af4d'
+          if gh release view v1.75.0 >/dev/null 2>&1; then
+            gh release upload v1.75.0 "$apk" --clobber
+            gh release edit v1.75.0 --target "$GITHUB_SHA" --title 'Aetherion Reforged v1.75.0 — Full Foundation Rebuild' --notes "$notes"
+          else
+            gh release create v1.75.0 "$apk" --target "$GITHUB_SHA" --title 'Aetherion Reforged v1.75.0 — Full Foundation Rebuild' --notes "$notes"
+          fi

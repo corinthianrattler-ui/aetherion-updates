@@ -1,0 +1,30 @@
+name: Export v1.74.3 base for v1.75.0 rebuild
+on:
+  push:
+    branches: [main]
+    paths: ['.github/workflows/export-v1743-apk-for-v1750.yml']
+permissions:
+  contents: read
+jobs:
+  export:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - name: Download verified v1.74.3 release APK
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          apk='Aetherion_Reforged_v1.74.3_FULL_GAME_REPAIR.apk'
+          gh release download v1.74.3 --pattern "$apk"
+          test "$(stat -c%s "$apk")" = '519238034'
+          echo 'd055b620e9f434fbba8ce0505d293be3141f072b81543a34340db0ca4996e00f  Aetherion_Reforged_v1.74.3_FULL_GAME_REPAIR.apk' | sha256sum --check --strict
+      - uses: actions/upload-artifact@v4
+        with:
+          name: aetherion-v1743-base-for-v1750
+          path: Aetherion_Reforged_v1.74.3_FULL_GAME_REPAIR.apk
+          compression-level: 0
+          retention-days: 1
+          if-no-files-found: error

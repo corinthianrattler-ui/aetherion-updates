@@ -22,7 +22,7 @@ jobs:
         run: |
           set -euo pipefail
           sudo apt-get update
-          sudo apt-get install --yes zstd unzip
+          sudo apt-get install --yes zstd unzip xz-utils
 
       - name: Download verified signed source APKs
         env:
@@ -67,15 +67,18 @@ jobs:
                   zi.external_attr=(0o100644 << 16)
                   zm.writestr(zi,data,compress_type=zipfile.ZIP_STORED)
           PY
-          test "$(stat -c%s v1743_plus_legacy_videos.apk)" = '593081294'
+          test "$(stat -c%s v1743_plus_legacy_videos.apk)" = '593082116'
           echo '9897812e1fa1fa6817f5c26bebad0bd61c191608deee7d5f4ff0010390d6c8a6  v1743_plus_legacy_videos.apk' | sha256sum --check --strict
 
       - name: Reconstruct exact signed v1.75.0 APK
         shell: bash
         run: |
           set -euo pipefail
-          cat .release-patches/v1.74.3-to-v1.75.0/final-patch.b64.part-* > final-patch.b64
-          base64 --decode final-patch.b64 > mid-to-final.zstpatch
+          cat .release-patches/v1.74.3-to-v1.75.0/residual.xz.b64.part-* > residual.xz.b64
+          base64 --decode residual.xz.b64 > residual.xz
+          test "$(stat -c%s residual.xz)" = '1241084'
+          echo 'ff4266217669975874b60e0a64a784178e4a9ab7478b9dacc02fe4905cb495d0  residual.xz' | sha256sum --check --strict
+          xz --decompress --stdout residual.xz > mid-to-final.zstpatch
           test "$(stat -c%s mid-to-final.zstpatch)" = '1878770'
           echo '4b556743a08d031a0a645e4b6368e5a5502c764152e31c236bad98c8e00cbf1e  mid-to-final.zstpatch' | sha256sum --check --strict
           out='Aetherion_Reforged_v1.75.0_FULL_FOUNDATION_REBUILD.apk'

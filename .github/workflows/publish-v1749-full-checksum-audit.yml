@@ -1,0 +1,50 @@
+name: Publish v1.74.9 full checksum repair
+
+on:
+  push:
+    paths:
+      - '.github/workflows/publish-v1749-full-checksum-audit.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Publish signed checksum-audited channel entry
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import json, hashlib
+          root=Path('.')
+          channel_path=root/'v2/channel.json'
+          manifest_path=root/'v2/releases/1.74.9.json'
+          expected='98d0e4bcd622d6fc10401f9cf98fc7eccff99300bbe595e4e171504976cfb963'
+          raw=manifest_path.read_bytes()
+          actual=hashlib.sha256(raw).hexdigest()
+          if actual != expected:
+            raise SystemExit(f'manifest sha mismatch: {actual} != {expected}')
+          audit=(root/'v2/releases/1.74.9-audit.txt').read_text().strip()
+          if not audit.startswith('mismatches=8'):
+            raise SystemExit('unexpected checksum audit result')
+          channel=json.loads(channel_path.read_text())
+          release={
+            'version':'1.74.9',
+            'manifestUrl':'https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/v2/releases/1.74.9.json',
+            'manifestSha256':expected,
+            'notes':'Full checksum-audited repair. Rehashes every cumulative payload against the exact repository bytes, correcting all eight mismatches found in the previous package including tournament part 08, a tournament image asset, Living Roads payloads, and media payloads. Preserves the complete tournaments, Living Roads, Lucan Vale progression, Dominus lance, Edwyn fix, approved dial placement, saves and existing content.',
+            'signature':'Y4AdJ1l8ZFCnbZ/lGuIbz6V9A4O1Rmg+pjAtijaEuS4WzogH4GvzJnk5qx2jPxPuqfTs5pODObwr1BqOYZFELMbbMNleXC7t9V6JYo0LvcJV5swYetOQMLonTXimJ/1rh7IfyyW1BcFxbxDHMWvIq2/InUS/ecP9eh9SniOEpLoT9oIKzsINmQNPb/mV/8ma0sAePJuDxhzuudRa4JdzK3b3/oL6pNsppbgRlE/SHLmcmg1vaB83/r+Uy6hXp06sU/8P68M6gz27oIGjjMWPoNRhwVkFOvws55Xwzh1WhfOzIpJPOw6sPTCeTARnocGsth7BIrcaM0G+xAhWCkBtJQ=='
+          }
+          old=[r for r in channel.get('releases',[]) if r.get('version')!='1.74.9']
+          channel={'schema':2,'appId':'aetherion-reforged','latest':'1.74.9','releases':[release]+old}
+          channel_path.write_text(json.dumps(channel,separators=(',',':'),ensure_ascii=False))
+          PY
+      - name: Commit channel
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add v2/channel.json
+          git diff --cached --quiet || git commit -m 'Publish v1.74.9 full checksum repair'
+          git push

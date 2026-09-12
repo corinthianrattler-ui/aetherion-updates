@@ -1,0 +1,61 @@
+name: Build v1.74.8 checksum repair
+
+on:
+  push:
+    paths:
+      - '.github/workflows/build-v1748-checksum-repair.yml'
+      - 'v2/files/1.74.8/v1748-portrait-dial-repair.js'
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build corrected cumulative manifest
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import json, hashlib
+          root=Path('.')
+          src=json.loads((root/'v2/releases/1.74.7.json').read_text())
+          fixed=root/'v2/files/1.74.8/v1748-portrait-dial-repair.js'
+          b=fixed.read_bytes()
+          fixed_entry={
+            'id':'v1746-portrait-dial-repair',
+            'type':'extension',
+            'path':'v1746-portrait-dial-repair',
+            'mime':'text/javascript',
+            'url':'https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/v2/files/1.74.8/v1748-portrait-dial-repair.js',
+            'sha256':hashlib.sha256(b).hexdigest(),
+            'bytes':len(b),
+            'label':'v1748-portrait-dial-repair.js'
+          }
+          files=[]
+          replaced=False
+          for entry in src['files']:
+            if entry.get('id')=='v1746-portrait-dial-repair':
+              files.append(fixed_entry)
+              replaced=True
+            else:
+              files.append(entry)
+          if not replaced:
+            raise SystemExit('missing v1746 portrait repair entry')
+          out={'schema':2,'appId':'aetherion-reforged','version':'1.74.8','files':files,'deletePaths':src.get('deletePaths',[])}
+          raw=json.dumps(out,separators=(',',':'),ensure_ascii=False).encode()
+          (root/'v2/releases/1.74.8.json').write_bytes(raw)
+          (root/'v2/releases/1.74.8.sha256').write_text(hashlib.sha256(raw).hexdigest()+'\n')
+          print('fixed_file_sha256',fixed_entry['sha256'])
+          print('manifest_sha256',hashlib.sha256(raw).hexdigest())
+          PY
+      - name: Validate fixed JavaScript
+        run: node --check v2/files/1.74.8/v1748-portrait-dial-repair.js
+      - name: Commit generated manifest
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add v2/releases/1.74.8.json v2/releases/1.74.8.sha256
+          git diff --cached --quiet || git commit -m 'Build v1.74.8 checksum repair manifest'
+          git push

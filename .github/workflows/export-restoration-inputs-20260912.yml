@@ -1,20 +1,16 @@
 name: Export verified restoration inputs
-
 on:
   push:
-    paths:
-      - '.github/workflows/export-restoration-inputs-20260912.yml'
-
+    paths: ['.github/workflows/export-restoration-inputs-20260912.yml']
 permissions:
   contents: read
-
 jobs:
   export:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
-      - name: Collect exact cumulative web release and build tools
+      - name: Preserve current release and earlier source chunks for restoration
         shell: bash
         run: |
           set -euo pipefail
@@ -22,34 +18,29 @@ jobs:
           from pathlib import Path
           from urllib.parse import urlparse, unquote
           import hashlib, json, shutil, subprocess
-          root=Path.cwd().resolve()
-          output=root/'restoration-inputs'
-          output.mkdir()
+          root=Path.cwd().resolve(); output=root/'restoration-inputs'; output.mkdir()
           manifest=root/'v2/releases/1.74.9.json'
           expected='98d0e4bcd622d6fc10401f9cf98fc7eccff99300bbe595e4e171504976cfb963'
           assert hashlib.sha256(manifest.read_bytes()).hexdigest()==expected, 'manifest changed'
           shutil.copy2(manifest,output/'manifest.json')
           report=[]
           for f in json.loads(manifest.read_bytes())['files']:
-              u=urlparse(f['url'])
-              prefix='/corinthianrattler-ui/aetherion-updates/main/'
+              u=urlparse(f['url']); prefix='/corinthianrattler-ui/aetherion-updates/main/'
               assert u.hostname=='raw.githubusercontent.com' and u.path.startswith(prefix), 'unexpected input origin'
               relative=Path(unquote(u.path[len(prefix):]))
               assert not relative.is_absolute() and '..' not in relative.parts, 'unsafe input path'
-              src=root/relative
-              data=src.read_bytes()
+              data=(root/relative).read_bytes()
               assert hashlib.sha256(data).hexdigest()==f['sha256'], f['id']+' checksum mismatch'
               assert len(data)==f['bytes'], f['id']+' size mismatch'
-              dest=output/relative
-              dest.parent.mkdir(parents=True,exist_ok=True)
-              dest.write_bytes(data)
+              dest=output/relative; dest.parent.mkdir(parents=True,exist_ok=True);dest.write_bytes(data)
               if f['type']=='extension': subprocess.run(['node','--check',str(dest)],check=True)
               report.append({'id':f['id'],'source':relative.as_posix(),'bytes':len(data),'sha256':f['sha256']})
-          (output/'verification.json').write_text(json.dumps({'release':'1.74.9','manifest_sha256':expected,'files':report},indent=2))
+          (output/'verification.json').write_text(json.dumps({'release':'1.74.9','verification_scope':'transport checksums and outer script syntax only; decoded payloads require separate validation','manifest_sha256':expected,'files':report},indent=2))
+          shutil.copytree(root/'v2/files/1.74.7',output/'historical-1747')
           (output/'tools').mkdir()
           for name in ('build_signed_apk.py','build_v1743_payload.py','build_v1742_payload.py','build_manifest.py','build_channel.py'):
               shutil.copy2(root/'tools'/name,output/'tools'/name)
-          print('Verified and exported',len(report),'release files. No live channel changes.')
+          print('Exported',len(report),'release files plus historical 1.74.7 source candidates. No live channel changes.')
           PY
       - uses: actions/upload-artifact@v4
         with:

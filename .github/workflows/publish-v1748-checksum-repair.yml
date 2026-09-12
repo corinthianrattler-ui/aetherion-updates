@@ -1,0 +1,45 @@
+name: Publish v1.74.8 checksum repair
+
+on:
+  push:
+    paths:
+      - '.github/workflows/publish-v1748-checksum-repair.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Publish signed channel entry
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import json
+          root=Path('.')
+          channel_path=root/'v2/channel.json'
+          channel=json.loads(channel_path.read_text())
+          manifest_sha=(root/'v2/releases/1.74.8.sha256').read_text().strip()
+          expected='8584a70944744f62526bd91ef378034f5cb90b458fd54e2e13814806c31b2c88'
+          if manifest_sha != expected:
+            raise SystemExit(f'manifest sha mismatch: {manifest_sha} != {expected}')
+          release={
+            'version':'1.74.8',
+            'manifestUrl':'https://raw.githubusercontent.com/corinthianrattler-ui/aetherion-updates/main/v2/releases/1.74.8.json',
+            'manifestSha256':manifest_sha,
+            'notes':'Checksum repair release for the Living Roads update. Replaces the rejected v1.74.6 portrait/dial extension with a syntax-checked checksum-safe build while preserving the complete v1.74.7 Living Roads, tournaments, Lucan Vale, Dominus lance, Edwyn fix, dial placement, saves and all existing content.',
+            'signature':'T/XcK52GrtLyAqFn3wexPpRj7u1dj9Woe5PyY2lGPP4PT1SNiTmjFkU6mjtzh3xXniGR0rTO0KLS91WIELTBmiyp9K4RCwXU3OpiCfQBQLGPhbhMd3/RJaizn3m5SoawoaVM9CUSJg1hhvvov2WiQQ4LTfW/FPt+gZgc7RGIM5yZImFcQjUt2nCLcQ3Qt/8atwNs9HxHtyObvyNssvqae0BD/24IfMHs3WcLKScYCB2FLpi+Rd/6wzpoRzmitqmi1R+4K4W+f7zM2sPKGfpQm4+/IvlsZLjK4/P9+d6HfRerfw8QGglgSn2osiQB+YOWlWL9QC3AkfT9ucBIsul2yw=='
+          }
+          old=[r for r in channel.get('releases',[]) if r.get('version')!='1.74.8']
+          channel={'schema':2,'appId':'aetherion-reforged','latest':'1.74.8','releases':[release]+old}
+          channel_path.write_text(json.dumps(channel,separators=(',',':'),ensure_ascii=False))
+          PY
+      - name: Commit channel
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add v2/channel.json
+          git diff --cached --quiet || git commit -m 'Publish v1.74.8 checksum repair'
+          git push

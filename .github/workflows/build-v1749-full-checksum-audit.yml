@@ -1,0 +1,80 @@
+name: Build v1.74.9 full checksum audit
+
+on:
+  push:
+    paths:
+      - '.github/workflows/build-v1749-full-checksum-audit.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Rehash every cumulative update file
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          from urllib.parse import urlparse
+          import json, hashlib
+
+          root = Path('.')
+          src = json.loads((root/'v2/releases/1.74.8.json').read_text())
+          out_files=[]
+          audit=[]
+          js_paths=[]
+
+          prefix='/corinthianrattler-ui/aetherion-updates/main/'
+          for old in src['files']:
+            entry=dict(old)
+            parsed=urlparse(entry['url'])
+            if parsed.netloc != 'raw.githubusercontent.com' or not parsed.path.startswith(prefix):
+              raise SystemExit(f"unsupported update URL: {entry['url']}")
+            rel=parsed.path[len(prefix):]
+            local=root/rel
+            if not local.is_file():
+              raise SystemExit(f"missing referenced file: {rel}")
+            b=local.read_bytes()
+            actual_sha=hashlib.sha256(b).hexdigest()
+            actual_bytes=len(b)
+            if entry.get('sha256') != actual_sha or int(entry.get('bytes',-1)) != actual_bytes:
+              audit.append({
+                'id':entry.get('id'),
+                'file':rel,
+                'old_sha256':entry.get('sha256'),
+                'actual_sha256':actual_sha,
+                'old_bytes':entry.get('bytes'),
+                'actual_bytes':actual_bytes,
+              })
+            entry['sha256']=actual_sha
+            entry['bytes']=actual_bytes
+            out_files.append(entry)
+            if entry.get('type') == 'extension' and entry.get('mime') == 'text/javascript':
+              js_paths.append(rel)
+
+          out={'schema':2,'appId':'aetherion-reforged','version':'1.74.9','files':out_files,'deletePaths':src.get('deletePaths',[])}
+          raw=json.dumps(out,separators=(',',':'),ensure_ascii=False).encode()
+          (root/'v2/releases/1.74.9.json').write_bytes(raw)
+          (root/'v2/releases/1.74.9.sha256').write_text(hashlib.sha256(raw).hexdigest()+'\n')
+          (root/'v2/releases/1.74.9-js.txt').write_text('\n'.join(js_paths)+'\n')
+          lines=[f"mismatches={len(audit)}"]
+          for x in audit:
+            lines.append(f"{x['id']} | {x['file']} | sha {x['old_sha256']} -> {x['actual_sha256']} | bytes {x['old_bytes']} -> {x['actual_bytes']}")
+          (root/'v2/releases/1.74.9-audit.txt').write_text('\n'.join(lines)+'\n')
+          print('\n'.join(lines))
+          print('manifest_sha256',hashlib.sha256(raw).hexdigest())
+          PY
+      - name: Syntax-check every JavaScript extension
+        run: |
+          while IFS= read -r f; do
+            [ -z "$f" ] || node --check "$f"
+          done < v2/releases/1.74.9-js.txt
+      - name: Commit audited manifest
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add v2/releases/1.74.9.json v2/releases/1.74.9.sha256 v2/releases/1.74.9-audit.txt v2/releases/1.74.9-js.txt
+          git diff --cached --quiet || git commit -m 'Build v1.74.9 full checksum-audited manifest'
+          git push
